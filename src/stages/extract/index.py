@@ -10,5 +10,5 @@ def get_indicators_dfs(indicator_ids_list: list[str]) -> list[pd.DataFrame]:
     except Exception as e:
         print(str(e))
 
-def run(indicator_ids_list):
+def extract_runner(indicator_ids_list):
     return get_indicators_dfs(indicator_ids_list)
