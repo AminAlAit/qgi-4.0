@@ -1,6 +1,6 @@
 
 
-from etl_runner.index import etl
+from etl_runner.index import etl  # pylint: disable=import-error
 
 
 ## This is where we read pipeline input data
