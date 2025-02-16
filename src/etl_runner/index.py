@@ -4,7 +4,7 @@ from stages.transform.index import transform_runner  # pylint: disable=import-er
 
 
 def etl(indicator_ids_list):
-    result = extract_runner(indicator_ids_list)
-    result = transform_runner(result)
+    indicators = extract_runner(indicator_ids_list)
+    indicators = transform_runner(indicators)
 
-    return result
+    return indicators

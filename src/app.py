@@ -6,7 +6,7 @@ from etl_runner.index import etl  # pylint: disable=import-error
 ## This is where we read pipeline input data
 indicator_ids_list = ["SP.POP.TOTL", "PV.EST"]
 
-dfs = etl(indicator_ids_list)
+indicators = etl(indicator_ids_list)
 
-for i, df in enumerate(dfs):
-    df.to_csv(str(i) + ".csv")
+for i, indicator in enumerate(indicators):
+    indicator.data.to_csv(str(i) + ".csv")

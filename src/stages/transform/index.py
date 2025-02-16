@@ -2,18 +2,18 @@
 import pandas as pd
 
 
-def transform_runner(dfs):
-    transformed_dfs = []
-    for df in dfs:
-        pivoted_df = pivot_dataframe(df)
-        result = rename_columns(pivoted_df)
-        result, unmatched_countries = clean_country_names(result)
-        result = delete_rows_by_country(result, unmatched_countries)
+def transform_runner(indicators):
+    transformed_indicators = []
+    for indicator in indicators:
+        indicator.data = pivot_dataframe(indicator.data)
+        indicator.data = rename_columns(indicator.data)
+        indicator.data, unmatched_countries = clean_country_names(indicator.data)
+        indicator.data = delete_rows_by_country(indicator.data, unmatched_countries)
 
         # final step
-        transformed_dfs.append(result)
+        transformed_indicators.append(indicator)
 
-    return transformed_dfs
+    return transformed_indicators
 
 
 def pivot_dataframe(df):
