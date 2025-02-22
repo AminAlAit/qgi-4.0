@@ -1,12 +1,20 @@
-
+"""empty module string"""
 
 from etl_runner.index import etl  # pylint: disable=import-error
 
 
-## This is where we read pipeline input data
-indicator_ids_list = ["SP.POP.TOTL", "PV.EST"]
+etl_input = {
+    "indicator_ids": [
+        "SP.POP.TOTL",
+        "PV.EST"
+    ]
+}
 
-indicators = etl(indicator_ids_list)
 
-for i, indicator in enumerate(indicators):
-    indicator.data.to_csv(str(i) + ".csv")
+def run_etl(etl_input):
+    indicators = etl(etl_input)
+
+    for i, indicator in enumerate(indicators):
+        indicator.data.to_csv(str(i) + ".csv")
+
+run_etl(etl_input)

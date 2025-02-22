@@ -3,8 +3,8 @@ from stages.extract.index import extract_runner  # pylint: disable=import-error
 from stages.transform.index import transform_runner  # pylint: disable=import-error
 
 
-def etl(indicator_ids_list):
-    indicators = extract_runner(indicator_ids_list)
+def etl(etl_input):
+    indicators = extract_runner(etl_input)
     indicators = transform_runner(indicators)
 
     return indicators
