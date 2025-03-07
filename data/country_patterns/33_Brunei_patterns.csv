@@ -1,0 +1,1599 @@
+country_b_id_fk,start_year_a_fk,start_year_b_fk,pattern_length_fk,indexes,avg_corr,orgs,Power,Sectors,country_a_id_fk
+121,2007,2008,14,2,0.944745,1,0,['Social Sector'],33
+169,2007,2007,13,2,0.967075,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2009,12,2,0.9614050000000001,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2008,12,2,0.962115,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2007,12,2,0.957605,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2010,11,2,0.9553400000000001,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2009,11,2,0.95024,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2008,11,2,0.950895,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2007,11,2,0.94729,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2011,10,2,0.910185,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+169,2007,2010,10,2,0.920125,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+169,2007,2009,10,2,0.93686,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+169,2007,2008,10,2,0.91925,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+169,2008,2010,9,2,0.956815,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+169,2008,2009,9,2,0.975115,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+169,2009,2009,7,2,0.966855,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+169,2008,2009,7,2,0.949955,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+169,2015,2015,6,2,0.92272,1,0,"['Human Rights Development', 'Social Sector']",33
+169,2010,2010,6,2,0.975515,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+169,2008,2015,6,2,0.943605,1,0,"['Social Sector', 'Finance Economy Sector']",33
+169,2008,2010,6,2,0.9390499999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+169,2008,2009,6,2,0.96594,1,0,"['Social Sector', 'Finance Economy Sector']",33
+169,2010,2011,5,2,0.9281,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2006,13,2,0.9519550000000001,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2008,13,3,0.96555,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+169,2009,2009,4,2,0.980945,1,0,"['Political State Sector', 'Social Sector']",33
+169,2007,2006,14,2,0.95887,1,0,"['Political State Sector', 'Social Sector']",33
+170,2008,2015,6,2,0.9655849999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+170,2008,2014,6,2,0.956245,1,0,"['Social Sector', 'Finance Economy Sector']",33
+170,2008,2013,6,2,0.97747,1,0,"['Social Sector', 'Finance Economy Sector']",33
+170,2008,2011,6,2,0.917475,1,0,"['Social Sector', 'Finance Economy Sector']",33
+170,2008,2009,6,2,0.9230100000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+170,2010,2015,5,2,0.9479150000000001,1,0,"['Political State Sector', 'Social Sector']",33
+170,2009,2014,4,2,0.969155,1,0,"['Political State Sector', 'Social Sector']",33
+170,2009,2017,3,2,0.963445,1,0,"['Political State Sector', 'Social Sector']",33
+170,2009,2016,3,2,0.97561,1,0,"['Political State Sector', 'Social Sector']",33
+170,2009,2015,3,2,0.98647,1,0,"['Political State Sector', 'Social Sector']",33
+170,2009,2014,3,2,0.955865,1,0,"['Political State Sector', 'Social Sector']",33
+170,2008,2021,3,2,0.971375,1,0,"['Human Rights Development', 'Social Sector']",33
+170,2008,2013,3,2,0.969155,1,0,"['Human Rights Development', 'Social Sector']",33
+170,2008,2010,3,2,0.9588300000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+170,1990,2013,3,2,0.9564732258064517,2,0,['Unknown'],33
+170,1990,2009,3,2,0.9918,2,0,['Unknown'],33
+170,1990,2005,3,2,0.9477433333333333,2,0,['Unknown'],33
+170,1990,2004,3,2,0.9387466666666667,2,0,['Unknown'],33
+170,1990,2002,3,2,0.9862390243902439,1,0,['Unknown'],33
+170,1990,1995,3,2,0.99878,2,0,['Unknown'],33
+169,2007,2007,14,2,0.9711799999999999,1,0,"['Political State Sector', 'Social Sector']",33
+169,2010,2010,5,2,0.96212,1,0,"['Political State Sector', 'Social Sector']",33
+169,1990,2014,4,2,0.96930125,2,0,['Unknown'],33
+170,2009,2013,7,2,0.933565,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+167,2009,2008,3,2,0.9724550000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+167,2008,2018,3,2,0.97245,1,0,"['Human Rights Development', 'Social Sector']",33
+167,2008,2016,3,2,0.964225,1,0,"['Human Rights Development', 'Social Sector']",33
+167,2008,2009,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+167,1990,2019,3,2,0.9892538709677419,2,0,['Unknown'],33
+167,1990,2014,3,2,0.92791,2,0,['Unknown'],33
+167,1990,2013,3,2,0.9896533333333333,2,0,['Unknown'],33
+167,1990,2012,3,3,0.9742866666666666,2,0,['Unknown'],33
+167,1990,2011,3,3,0.9876431372549019,2,0,['Unknown'],33
+167,1990,2010,3,3,0.9667513725490195,2,0,['Unknown'],33
+167,1990,2009,3,2,0.9779854838709677,2,0,['Unknown'],33
+167,1990,2008,3,2,0.9687425806451613,2,0,['Unknown'],33
+167,1990,2005,3,2,0.9829609677419354,2,0,['Unknown'],33
+167,1990,2004,3,2,0.9394466666666667,2,0,['Unknown'],33
+167,1990,2002,3,2,0.9814533333333333,2,0,['Unknown'],33
+167,1990,1999,3,2,0.9822366666666668,2,0,['Unknown'],33
+167,1990,1998,3,2,0.9817566666666667,2,0,['Unknown'],33
+167,1990,1997,3,3,0.9815582352941176,2,0,['Unknown'],33
+167,1990,1993,3,2,0.9964333333333334,2,0,['Unknown'],33
+167,1990,1992,3,2,0.9808166666666668,2,0,['Unknown'],33
+167,1990,1990,3,2,0.91798,2,0,['Unknown'],33
+166,2008,2012,9,2,0.923215,1,0,"['Political State Sector', 'Social Sector']",33
+167,2008,2020,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+167,2009,2015,3,2,0.91766,1,0,"['Political State Sector', 'Social Sector']",33
+169,2009,2012,3,2,0.96575,1,0,['Political State Sector'],33
+167,2009,2017,3,2,0.969155,1,0,"['Political State Sector', 'Social Sector']",33
+169,2009,2010,3,2,0.9803850000000001,1,0,"['Political State Sector', 'Social Sector']",33
+169,2009,2009,3,3,0.9932133333333333,1,0,"['Political State Sector', 'Social Sector']",33
+169,2009,2008,3,2,0.9789749999999999,1,0,"['Political State Sector', 'Social Sector']",33
+169,1990,2014,3,2,0.995066875,2,0,['Unknown'],33
+169,1990,2012,3,2,0.944564,2,0,['Unknown'],33
+169,1990,2002,3,2,0.9772058823529413,1,0,['Unknown'],33
+168,1990,2011,3,2,0.97879,1,0,['Unknown'],33
+167,2008,2013,11,3,0.9383566666666666,1,0,"['Social Sector', 'Finance Economy Sector']",33
+167,2008,2014,10,2,0.91669,1,0,"['Sovereignty', 'Social Sector']",33
+167,2008,2015,9,3,0.9368933333333334,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+167,2008,2014,9,2,0.955445,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+167,2008,2015,8,2,0.9651000000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+167,2008,2014,8,2,0.9409350000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+167,2008,2014,7,2,0.953185,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+167,2015,2016,6,2,0.94145,1,0,"['Human Rights Development', 'Social Sector']",33
+167,2008,2017,6,2,0.9392,1,0,"['Social Sector', 'Finance Economy Sector']",33
+167,2010,2016,5,2,0.96803,1,0,"['Political State Sector', 'Social Sector']",33
+167,2009,2018,5,2,0.942915,1,0,"['Social Sector', 'Finance Economy Sector']",33
+167,2009,2015,4,2,0.972655,1,0,"['Political State Sector', 'Social Sector']",33
+167,1990,2016,4,2,0.9344454838709677,2,0,['Unknown'],33
+167,1990,2005,4,2,0.982005806451613,2,0,['Unknown'],33
+170,2008,2012,7,2,0.91857,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+170,2009,2014,7,2,0.92859,1,0,"['Sovereignty', 'Political State Sector']",33
+166,2015,2017,6,2,0.96856,1,0,"['Human Rights Development', 'Social Sector']",33
+173,1990,1998,3,3,0.9467996078431372,2,0,['Unknown'],33
+173,1990,1994,3,2,0.9436122580645161,2,0,['Unknown'],33
+173,1990,1993,3,2,0.984228064516129,2,0,['Unknown'],33
+173,1990,1992,3,3,0.9932098039215687,2,0,['Unknown'],33
+172,2008,2015,9,2,0.9521850000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+172,2008,2016,8,2,0.9286749999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+172,2010,2006,6,2,0.956035,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+172,2008,2016,6,2,0.9211199999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+172,2009,2016,4,3,0.9348433333333332,1,0,"['Political State Sector', 'Social Sector']",33
+172,1990,2015,4,2,0.9687166666666667,2,0,['Unknown'],33
+172,2009,2013,3,2,0.9642850000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+172,2009,2009,3,2,0.99312,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+172,2008,2020,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+172,2008,2018,3,2,0.990415,1,0,"['Human Rights Development', 'Social Sector']",33
+172,2008,2010,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+172,1990,2018,3,2,0.985451,1,0,['Unknown'],33
+172,1990,2015,3,2,0.9869966666666666,2,0,['Unknown'],33
+172,1990,2011,3,2,0.9725732258064517,2,0,['Unknown'],33
+172,1990,2007,3,2,0.9614331578947369,2,0,['Unknown'],33
+172,1990,2005,3,3,0.9620194871794872,2,0,['Unknown'],33
+172,1990,1994,3,2,0.9927829032258064,2,0,['Unknown'],33
+172,1990,1993,3,2,0.9525066666666666,2,0,['Unknown'],33
+173,1990,1997,3,2,0.9387422580645162,2,0,['Unknown'],33
+173,1990,2003,3,2,0.9881733333333333,2,0,['Unknown'],33
+171,2007,2008,13,2,0.9275800000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+173,1990,2006,3,2,0.9863066666666666,2,0,['Unknown'],33
+173,2007,2006,13,2,0.962425,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2008,2009,12,2,0.95826,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2008,2008,12,2,0.979,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2008,2007,12,2,0.9609749999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2008,2006,12,2,0.916455,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2008,2008,10,2,0.974965,1,0,"['Sovereignty', 'Social Sector']",33
+173,2008,2007,10,2,0.946475,1,0,"['Sovereignty', 'Social Sector']",33
+173,2007,2010,10,2,0.91669,1,0,"['Human Rights Development', 'Finance Economy Sector']",33
+173,2008,2009,9,2,0.912045,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2008,2008,9,2,0.96458,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2008,2007,9,2,0.926365,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2008,2008,8,2,0.9549099999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2009,2009,7,2,0.9295500000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2015,2016,6,2,0.94129,1,0,"['Human Rights Development', 'Social Sector']",33
+173,2008,2008,6,2,0.9620200000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+173,1990,2014,4,2,0.9577966666666666,2,0,['Unknown'],33
+173,2009,2016,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+173,2009,2015,3,2,0.967225,1,0,"['Political State Sector', 'Social Sector']",33
+173,2008,2010,3,2,1.0,1,0,"['Human Rights Development', 'Social Sector']",33
+173,2008,2008,3,2,0.95553,1,0,"['Human Rights Development', 'Social Sector']",33
+173,1990,2014,3,2,0.9912933333333334,2,0,['Unknown'],33
+172,1990,1992,3,2,0.9348466666666667,2,0,['Unknown'],33
+171,2007,2008,12,2,0.955055,1,0,"['Human Rights Development', 'Social Sector']",33
+170,2008,2013,8,2,0.93984,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2007,2006,15,3,0.9576066666666666,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+170,2007,2008,14,2,0.929365,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2007,2007,14,3,0.9578333333333333,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+170,2007,2006,14,3,0.9556933333333334,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+170,2007,2011,13,2,0.9510700000000001,1,0,"['Sovereignty', 'Social Sector']",33
+170,2007,2010,13,2,0.92442,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2007,2009,13,2,0.909055,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2007,2008,13,3,0.9336066666666666,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+170,2007,2007,13,3,0.9471599999999999,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+170,2007,2006,13,3,0.9493266666666665,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+170,2008,2009,12,2,0.93732,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2008,2008,12,2,0.96202,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2008,2007,12,2,0.967795,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2008,2006,12,2,0.933155,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2008,2012,11,2,0.926685,1,0,"['Social Sector', 'Finance Economy Sector']",33
+170,2008,2011,10,2,0.9394899999999999,1,0,"['Sovereignty', 'Social Sector']",33
+170,2008,2008,10,2,0.9206799999999999,1,0,"['Sovereignty', 'Social Sector']",33
+170,2008,2007,10,2,0.9709,1,0,"['Sovereignty', 'Social Sector']",33
+170,2008,2014,9,2,0.921835,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2008,2013,9,2,0.93818,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2008,2012,9,2,0.936755,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2008,2007,9,2,0.93416,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2007,2009,14,2,0.917975,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2007,2007,15,2,0.961225,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+171,2007,2008,11,2,0.94915,1,0,"['Human Rights Development', 'Social Sector']",33
+170,2007,2008,15,2,0.935785,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+171,2007,2009,10,2,0.91517,1,0,"['Human Rights Development', 'Social Sector']",33
+171,2007,2008,10,2,0.94548,1,0,"['Human Rights Development', 'Social Sector']",33
+171,2007,2009,9,2,0.91717,1,0,"['Human Rights Development', 'Social Sector']",33
+171,2007,2008,9,2,0.93162,1,0,"['Human Rights Development', 'Social Sector']",33
+171,2008,2016,8,2,0.93475,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+171,2008,2018,6,2,0.9441900000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+171,2008,2017,6,2,0.93317,1,0,"['Social Sector', 'Finance Economy Sector']",33
+171,2008,2016,6,2,0.94563,1,0,"['Social Sector', 'Finance Economy Sector']",33
+171,2009,2016,4,2,0.921375,1,0,"['Political State Sector', 'Social Sector']",33
+171,2009,2009,4,2,0.90453,1,0,['Social Sector'],33
+171,2009,2019,3,2,0.95345,1,0,"['Political State Sector', 'Social Sector']",33
+171,2008,2019,3,2,1.0,1,0,"['Human Rights Development', 'Social Sector']",33
+171,2008,2010,3,3,0.9977999999999999,1,0,"['Human Rights Development', 'Social Sector']",33
+171,1990,2016,3,2,0.9848611428571429,1,0,['Unknown'],33
+171,1990,2008,3,2,0.9850677777777778,1,0,['Unknown'],33
+171,1990,2003,3,2,0.9183744444444444,1,0,['Unknown'],33
+170,2007,2007,17,2,0.959805,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2007,2006,17,3,0.9454566666666667,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+170,2007,2008,16,2,0.933225,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2007,2007,16,2,0.960345,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+170,2007,2006,16,3,0.9428433333333334,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+166,2014,2016,7,2,0.9600949999999999,1,0,"['Human Rights Development', 'Social Sector']",33
+166,2009,2016,4,2,0.9385600000000001,1,0,['Social Sector'],33
+173,2007,2008,13,2,0.962835,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+162,2008,2008,6,2,0.927915,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2009,2009,5,2,0.926365,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2009,2009,4,2,0.9522649999999999,1,0,['Social Sector'],33
+162,2009,2021,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+162,2009,2020,3,3,0.9977999999999999,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+162,2009,2019,3,2,0.994035,1,0,"['Political State Sector', 'Social Sector']",33
+162,2009,2018,3,2,0.944195,1,0,"['Political State Sector', 'Social Sector']",33
+162,2009,2013,3,2,0.98012,1,0,"['Political State Sector', 'Social Sector']",33
+162,2009,2009,3,2,0.97567,1,0,"['Political State Sector', 'Social Sector']",33
+162,2008,2011,3,2,0.9724550000000001,1,0,['Social Sector'],33
+159,2014,2014,7,2,0.94137,1,0,"['Human Rights Development', 'Social Sector']",33
+159,2015,2015,6,2,0.9651350000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+159,2002,2001,4,2,0.920665,1,0,['Military Sector'],33
+159,2009,2018,3,3,0.96968,1,0,"['Political State Sector', 'Social Sector']",33
+159,1990,2017,3,2,0.9683158536585366,1,0,['Unknown'],33
+159,1990,2012,3,2,0.9695651612903226,2,0,['Unknown'],33
+159,1990,2011,3,2,0.9867466666666667,2,0,['Unknown'],33
+159,1990,2006,3,2,0.9794133333333334,2,0,['Unknown'],33
+159,1990,2003,3,2,0.9003433333333334,2,0,['Unknown'],33
+159,1990,2002,3,2,0.9655400000000001,2,0,['Unknown'],33
+159,1990,2000,3,2,0.9987633333333333,2,0,['Unknown'],33
+159,1990,1999,3,2,0.9658866666666667,2,0,['Unknown'],33
+162,2009,2014,5,2,0.917545,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2008,2009,6,2,0.92398,1,0,['Social Sector'],33
+159,1990,1995,3,2,0.9959548387096775,2,0,['Unknown'],33
+162,2008,2018,6,2,0.91445,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2006,13,2,0.93706,1,0,"['Political State Sector', 'Social Sector']",33
+162,2007,2011,12,3,0.9195133333333333,1,0,"['Political State Sector', 'Social Sector']",33
+162,2007,2010,12,4,0.9276125,1,0,"['Political State Sector', 'Social Sector']",33
+162,2007,2009,12,3,0.9464533333333334,1,0,"['Political State Sector', 'Social Sector']",33
+162,2007,2008,12,2,0.94466,1,0,"['Political State Sector', 'Social Sector']",33
+162,2007,2007,12,2,0.943595,1,0,"['Political State Sector', 'Social Sector']",33
+162,2007,2006,12,2,0.9240200000000001,1,0,"['Political State Sector', 'Social Sector']",33
+162,2008,2012,11,2,0.91532,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2008,2011,11,2,0.919235,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2008,2010,11,2,0.93987,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2008,2009,11,2,0.940555,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2008,2008,11,2,0.9560500000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2008,2007,11,2,0.95749,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2010,11,2,0.933195,1,0,"['Political State Sector', 'Social Sector']",33
+162,2007,2009,11,2,0.92348,1,0,"['Political State Sector', 'Social Sector']",33
+162,2007,2010,10,2,0.951005,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+162,2007,2009,10,2,0.93415,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+162,2008,2011,9,2,0.964185,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+162,2008,2010,9,2,0.92076,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+162,2008,2017,7,2,0.918785,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+162,2008,2016,7,2,0.92953,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+159,1990,1996,3,3,0.9572225490196079,2,0,['Unknown'],33
+159,1990,1994,3,2,0.95178,2,0,['Unknown'],33
+162,2007,2008,13,3,0.9552566666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+157,1990,2005,4,2,0.9509611764705881,2,0,['Unknown'],33
+157,2009,2015,3,2,0.938215,1,0,"['Political State Sector', 'Social Sector']",33
+157,2009,2010,3,3,0.9559266666666666,1,0,"['Political State Sector', 'Social Sector']",33
+157,2009,2009,3,2,0.97003,1,0,"['Political State Sector', 'Social Sector']",33
+157,2008,2021,3,2,0.95284,1,0,"['Human Rights Development', 'Social Sector']",33
+157,1990,2015,3,2,0.9991599999999999,2,0,['Unknown'],33
+157,1990,2014,3,2,0.99167,2,0,['Unknown'],33
+157,1990,2013,3,2,0.9546976470588237,2,0,['Unknown'],33
+157,1990,2011,3,2,0.9749411764705883,2,0,['Unknown'],33
+157,1990,2009,3,2,0.9732133333333334,2,0,['Unknown'],33
+157,1990,2002,3,2,0.98012,2,0,['Unknown'],33
+157,1990,2000,3,2,0.9371988235294118,2,0,['Unknown'],33
+157,1990,1999,3,2,0.9970266666666666,2,0,['Unknown'],33
+157,1990,1994,3,3,0.959902,2,0,['Unknown'],33
+156,2008,2015,9,2,0.9280649999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+156,2008,2016,8,2,0.92821,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+156,2008,2015,8,2,0.9231400000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+156,2008,2018,6,2,0.9183,1,0,['Social Sector'],33
+156,2008,2017,6,2,0.929035,1,0,['Social Sector'],33
+156,2008,2015,6,2,0.91489,1,0,"['Social Sector', 'Finance Economy Sector']",33
+156,2009,2020,4,2,0.98473,1,0,"['Social Sector', 'Finance Economy Sector']",33
+156,2009,2020,3,2,0.9966999999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+157,2009,2016,3,2,0.979515,1,0,"['Political State Sector', 'Social Sector']",33
+157,1990,2015,4,2,0.9791788235294118,2,0,['Unknown'],33
+158,2007,2008,8,2,0.938545,1,0,"['Political State Sector', 'Social Sector']",33
+157,2008,2009,6,2,0.9594050000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+158,2009,2012,4,2,0.9507950000000001,1,0,"['Political State Sector', 'Social Sector']",33
+158,1990,2002,4,2,0.9409927586206897,2,0,['Unknown'],33
+158,1990,1996,4,2,0.9266566666666666,2,0,['Unknown'],33
+158,2009,2021,3,3,0.9572766666666667,1,0,"['Political State Sector', 'Social Sector']",33
+158,2008,2020,3,2,0.95284,1,0,"['Human Rights Development', 'Social Sector']",33
+158,2008,2010,3,2,0.969155,1,0,"['Human Rights Development', 'Social Sector']",33
+158,1990,2008,3,3,0.9469308163265306,2,0,['Unknown'],33
+158,1990,2005,3,2,0.94104,2,0,['Unknown'],33
+158,1990,2001,3,3,0.9259095918367346,2,0,['Unknown'],33
+158,1990,1996,3,2,0.92317,2,0,['Unknown'],33
+158,1990,1995,3,2,0.9983892307692307,1,0,['Unknown'],33
+158,1990,1994,3,2,0.970311724137931,2,0,['Unknown'],33
+158,1990,1993,3,2,0.9806366666666667,2,0,['Unknown'],33
+158,1990,1990,3,2,0.9612066666666667,2,0,['Unknown'],33
+157,2007,2008,14,2,0.945295,1,0,['Social Sector'],33
+157,2007,2012,11,2,0.90944,1,0,"['Human Rights Development', 'Social Sector']",33
+157,2014,2008,7,2,0.9302699999999999,1,0,"['Human Rights Development', 'Social Sector']",33
+157,2015,2010,6,2,0.9352400000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+157,2015,2009,6,2,0.934815,1,0,"['Human Rights Development', 'Social Sector']",33
+157,2010,2015,6,2,0.9800800000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+157,2008,2016,6,2,0.93853,1,0,['Social Sector'],33
+162,2007,2007,13,3,0.9425733333333333,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+162,2007,2009,13,4,0.950325,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+166,2009,2021,3,2,0.939215,1,0,"['Political State Sector', 'Social Sector']",33
+165,2009,2016,4,2,0.9070750000000001,1,0,['Social Sector'],33
+165,2009,2021,3,2,0.9803850000000001,1,0,"['Political State Sector', 'Social Sector']",33
+165,2009,2020,3,2,0.986495,1,0,"['Social Sector', 'Finance Economy Sector']",33
+165,2009,2019,3,2,0.9966999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+165,2008,2020,3,2,0.963445,1,0,"['Human Rights Development', 'Social Sector']",33
+165,2008,2017,3,3,0.9572666666666666,1,0,"['Human Rights Development', 'Social Sector']",33
+165,1990,2010,3,2,0.9524187804878049,1,0,['Unknown'],33
+165,1990,1990,3,3,0.9763411538461538,2,0,['Unknown'],33
+163,2007,2006,15,2,0.9616549999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2007,2007,14,2,0.96249,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2007,2006,14,2,0.95369,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2007,2011,13,2,0.91655,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2007,2008,13,2,0.969695,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2007,2007,13,2,0.95309,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2007,2006,13,2,0.95121,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2007,2007,10,2,0.9109,1,0,['Finance Economy Sector'],33
+163,2007,2007,9,2,0.94766,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2008,2008,8,2,0.9506699999999999,1,0,['Finance Economy Sector'],33
+163,2008,2007,8,2,0.9288350000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+163,2007,2013,8,2,0.9354750000000001,1,0,['Social Sector'],33
+163,2007,2006,8,2,0.9492849999999999,1,0,"['Political State Sector', 'Social Sector']",33
+163,2009,2008,7,2,0.92848,1,0,"['Sovereignty', 'Political State Sector']",33
+165,1990,1997,4,2,0.972985,2,0,['Unknown'],33
+165,2009,2017,4,2,0.9358150000000001,1,0,"['Political State Sector', 'Social Sector']",33
+163,2007,2013,7,2,0.951205,1,0,['Social Sector'],33
+165,2008,2014,6,2,0.951175,1,0,"['Social Sector', 'Finance Economy Sector']",33
+166,2009,2018,3,2,0.960285,1,0,"['Political State Sector', 'Social Sector']",33
+166,2009,2017,3,3,0.9762166666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+166,2009,2013,3,2,0.9803850000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+166,2008,2021,3,2,0.94491,1,0,"['Human Rights Development', 'Social Sector']",33
+166,2008,2018,3,2,0.9578,1,0,"['Human Rights Development', 'Social Sector']",33
+166,1990,2012,3,2,0.9181729411764706,2,0,['Unknown'],33
+166,1990,2011,3,2,0.9734164705882352,2,0,['Unknown'],33
+166,1990,2003,3,2,0.9449920689655172,2,0,['Unknown'],33
+166,1990,1996,3,2,0.9222880000000001,2,0,['Unknown'],33
+166,1990,1995,3,2,0.912122,2,0,['Unknown'],33
+165,2008,2012,12,3,0.9236566666666667,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+165,2008,2013,11,2,0.934955,1,0,"['Social Sector', 'Finance Economy Sector']",33
+165,2008,2012,11,2,0.9122699999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+165,2008,2014,10,2,0.94219,1,0,"['Sovereignty', 'Social Sector']",33
+165,2008,2013,10,2,0.92777,1,0,"['Sovereignty', 'Social Sector']",33
+165,2008,2015,9,2,0.942385,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+165,2008,2014,9,3,0.9485433333333333,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+165,2008,2016,8,2,0.93143,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+165,2008,2015,8,2,0.950615,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+165,2008,2016,7,2,0.91968,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+165,2008,2015,6,2,0.97621,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2008,2007,7,2,0.944295,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+163,2015,2016,6,2,0.9230700000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+162,2007,2010,13,3,0.9520766666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+163,2008,2008,3,2,0.963445,1,0,"['Human Rights Development', 'Social Sector']",33
+163,1990,2005,3,2,0.9459980952380953,2,0,['Unknown'],33
+163,1990,2004,3,2,0.9587776190476192,2,0,['Unknown'],33
+163,1990,2000,3,2,0.96715,1,0,['Unknown'],33
+163,1990,1997,3,2,0.9648278947368422,1,0,['Unknown'],33
+163,1990,1996,3,2,0.9787942105263157,1,0,['Unknown'],33
+163,1990,1995,3,2,0.9649463157894737,1,0,['Unknown'],33
+162,2007,2007,17,2,0.957975,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2006,17,2,0.9495,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2008,16,2,0.971205,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2007,16,2,0.9652400000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2006,16,2,0.9485250000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2009,15,2,0.9724200000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2008,15,2,0.971235,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2007,15,3,0.9400533333333333,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+162,2007,2006,15,2,0.9378,1,0,"['Social Sector', 'Finance Economy Sector']",33
+162,2007,2010,14,3,0.9561533333333333,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+162,2007,2009,14,3,0.9621433333333332,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+162,2007,2008,14,4,0.94652,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+162,2007,2007,14,3,0.9493900000000001,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+162,2007,2006,14,3,0.9319833333333333,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+162,2007,2011,13,3,0.93438,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+163,1990,2013,3,2,0.9570747368421052,1,0,['Unknown'],33
+163,2008,2012,3,2,0.985365,1,0,"['Human Rights Development', 'Social Sector']",33
+163,2008,2010,6,2,0.967535,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2008,2013,3,2,0.9642850000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+163,2008,2009,6,2,0.964095,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2008,2008,6,2,0.991545,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2008,2007,6,2,0.9550000000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2010,2011,5,2,0.932065,1,0,"['Political State Sector', 'Social Sector']",33
+163,2010,2010,5,2,0.9758549999999999,1,0,"['Political State Sector', 'Social Sector']",33
+163,2010,2009,5,2,0.93228,1,0,"['Political State Sector', 'Social Sector']",33
+163,2010,2008,5,2,0.96601,1,0,"['Political State Sector', 'Social Sector']",33
+163,1990,1997,5,2,0.911995,1,0,['Unknown'],33
+163,2009,2016,4,2,0.936785,1,0,['Social Sector'],33
+163,2009,2012,4,3,0.9256933333333333,1,0,"['Political State Sector', 'Social Sector']",33
+163,2009,2010,4,2,0.9396850000000001,1,0,"['Political State Sector', 'Social Sector']",33
+163,2009,2009,4,3,0.9674299999999999,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+163,1990,2018,4,2,0.9530400000000001,1,0,['Unknown'],33
+163,1990,1997,4,2,0.9511449999999999,1,0,['Unknown'],33
+163,2009,2021,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+163,2009,2020,3,2,0.982065,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2009,2018,3,2,0.9966999999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+163,2009,2015,3,2,0.93376,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+163,2009,2009,3,3,0.9757899999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+163,2008,2017,3,2,0.9642850000000001,1,0,['Social Sector'],33
+163,2008,2014,3,3,0.9578266666666667,1,0,"['Human Rights Development', 'Social Sector']",33
+173,2007,2007,13,2,0.96238,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2007,2006,14,2,0.9680150000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+121,2007,2008,15,2,0.929045,1,0,['Social Sector'],33
+226,2010,2015,5,2,0.9475899999999999,1,0,"['Political State Sector', 'Social Sector']",33
+226,2010,2013,5,2,0.9379550000000001,1,0,"['Political State Sector', 'Social Sector']",33
+226,2010,2012,5,2,0.93144,1,0,"['Political State Sector', 'Social Sector']",33
+226,2009,2017,4,3,0.9427099999999999,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+226,2009,2016,4,3,0.9375366666666668,1,0,"['Political State Sector', 'Social Sector']",33
+226,2009,2015,4,2,0.94567,1,0,"['Political State Sector', 'Social Sector']",33
+226,2009,2014,4,2,0.93211,1,0,"['Political State Sector', 'Social Sector']",33
+226,2009,2013,4,2,0.963135,1,0,"['Political State Sector', 'Social Sector']",33
+226,2009,2012,4,2,0.929605,1,0,"['Political State Sector', 'Social Sector']",33
+226,1990,2001,4,2,0.9329276923076922,2,0,['Unknown'],33
+226,2009,2017,3,2,0.976765,1,0,"['Political State Sector', 'Social Sector']",33
+226,2009,2016,3,2,0.9919,1,0,"['Political State Sector', 'Social Sector']",33
+226,2009,2015,3,4,0.93475,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+226,2009,2014,3,2,0.967225,1,0,"['Political State Sector', 'Social Sector']",33
+226,2009,2009,3,2,0.99312,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+226,2009,2008,3,2,0.9567650000000001,1,0,['Political State Sector'],33
+226,1990,2017,3,3,0.9610386274509805,2,0,['Unknown'],33
+226,1990,2016,3,3,0.995234705882353,2,0,['Unknown'],33
+226,1990,2004,3,2,0.9567061538461539,2,0,['Unknown'],33
+226,1990,2002,3,2,0.9793548387096774,2,0,['Unknown'],33
+226,1990,2001,3,4,0.9820204477611941,2,0,['Unknown'],33
+226,1990,1998,3,2,0.9395548387096775,2,0,['Unknown'],33
+226,2010,2014,5,2,0.9540500000000001,1,0,"['Political State Sector', 'Social Sector']",33
+226,2010,2016,5,2,0.957505,1,0,"['Political State Sector', 'Social Sector']",33
+226,1990,1995,3,3,0.958766956521739,2,0,['Unknown'],33
+226,2010,2017,5,2,0.943325,1,0,"['Political State Sector', 'Social Sector']",33
+226,2007,2008,10,2,0.906145,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2008,2012,9,2,0.97663,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+226,2008,2011,9,2,0.9668300000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+226,2008,2010,9,2,0.945205,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2008,2009,9,2,0.9282699999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2008,2008,9,2,0.933415,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2008,2007,9,2,0.93856,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2008,2011,8,2,0.935005,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2008,2010,8,2,0.929505,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2008,2007,8,2,0.93328,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2009,2013,7,2,0.95062,1,0,"['Sovereignty', 'Political State Sector']",33
+226,2009,2012,7,2,0.9470700000000001,1,0,"['Sovereignty', 'Political State Sector']",33
+226,2008,2011,7,2,0.96644,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+226,2009,2016,6,2,0.95736,2,0,"['Military Sector', 'Political State Sector']",33
+226,2008,2015,6,2,0.990165,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2008,2014,6,2,0.967195,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2008,2013,6,2,0.955425,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2008,2012,6,2,0.97497,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2008,2010,6,2,0.947765,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2008,2009,6,2,0.9382900000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2008,2008,6,2,0.9224,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,1990,1996,3,2,0.9712200000000001,2,0,['Unknown'],33
+226,1990,1993,3,2,0.9357441463414634,1,0,['Unknown'],33
+226,2007,2011,10,2,0.9642850000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+182,2007,2006,14,2,0.94938,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2007,13,2,0.9613,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2009,12,2,0.96445,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2008,12,2,0.95592,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2007,12,2,0.953525,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2010,11,2,0.970675,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2009,11,2,0.956125,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2008,11,2,0.9460999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2007,11,2,0.944345,1,0,"['Political State Sector', 'Social Sector']",33
+182,2008,2015,8,2,0.96404,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+182,2008,2015,6,3,0.9489933333333335,1,0,"['Social Sector', 'Finance Economy Sector']",33
+182,2008,2008,6,2,0.9287799999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+182,2008,2007,6,2,0.976125,1,0,"['Social Sector', 'Finance Economy Sector']",33
+182,2009,2009,4,2,0.974055,1,0,"['Social Sector', 'Finance Economy Sector']",33
+182,2009,2020,3,2,0.95553,1,0,"['Social Sector', 'Finance Economy Sector']",33
+182,2009,2018,3,3,0.9606733333333333,1,0,"['Political State Sector', 'Social Sector']",33
+182,2009,2017,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+182,2009,2016,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+182,2009,2010,3,3,0.9512533333333334,1,0,"['Political State Sector', 'Social Sector']",33
+182,2009,2009,3,3,0.9758633333333333,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+182,2009,2006,3,2,0.96686,1,0,"['Social Sector', 'Finance Economy Sector']",33
+182,2008,2017,3,2,0.95284,1,0,"['Human Rights Development', 'Social Sector']",33
+182,2007,2008,13,2,0.963935,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2007,14,2,0.962195,1,0,"['Political State Sector', 'Social Sector']",33
+183,2008,2016,8,2,0.94402,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+182,2007,2008,14,2,0.940565,1,0,"['Political State Sector', 'Social Sector']",33
+183,2008,2015,8,2,0.9350700000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+183,2008,2018,6,2,0.9429099999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+183,2010,2009,5,2,0.9521200000000001,1,0,"['Political State Sector', 'Social Sector']",33
+183,2009,2010,4,2,0.9442900000000001,1,0,"['Political State Sector', 'Social Sector']",33
+183,2009,2009,4,2,0.941145,1,0,"['Political State Sector', 'Social Sector']",33
+183,1990,2000,4,2,0.9796378571428572,2,0,['Unknown'],33
+183,2009,2021,3,2,0.9556450000000001,1,0,['Political State Sector'],33
+183,2009,2018,3,2,0.94216,1,0,['Political State Sector'],33
+183,2008,2021,3,2,0.95284,1,0,"['Human Rights Development', 'Social Sector']",33
+183,2008,2018,3,2,0.96271,1,0,"['Human Rights Development', 'Social Sector']",33
+183,2008,2006,3,3,0.9473766666666666,1,0,"['Human Rights Development', 'Social Sector']",33
+183,1990,2018,3,2,0.9592533333333333,2,0,['Unknown'],33
+183,1990,2017,3,2,0.9677066666666667,2,0,['Unknown'],33
+183,1990,2013,3,3,0.9542258333333334,2,0,['Unknown'],33
+183,1990,2012,3,2,0.9974542857142857,2,0,['Unknown'],33
+183,1990,2010,3,2,0.9908333333333333,2,0,['Unknown'],33
+183,1990,2009,3,2,0.9903233333333333,2,0,['Unknown'],33
+183,1990,2000,3,3,0.9281145833333334,2,0,['Unknown'],33
+182,2007,2007,17,2,0.925465,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2007,16,2,0.928895,1,0,"['Political State Sector', 'Social Sector']",33
+182,2007,2007,15,2,0.94917,1,0,"['Political State Sector', 'Social Sector']",33
+226,2007,2010,10,2,0.963885,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+226,2008,2007,10,2,0.95309,1,0,"['Sovereignty', 'Social Sector']",33
+182,2008,2010,3,2,0.952095,1,0,"['Human Rights Development', 'Social Sector']",33
+228,2009,2018,3,3,0.9720466666666666,1,0,"['Political State Sector', 'Social Sector']",33
+228,2009,2009,3,3,0.9662966666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+228,2008,2021,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+228,2008,2010,3,2,0.985365,1,0,"['Human Rights Development', 'Social Sector']",33
+228,1990,2018,3,2,0.9393884375,2,0,['Unknown'],33
+228,1990,2014,3,2,0.9627141379310346,2,0,['Unknown'],33
+228,1990,2009,3,3,0.9768030612244898,2,0,['Unknown'],33
+228,1990,2003,3,2,0.9488909375,2,0,['Unknown'],33
+228,1990,2002,3,2,0.998509375,2,0,['Unknown'],33
+228,1990,2001,3,2,0.9476978125,2,0,['Unknown'],33
+228,1990,1998,3,2,0.9674092307692308,1,0,['Unknown'],33
+228,1990,1994,3,2,0.9964346875,2,0,['Unknown'],33
+228,1990,1991,3,2,0.9868054838709677,2,0,['Unknown'],33
+227,2007,2007,15,2,0.9457599999999999,1,0,"['Political State Sector', 'Social Sector']",33
+227,2007,2007,14,2,0.959025,1,0,"['Political State Sector', 'Social Sector']",33
+227,2007,2006,14,2,0.953505,1,0,"['Political State Sector', 'Social Sector']",33
+227,2007,2008,13,2,0.942125,1,0,"['Political State Sector', 'Social Sector']",33
+227,2007,2007,13,2,0.949965,1,0,"['Political State Sector', 'Social Sector']",33
+227,2007,2006,13,2,0.94554,1,0,"['Political State Sector', 'Social Sector']",33
+227,2007,2007,12,2,0.935825,1,0,"['Political State Sector', 'Social Sector']",33
+227,2007,2006,12,2,0.930865,1,0,"['Political State Sector', 'Social Sector']",33
+227,2007,2010,11,2,0.947145,1,0,"['Human Rights Development', 'Social Sector']",33
+228,2009,2012,3,2,0.9281,1,0,['Political State Sector'],33
+228,2009,2020,3,3,0.9677166666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+227,2008,2015,9,2,0.970865,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+228,1990,1991,4,3,0.9431536538461539,2,0,['Unknown'],33
+229,2008,2012,11,3,0.9214666666666668,1,0,"['Social Sector', 'Finance Economy Sector']",33
+229,2008,2011,11,2,0.937735,1,0,['Social Sector'],33
+229,2008,2010,11,2,0.9417150000000001,1,0,['Social Sector'],33
+229,2008,2009,11,3,0.94053,1,0,"['Social Sector', 'Finance Economy Sector']",33
+229,2008,2008,11,3,0.9433466666666667,1,0,"['Social Sector', 'Finance Economy Sector']",33
+229,2008,2007,11,2,0.95265,1,0,"['Social Sector', 'Finance Economy Sector']",33
+229,2008,2006,11,2,0.93933,1,0,"['Social Sector', 'Finance Economy Sector']",33
+229,2007,2011,11,2,0.94371,1,0,"['Political State Sector', 'Social Sector']",33
+229,2007,2010,11,2,0.948115,1,0,"['Political State Sector', 'Social Sector']",33
+229,2007,2006,11,2,0.9333199999999999,1,0,"['Political State Sector', 'Social Sector']",33
+229,2008,2012,10,3,0.9415025,2,0,"['Sovereignty', 'Social Sector', 'Unknown']",33
+229,2008,2011,10,3,0.9521366666666666,1,0,"['Sovereignty', 'Social Sector']",33
+229,2008,2010,10,2,0.95408,1,0,['Social Sector'],33
+229,2008,2009,10,2,0.941095,1,0,['Social Sector'],33
+229,2008,2008,10,2,0.95419,1,0,['Social Sector'],33
+229,2008,2007,10,3,0.9359766666666666,1,0,"['Sovereignty', 'Social Sector']",33
+229,2008,2006,10,3,0.9273899999999999,1,0,"['Sovereignty', 'Social Sector']",33
+229,2007,2013,10,2,0.917665,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+229,2007,2006,10,2,0.9206300000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+228,1990,1991,5,2,0.9173936585365854,1,0,['Unknown'],33
+228,1990,2014,4,2,0.9543984615384614,1,0,['Unknown'],33
+227,2007,2007,11,2,0.916925,1,0,"['Political State Sector', 'Social Sector']",33
+227,2008,2014,9,2,0.955875,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2008,2009,10,2,0.9515750000000001,1,0,"['Sovereignty', 'Social Sector']",33
+227,1990,1995,3,2,0.966365,2,0,['Unknown'],33
+226,2007,2008,16,2,0.942875,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2007,2007,16,3,0.9535966666666665,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+226,2007,2009,15,2,0.940795,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2007,2008,15,2,0.94686,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2007,2007,15,4,0.9418475,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+226,2007,2010,14,2,0.9193549999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2007,2009,14,2,0.9482349999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2007,2008,14,2,0.9437899999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2007,2007,14,4,0.93878,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+226,2007,2010,13,2,0.940035,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2007,2009,13,2,0.9555450000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+226,2007,2008,13,3,0.9288066666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+226,2007,2007,13,3,0.9488066666666667,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+226,2008,2008,12,2,0.96018,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2008,2007,12,2,0.9708600000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+226,2007,2009,12,2,0.9430000000000001,1,0,"['Political State Sector', 'Social Sector']",33
+226,2007,2008,12,2,0.9147700000000001,1,0,['Social Sector'],33
+226,2007,2007,12,2,0.92089,1,0,['Social Sector'],33
+226,2007,2010,11,2,0.9577199999999999,1,0,"['Political State Sector', 'Social Sector']",33
+226,2007,2009,11,2,0.92927,1,0,"['Political State Sector', 'Social Sector']",33
+226,2008,2010,10,2,0.932375,1,0,"['Sovereignty', 'Social Sector']",33
+226,2007,2007,17,3,0.9506466666666666,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+227,1990,1997,3,3,0.9844813953488373,2,0,['Unknown'],33
+227,2008,2013,9,2,0.9097500000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+227,1990,1999,3,2,0.9549093333333333,2,0,['Unknown'],33
+227,2008,2016,8,2,0.936395,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+227,2008,2015,8,2,0.9583200000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+227,2008,2014,8,2,0.9389149999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+227,2009,2014,7,2,0.9371050000000001,1,0,"['Sovereignty', 'Political State Sector']",33
+227,2008,2016,6,2,0.927395,1,0,"['Social Sector', 'Finance Economy Sector']",33
+227,2008,2015,6,2,0.9909950000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+227,2008,2014,6,2,0.9517150000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+227,2008,2013,6,2,0.95922,1,0,"['Social Sector', 'Finance Economy Sector']",33
+227,2010,2013,5,2,0.927635,1,0,"['Political State Sector', 'Social Sector']",33
+227,2009,2016,4,2,0.9385600000000001,1,0,['Social Sector'],33
+227,1990,2016,4,2,0.9273073333333334,2,0,['Unknown'],33
+227,1990,1997,4,2,0.9484783333333333,2,0,['Unknown'],33
+227,2009,2021,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+227,2009,2020,3,2,0.969155,1,0,"['Political State Sector', 'Social Sector']",33
+227,2009,2019,3,2,0.960985,1,0,"['Political State Sector', 'Social Sector']",33
+227,2009,2015,3,3,0.9283933333333333,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+227,2009,2014,3,2,0.9680949999999999,1,0,['Political State Sector'],33
+227,1990,2016,3,2,0.9814686666666667,2,0,['Unknown'],33
+227,1990,2013,3,2,0.977055,2,0,['Unknown'],33
+227,1990,2005,3,2,0.9999936666666667,2,0,['Unknown'],33
+227,1990,2002,3,2,0.9739136666666667,2,0,['Unknown'],33
+182,2008,2015,3,3,0.9429066666666667,1,0,"['Human Rights Development', 'Social Sector']",33
+182,2008,2007,3,2,1.0,1,0,['Social Sector'],33
+173,2007,2007,14,2,0.968815,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+177,2007,2010,11,2,0.94331,1,0,"['Political State Sector', 'Social Sector']",33
+177,2008,2011,9,2,0.923735,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+177,2015,2016,6,2,0.93319,1,0,"['Human Rights Development', 'Social Sector']",33
+177,2008,2012,6,2,0.944155,1,0,"['Social Sector', 'Finance Economy Sector']",33
+177,2009,2016,4,3,0.93763,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+177,1990,1998,4,2,0.9231565625,2,0,['Unknown'],33
+177,2009,2020,3,2,0.992085,1,0,"['Political State Sector', 'Social Sector']",33
+177,2009,2018,3,2,0.944615,1,0,['Political State Sector'],33
+177,2008,2014,3,2,0.9642850000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+177,1990,2012,3,2,0.9851219512195122,1,0,['Unknown'],33
+177,1990,2003,3,2,0.9706534375,2,0,['Unknown'],33
+177,1990,1996,3,2,0.9784306451612903,2,0,['Unknown'],33
+177,1990,1993,3,2,0.9951012195121951,1,0,['Unknown'],33
+176,2007,2007,15,2,0.9307,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2007,14,2,0.96861,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2006,14,2,0.9608399999999999,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2008,13,2,0.95546,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2007,13,2,0.962365,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2006,13,2,0.95287,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2008,12,2,0.946745,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2007,12,2,0.954545,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2006,12,2,0.94001,1,0,"['Political State Sector', 'Social Sector']",33
+177,2007,2009,11,2,0.9209750000000001,1,0,"['Political State Sector', 'Social Sector']",33
+177,2007,2009,12,2,0.93868,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2007,11,2,0.941695,1,0,"['Political State Sector', 'Social Sector']",33
+177,2007,2006,13,2,0.930075,1,0,"['Political State Sector', 'Social Sector']",33
+179,2008,2008,6,2,0.99786,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2008,2007,6,2,0.9712350000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2009,2013,5,2,0.9536,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2009,2009,5,2,0.99822,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2009,2016,4,2,0.937195,1,0,['Social Sector'],33
+179,2009,2008,4,2,0.97757,1,0,"['Political State Sector', 'Social Sector']",33
+179,2009,2011,3,3,0.9880433333333333,1,0,"['Political State Sector', 'Social Sector']",33
+179,2009,2010,3,2,0.982065,1,0,"['Political State Sector', 'Social Sector']",33
+179,2009,2009,3,2,0.985365,1,0,"['Political State Sector', 'Social Sector']",33
+179,2009,2008,3,2,0.9574199999999999,1,0,"['Political State Sector', 'Social Sector']",33
+179,2008,2021,3,2,0.96575,1,0,"['Human Rights Development', 'Social Sector']",33
+179,2008,2015,3,2,0.95553,1,0,"['Human Rights Development', 'Social Sector']",33
+179,2008,2014,3,2,1.0,1,0,"['Human Rights Development', 'Social Sector']",33
+179,2008,2010,3,3,1.0,1,0,"['Human Rights Development', 'Social Sector']",33
+179,2008,2007,3,2,0.985365,1,0,['Social Sector'],33
+179,1990,1997,3,2,0.9894933333333333,2,0,['Unknown'],33
+179,1990,1991,3,3,0.9573318749999999,2,0,['Unknown'],33
+177,2007,2007,14,2,0.945765,1,0,"['Political State Sector', 'Social Sector']",33
+177,2007,2006,14,2,0.93662,1,0,"['Political State Sector', 'Social Sector']",33
+177,2007,2008,13,2,0.93699,1,0,"['Political State Sector', 'Social Sector']",33
+177,2007,2007,13,2,0.938555,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2008,11,2,0.9344349999999999,1,0,"['Political State Sector', 'Social Sector']",33
+176,2007,2006,11,2,0.924045,1,0,"['Political State Sector', 'Social Sector']",33
+179,2009,2009,7,2,0.90318,1,0,"['Sovereignty', 'Political State Sector']",33
+174,2002,2002,4,2,0.94776,1,0,['Military Sector'],33
+174,2009,2018,3,3,0.96636,1,0,"['Political State Sector', 'Social Sector']",33
+174,2009,2015,3,3,0.9379833333333334,1,0,"['Political State Sector', 'Social Sector']",33
+174,2009,2014,3,2,0.9966999999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+174,2008,2021,3,2,0.95553,1,0,"['Human Rights Development', 'Social Sector']",33
+174,2008,2010,3,2,0.9966999999999999,1,0,"['Human Rights Development', 'Social Sector']",33
+174,1990,2016,3,2,0.9990566666666666,2,0,['Unknown'],33
+174,1990,2011,3,2,0.9884458064516128,2,0,['Unknown'],33
+174,1990,2005,3,2,0.9365465853658537,1,0,['Unknown'],33
+174,1990,2001,3,4,0.9687446478873241,2,0,['Unknown'],33
+174,1990,1998,3,3,0.9838333333333333,2,0,['Unknown'],33
+174,1990,1994,3,2,0.9463100000000001,2,0,['Unknown'],33
+174,1990,1993,3,2,0.9531033333333333,2,0,['Unknown'],33
+174,1990,1991,3,2,0.9713824390243901,1,0,['Unknown'],33
+174,1990,1990,3,2,0.9830633333333334,2,0,['Unknown'],33
+173,2007,2007,17,2,0.9457599999999999,1,0,"['Sovereignty', 'Social Sector']",33
+173,2007,2006,17,2,0.942225,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2007,2008,16,2,0.93896,1,0,"['Sovereignty', 'Social Sector']",33
+173,2007,2007,16,3,0.92686,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+173,2007,2006,16,2,0.943685,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2007,2007,15,2,0.94383,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+173,2007,2006,15,2,0.96862,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+174,2009,2020,3,2,0.948795,1,0,"['Social Sector', 'Finance Economy Sector']",33
+174,2009,2014,4,2,0.94734,1,0,"['Social Sector', 'Finance Economy Sector']",33
+176,2008,2006,10,2,0.9179649999999999,1,0,"['Sovereignty', 'Social Sector']",33
+174,2009,2020,4,2,0.922785,1,0,"['Social Sector', 'Finance Economy Sector']",33
+176,2008,2008,9,2,0.9465049999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+176,2008,2009,8,2,0.93345,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+176,2008,2008,8,2,0.9343,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+176,2009,2009,7,2,0.926715,1,0,"['Sovereignty', 'Political State Sector']",33
+176,2008,2009,6,2,0.94059,1,0,"['Social Sector', 'Finance Economy Sector']",33
+176,2008,2008,6,2,0.9215,1,0,"['Social Sector', 'Finance Economy Sector']",33
+176,2010,2009,5,2,0.94296,1,0,"['Political State Sector', 'Social Sector']",33
+176,2009,2010,4,2,0.9174100000000001,1,0,"['Political State Sector', 'Social Sector']",33
+176,2009,2016,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+176,2009,2011,3,3,0.9505266666666667,1,0,"['Political State Sector', 'Social Sector']",33
+176,2008,2012,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+176,2008,2011,3,2,0.9642850000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+176,1990,2016,3,2,0.9849619047619048,2,0,['Unknown'],33
+176,1990,2013,3,2,0.9737737037037036,1,0,['Unknown'],33
+176,1990,2009,3,2,0.9363471428571428,2,0,['Unknown'],33
+176,1990,2002,3,2,0.974552857142857,2,0,['Unknown'],33
+176,1990,2001,3,2,0.9856266666666668,1,0,['Unknown'],33
+176,1990,1994,3,2,0.9701707142857143,2,0,['Unknown'],33
+176,1990,1993,3,2,0.9837644444444444,1,0,['Unknown'],33
+176,1990,1992,3,2,0.9955192592592593,1,0,['Unknown'],33
+176,1990,1991,3,2,0.9681403703703704,1,0,['Unknown'],33
+179,2008,2012,6,2,0.952715,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2008,2008,8,2,0.94387,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+182,1990,2016,3,3,0.9634253333333334,2,0,['Unknown'],33
+181,2008,2010,10,2,0.9443250000000001,1,0,"['Sovereignty', 'Social Sector']",33
+181,2008,2008,10,2,0.96828,1,0,"['Sovereignty', 'Social Sector']",33
+181,2008,2007,10,2,0.9594199999999999,1,0,"['Sovereignty', 'Social Sector']",33
+181,2008,2006,10,2,0.93638,1,0,"['Sovereignty', 'Social Sector']",33
+181,2007,2011,10,2,0.96204,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+181,2008,2012,9,3,0.9521366666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+181,2008,2011,9,2,0.9319999999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+181,2008,2010,9,2,0.933265,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+181,2008,2009,9,2,0.92885,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+181,2008,2010,8,2,0.912555,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+181,2007,2010,8,2,0.95851,1,0,"['Political State Sector', 'Social Sector']",33
+181,2009,2013,7,3,0.9264066666666667,1,0,"['Sovereignty', 'Political State Sector', 'Finance Economy Sector']",33
+181,2008,2011,7,2,0.939775,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+181,2010,2014,6,2,0.97036,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+181,2008,2015,6,2,0.97853,1,0,"['Social Sector', 'Finance Economy Sector']",33
+181,2008,2014,6,2,0.97017,1,0,"['Social Sector', 'Finance Economy Sector']",33
+181,2008,2013,6,2,0.975745,1,0,"['Social Sector', 'Finance Economy Sector']",33
+181,2008,2012,6,2,0.97861,1,0,"['Social Sector', 'Finance Economy Sector']",33
+181,2008,2011,6,2,0.980755,1,0,"['Social Sector', 'Finance Economy Sector']",33
+181,2008,2010,6,2,0.965625,1,0,"['Social Sector', 'Finance Economy Sector']",33
+181,2008,2009,6,2,0.967905,1,0,"['Social Sector', 'Finance Economy Sector']",33
+181,2010,2013,5,2,0.9758,1,0,"['Political State Sector', 'Social Sector']",33
+181,2008,2009,10,2,0.975145,1,0,"['Sovereignty', 'Social Sector']",33
+181,2007,2010,11,2,0.957765,1,0,"['Political State Sector', 'Social Sector']",33
+181,2009,2014,4,2,0.952105,1,0,"['Political State Sector', 'Social Sector']",33
+181,2007,2006,12,3,0.93587,1,0,"['Political State Sector', 'Social Sector']",33
+182,1990,2015,3,3,0.9984276666666666,2,0,['Unknown'],33
+182,1990,2005,3,3,0.94647,2,0,['Unknown'],33
+182,1990,2002,3,2,0.9611436842105263,2,0,['Unknown'],33
+182,1990,1999,3,2,0.9649468421052632,2,0,['Unknown'],33
+182,1990,1998,3,2,0.9836938095238095,2,0,['Unknown'],33
+182,1990,1994,3,2,0.9400795000000001,1,0,['Unknown'],33
+181,2007,2006,17,3,0.9544466666666667,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+181,2007,2007,16,3,0.9400133333333334,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+181,2007,2006,16,4,0.9467300000000001,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+181,2007,2008,15,2,0.922145,1,0,"['Sovereignty', 'Social Sector']",33
+181,2007,2007,15,4,0.9339824999999999,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+181,2007,2006,15,4,0.9654375,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+181,2007,2007,14,5,0.945716,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+181,2007,2006,14,5,0.956484,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+181,2007,2008,13,4,0.92808,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+181,2007,2007,13,5,0.939362,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+181,2007,2006,13,5,0.948656,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+181,2008,2008,12,2,0.9522999999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+181,2008,2007,12,2,0.948415,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+181,2008,2006,12,2,0.937415,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+181,2007,2007,12,3,0.9211999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+181,2009,2016,4,2,0.9385600000000001,1,0,['Social Sector'],33
+181,2009,2020,3,2,0.9679,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2008,2007,9,2,0.936845,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+180,1990,1994,3,2,0.9227550000000001,1,0,['Unknown'],33
+179,2007,2008,16,3,0.9333733333333334,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2007,2007,16,3,0.9405100000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2007,2009,15,3,0.9206566666666666,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2007,2008,15,3,0.92203,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2007,2007,15,3,0.9351666666666666,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2007,2010,14,2,0.931465,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2007,2007,14,3,0.9524933333333333,1,0,"['Political State Sector', 'Social Sector']",33
+179,2007,2011,13,3,0.9224366666666667,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2007,2008,13,2,0.943585,1,0,"['Political State Sector', 'Social Sector']",33
+179,2007,2007,13,4,0.93869,1,0,"['Political State Sector', 'Social Sector']",33
+179,2008,2012,12,2,0.91631,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2007,2009,12,2,0.92468,1,0,"['Political State Sector', 'Social Sector']",33
+179,2007,2008,12,2,0.949715,1,0,"['Political State Sector', 'Social Sector']",33
+179,2007,2007,12,3,0.9687166666666668,1,0,"['Political State Sector', 'Social Sector']",33
+179,2008,2011,11,2,0.9225399999999999,1,0,['Social Sector'],33
+179,2008,2007,11,2,0.96574,1,0,"['Social Sector', 'Finance Economy Sector']",33
+179,2007,2007,11,2,0.9647950000000001,1,0,"['Political State Sector', 'Social Sector']",33
+179,2007,2008,10,2,0.911065,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+179,2007,2007,10,3,0.9594533333333333,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+179,2008,2009,9,2,0.924385,1,0,"['Sovereignty', 'Political State Sector']",33
+179,2008,2008,9,3,0.94978,1,0,"['Sovereignty', 'Political State Sector', 'Finance Economy Sector']",33
+179,2007,2007,17,3,0.9470299999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+180,1990,2003,3,2,0.9355499999999999,1,0,['Unknown'],33
+181,2009,2017,3,2,0.9979800000000001,1,0,"['Political State Sector', 'Social Sector']",33
+180,2008,2011,3,2,0.969155,1,0,"['Human Rights Development', 'Social Sector']",33
+181,2009,2014,3,2,0.971375,1,0,['Political State Sector'],33
+181,2009,2011,3,3,0.9597866666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+181,2009,2009,3,2,0.9655750000000001,1,0,['Political State Sector'],33
+181,2009,2008,3,2,0.9789749999999999,1,0,"['Political State Sector', 'Social Sector']",33
+181,2009,2007,3,2,0.94667,1,0,"['Political State Sector', 'Social Sector']",33
+181,2008,2006,3,2,0.993915,1,0,['Social Sector'],33
+181,1990,2005,3,2,0.953885,1,0,['Unknown'],33
+181,1990,2001,3,2,0.9906823809523809,2,0,['Unknown'],33
+181,1990,2000,3,3,0.9652587096774193,2,0,['Unknown'],33
+181,1990,1998,3,2,0.9554,1,0,['Unknown'],33
+181,1990,1997,3,2,0.9800600000000002,1,0,['Unknown'],33
+181,1990,1994,3,2,0.9502328571428571,2,0,['Unknown'],33
+181,1990,1993,3,2,0.99645,1,0,['Unknown'],33
+180,2015,2008,6,2,0.9457450000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+180,2008,2009,6,2,0.9457450000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+180,2010,2010,5,2,0.96917,1,0,"['Political State Sector', 'Social Sector']",33
+180,2009,2011,4,2,0.9520299999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+180,2009,2018,3,2,0.9656549999999999,1,0,"['Political State Sector', 'Social Sector']",33
+180,2009,2017,3,2,0.978585,1,0,"['Political State Sector', 'Social Sector']",33
+180,2009,2016,3,2,0.9527650000000001,1,0,"['Political State Sector', 'Social Sector']",33
+180,2008,2019,3,2,0.99935,1,0,"['Human Rights Development', 'Social Sector']",33
+156,2009,2019,3,2,0.9588300000000001,1,0,"['Political State Sector', 'Social Sector']",33
+156,2009,2017,3,2,0.99986,1,0,"['Political State Sector', 'Social Sector']",33
+156,2008,2019,3,2,0.99831,1,0,"['Human Rights Development', 'Social Sector']",33
+132,2015,2016,6,2,0.942775,1,0,"['Human Rights Development', 'Social Sector']",33
+132,2008,2008,6,2,0.93976,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2008,2007,6,2,0.938375,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2009,2017,5,2,0.92937,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2009,2009,5,2,0.9593700000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2009,2017,4,2,0.96604,1,0,"['Political State Sector', 'Social Sector']",33
+132,2009,2009,4,3,0.9899533333333334,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2009,2020,3,2,0.969155,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2009,2019,3,2,0.9574050000000001,1,0,"['Political State Sector', 'Social Sector']",33
+132,2009,2018,3,2,0.94169,1,0,"['Political State Sector', 'Social Sector']",33
+132,2009,2017,3,3,0.9977999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+132,2009,2014,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+132,2009,2013,3,3,0.96636,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2009,2010,3,2,0.97653,1,0,"['Political State Sector', 'Social Sector']",33
+132,2009,2009,3,3,0.9763566666666668,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2009,2008,3,2,0.944195,1,0,"['Political State Sector', 'Social Sector']",33
+132,2008,2019,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+132,2008,2010,3,2,1.0,1,0,"['Human Rights Development', 'Social Sector']",33
+132,1990,2015,3,2,0.9650414285714286,1,0,['Unknown'],33
+131,2007,2007,17,3,0.9310933333333334,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector']",33
+131,2007,2006,17,2,0.953155,1,0,"['Sovereignty', 'Social Sector']",33
+131,2007,2008,16,4,0.943085,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+132,2008,2016,6,2,0.9485,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2008,2015,7,2,0.9411149999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+131,2007,2006,16,2,0.95267,1,0,"['Sovereignty', 'Social Sector']",33
+132,2008,2016,7,2,0.9404950000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+132,2007,2009,14,3,0.95205,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2008,14,3,0.9670166666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2007,14,3,0.97558,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2010,13,3,0.94176,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2009,13,3,0.94048,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2008,13,3,0.9613366666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2007,13,3,0.98151,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2011,12,2,0.95063,1,0,"['Political State Sector', 'Social Sector']",33
+132,2007,2010,12,2,0.958995,1,0,"['Political State Sector', 'Social Sector']",33
+132,2007,2009,12,2,0.96419,1,0,"['Political State Sector', 'Social Sector']",33
+132,2007,2008,12,2,0.965615,1,0,"['Political State Sector', 'Social Sector']",33
+132,2007,2007,12,2,0.980355,1,0,"['Political State Sector', 'Social Sector']",33
+132,2008,2008,11,2,0.9645,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2008,2007,11,2,0.968075,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2007,2008,10,2,0.924775,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+132,2007,2007,10,2,0.9684,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+132,2008,2008,9,2,0.9594499999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+132,2008,2007,9,2,0.97199,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+132,2008,2015,8,2,0.929,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+132,2009,2014,7,2,0.9435800000000001,1,0,"['Sovereignty', 'Political State Sector']",33
+132,2008,2017,7,2,0.9093549999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+131,2007,2007,16,3,0.9340866666666666,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector']",33
+131,2007,2009,15,3,0.9581233333333333,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2007,15,3,0.9622533333333333,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+131,2007,2009,11,2,0.925135,1,0,"['Political State Sector', 'Social Sector']",33
+131,2008,2012,10,2,0.92722,1,0,"['Sovereignty', 'Social Sector']",33
+131,2008,2011,10,2,0.911535,1,0,"['Sovereignty', 'Social Sector']",33
+131,2008,2010,10,2,0.9096150000000001,1,0,"['Sovereignty', 'Social Sector']",33
+131,2008,2009,10,2,0.93206,1,0,"['Sovereignty', 'Social Sector']",33
+131,2008,2015,9,3,0.9472233333333334,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+131,2008,2012,9,2,0.92012,1,0,"['Sovereignty', 'Political State Sector']",33
+131,2008,2009,9,2,0.933265,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+131,2008,2008,9,2,0.92028,1,0,"['Sovereignty', 'Political State Sector']",33
+131,2007,2009,9,2,0.909675,1,0,"['Human Rights Development', 'Social Sector']",33
+131,2008,2016,8,2,0.95634,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+131,2008,2015,8,2,0.948885,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+131,2014,2015,7,2,0.9545049999999999,1,0,"['Human Rights Development', 'Social Sector']",33
+131,2009,2014,7,2,0.9490149999999999,1,0,"['Sovereignty', 'Political State Sector']",33
+131,2015,2016,6,2,0.95996,1,0,"['Human Rights Development', 'Social Sector']",33
+131,2010,2014,6,2,0.964505,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+131,2008,2017,6,2,0.9152899999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+131,2008,2016,6,2,0.971105,1,0,"['Social Sector', 'Finance Economy Sector']",33
+131,2008,2015,6,2,0.981215,1,0,"['Social Sector', 'Finance Economy Sector']",33
+131,2008,2010,6,2,0.920425,1,0,"['Social Sector', 'Finance Economy Sector']",33
+131,2008,2009,6,2,0.941005,1,0,"['Social Sector', 'Finance Economy Sector']",33
+131,2010,2017,5,2,0.97551,1,0,"['Political State Sector', 'Social Sector']",33
+131,2007,2008,11,2,0.9278,1,0,"['Political State Sector', 'Social Sector']",33
+131,2007,2010,11,2,0.91831,1,0,"['Political State Sector', 'Social Sector']",33
+131,2007,2008,15,4,0.9459525,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+131,2008,2009,11,2,0.9586250000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+131,2007,2007,15,3,0.9412266666666667,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector']",33
+131,2007,2006,15,2,0.953145,1,0,"['Sovereignty', 'Social Sector']",33
+131,2007,2010,14,3,0.9497233333333334,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+131,2007,2009,14,4,0.946015,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+131,2007,2008,14,4,0.94555,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector']",33
+131,2007,2007,14,3,0.9409266666666666,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector']",33
+131,2007,2006,14,2,0.95485,1,0,"['Sovereignty', 'Social Sector']",33
+131,2007,2011,13,2,0.963755,1,0,"['Sovereignty', 'Social Sector']",33
+131,2007,2010,13,4,0.9308974999999999,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+131,2007,2009,13,4,0.9477925,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+131,2007,2008,13,4,0.94867,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector']",33
+131,2007,2007,13,3,0.93825,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector']",33
+131,2007,2006,13,2,0.94587,1,0,"['Sovereignty', 'Social Sector']",33
+131,2008,2011,12,2,0.930815,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+131,2008,2010,12,2,0.942415,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+131,2008,2009,12,2,0.95137,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+131,2007,2010,12,2,0.96346,1,0,['Social Sector'],33
+131,2007,2009,12,3,0.9522333333333334,1,0,"['Political State Sector', 'Social Sector']",33
+131,2007,2008,12,3,0.9418466666666667,1,0,"['Political State Sector', 'Social Sector']",33
+131,2007,2007,12,2,0.9178999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+131,2008,2010,11,2,0.9429749999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2007,2010,14,3,0.94654,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2008,15,3,0.9472366666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+131,2009,2017,4,3,0.94842,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+134,2007,2009,14,3,0.9417833333333334,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2007,2007,14,6,0.9627983333333333,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+134,2007,2011,13,2,0.955335,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2007,2010,13,3,0.93985,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2007,2009,13,3,0.9403366666666667,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2007,2008,13,6,0.9446133333333333,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+134,2007,2007,13,6,0.96164,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+134,2008,2012,12,2,0.93443,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2009,12,3,0.9424933333333333,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+134,2008,2008,12,3,0.9575266666666667,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+134,2008,2007,12,2,0.9702949999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+134,2007,2009,12,2,0.95399,1,0,['Social Sector'],33
+134,2007,2008,12,3,0.94358,1,0,"['Political State Sector', 'Social Sector']",33
+134,2007,2007,12,3,0.9584266666666666,1,0,"['Political State Sector', 'Social Sector']",33
+134,2008,2013,11,3,0.9343566666666666,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2012,11,3,0.9320200000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2011,11,3,0.92399,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2010,11,3,0.9479733333333332,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2009,11,2,0.971345,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2008,11,2,0.983295,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2007,11,2,0.9622850000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2007,2007,11,2,0.943685,1,0,"['Political State Sector', 'Social Sector']",33
+134,2007,2008,14,4,0.94779,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+134,2007,2010,14,3,0.9464133333333332,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2009,10,2,0.92826,1,0,"['Sovereignty', 'Social Sector']",33
+134,2007,2007,15,5,0.968062,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+137,2008,2018,3,2,0.995905,1,0,"['Human Rights Development', 'Social Sector']",33
+137,1990,2018,3,2,0.98693,2,0,['Unknown'],33
+137,1990,2016,3,2,0.9969066666666666,2,0,['Unknown'],33
+137,1990,2013,3,4,0.9614348387096774,2,0,['Unknown'],33
+137,1990,2012,3,2,0.98768,2,0,['Unknown'],33
+137,1990,2011,3,2,0.9913209090909091,2,0,['Unknown'],33
+137,1990,2010,3,2,0.94989625,1,0,['Unknown'],33
+137,1990,2004,3,2,0.9615966666666667,2,0,['Unknown'],33
+137,1990,2001,3,2,0.9757566666666667,2,0,['Unknown'],33
+137,1990,2000,3,2,0.9929733333333333,2,0,['Unknown'],33
+137,1990,1998,3,2,0.9852172727272727,2,0,['Unknown'],33
+137,1990,1997,3,2,0.9391333333333333,2,0,['Unknown'],33
+137,1990,1995,3,2,0.96645,2,0,['Unknown'],33
+137,1990,1991,3,2,0.9653966666666667,2,0,['Unknown'],33
+135,1990,2003,3,2,0.931240909090909,1,0,['Unknown'],33
+135,1990,1999,3,2,0.9538972727272728,1,0,['Unknown'],33
+134,2007,2007,17,5,0.970982,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+134,2007,2008,16,4,0.959345,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+134,2007,2007,16,5,0.9704460000000001,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+134,2007,2009,15,4,0.9391700000000001,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+134,2007,2008,15,4,0.9531575,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+134,2008,2010,10,2,0.92153,1,0,"['Sovereignty', 'Social Sector']",33
+134,2008,2008,10,2,0.95284,1,0,"['Sovereignty', 'Social Sector']",33
+132,2007,2009,15,3,0.9474866666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+134,2009,2016,4,2,0.9522649999999999,1,0,"['Political State Sector', 'Social Sector']",33
+134,2009,2021,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+134,2009,2018,3,2,0.9329700000000001,1,0,"['Political State Sector', 'Social Sector']",33
+134,2009,2017,3,2,0.9586600000000001,1,0,"['Political State Sector', 'Social Sector']",33
+134,2009,2016,3,2,0.99312,1,0,['Political State Sector'],33
+134,2009,2013,3,2,0.969155,1,0,"['Political State Sector', 'Social Sector']",33
+134,2009,2010,3,2,0.97069,1,0,"['Political State Sector', 'Social Sector']",33
+134,2009,2009,3,2,0.9789749999999999,1,0,"['Political State Sector', 'Social Sector']",33
+134,2009,2007,3,2,0.9588300000000001,1,0,"['Political State Sector', 'Social Sector']",33
+134,2008,2014,3,3,0.9771666666666666,1,0,"['Human Rights Development', 'Social Sector']",33
+134,1990,2012,3,2,0.9881523684210527,1,0,['Unknown'],33
+134,1990,2011,3,2,0.9516171052631579,1,0,['Unknown'],33
+134,1990,2001,3,2,0.9825563157894737,1,0,['Unknown'],33
+134,1990,1997,3,2,0.977381875,1,0,['Unknown'],33
+133,2009,2014,4,2,0.984985,1,0,"['Social Sector', 'Finance Economy Sector']",33
+133,2009,2016,3,2,0.99109,1,0,['Political State Sector'],33
+133,2008,2020,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+133,1990,2008,3,2,0.9656703448275862,1,0,['Unknown'],33
+133,1990,1992,3,2,0.9537450000000001,1,0,['Unknown'],33
+132,2007,2007,17,3,0.9535566666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+132,2007,2008,16,2,0.9716199999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+132,2007,2007,16,2,0.9809300000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2009,2008,4,2,0.940825,1,0,"['Political State Sector', 'Social Sector']",33
+134,2009,2013,5,2,0.9897199999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2007,10,3,0.95121,1,0,"['Sovereignty', 'Social Sector']",33
+134,2010,2015,5,2,0.967055,1,0,"['Political State Sector', 'Social Sector']",33
+134,2007,2011,10,2,0.91902,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+134,2007,2007,10,2,0.935595,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+134,2008,2012,9,3,0.93091,1,0,"['Sovereignty', 'Political State Sector', 'Finance Economy Sector']",33
+134,2008,2011,9,2,0.9163600000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+134,2008,2008,9,4,0.9478800000000001,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+134,2008,2007,9,4,0.948355,1,0,"['Sovereignty', 'Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+134,2008,2013,8,2,0.945085,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+134,2008,2012,8,2,0.9084399999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+134,2008,2008,8,2,0.957195,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+134,2008,2007,8,2,0.926795,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+134,2007,2010,8,2,0.93118,1,0,['Social Sector'],33
+134,2009,2014,7,2,0.962955,1,0,"['Sovereignty', 'Political State Sector']",33
+134,2009,2013,7,2,0.9130750000000001,1,0,"['Sovereignty', 'Political State Sector']",33
+134,2009,2009,7,2,0.9283049999999999,1,0,"['Sovereignty', 'Political State Sector']",33
+134,2009,2008,7,2,0.95062,1,0,"['Sovereignty', 'Political State Sector']",33
+134,2008,2015,7,2,0.930535,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+134,2007,2010,7,2,0.91832,1,0,['Social Sector'],33
+134,2015,2008,6,2,0.93267,1,0,"['Human Rights Development', 'Social Sector']",33
+134,2008,2014,6,2,0.941635,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2012,6,3,0.9576566666666667,1,0,"['Social Sector', 'Finance Economy Sector']",33
+134,2008,2008,6,2,0.9542,1,0,"['Social Sector', 'Finance Economy Sector']",33
+131,2009,2018,4,2,0.91901,1,0,"['Political State Sector', 'Social Sector']",33
+131,2009,2016,4,2,0.9491700000000001,1,0,['Social Sector'],33
+156,2008,2017,3,2,0.97073,1,0,['Social Sector'],33
+126,2008,2007,8,2,0.945945,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+126,2008,2015,6,2,0.99184,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2008,2014,6,2,0.9807250000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2008,2009,6,2,0.93858,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2008,2008,6,2,0.9801,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2008,2007,6,2,0.9662299999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2008,2006,6,2,0.928025,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2010,2016,5,2,0.957505,1,0,"['Political State Sector', 'Social Sector']",33
+126,2010,2015,5,2,0.9475899999999999,1,0,"['Political State Sector', 'Social Sector']",33
+126,2010,2014,5,2,0.959055,1,0,"['Political State Sector', 'Social Sector']",33
+126,2010,2013,5,2,0.95282,1,0,"['Political State Sector', 'Social Sector']",33
+126,2010,2007,5,2,0.96292,1,0,"['Political State Sector', 'Social Sector']",33
+126,2009,2019,4,2,0.9093450000000001,1,0,"['Political State Sector', 'Social Sector']",33
+126,2009,2017,4,3,0.9300766666666668,1,0,"['Political State Sector', 'Social Sector']",33
+126,2009,2016,4,3,0.9375366666666668,1,0,"['Political State Sector', 'Social Sector']",33
+126,2009,2015,4,2,0.94567,1,0,"['Political State Sector', 'Social Sector']",33
+126,2009,2014,4,3,0.9377,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+126,2009,2013,4,2,0.9546,1,0,"['Political State Sector', 'Social Sector']",33
+126,2009,2017,3,2,0.979545,1,0,"['Political State Sector', 'Social Sector']",33
+126,2009,2016,3,2,0.99302,1,0,"['Political State Sector', 'Social Sector']",33
+126,2009,2015,3,3,0.9313633333333334,1,0,"['Political State Sector', 'Social Sector']",33
+126,2009,2014,3,2,0.959295,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2011,8,2,0.956495,1,0,"['Political State Sector', 'Social Sector']",33
+126,2008,2008,8,2,0.973285,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+126,2008,2011,3,2,0.9966999999999999,1,0,"['Human Rights Development', 'Social Sector']",33
+126,2008,2007,9,2,0.953445,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2008,2017,3,2,0.96575,1,0,"['Human Rights Development', 'Social Sector']",33
+127,2008,2014,3,2,1.0,1,0,"['Human Rights Development', 'Social Sector']",33
+127,1990,2022,3,3,0.974800612244898,2,0,['Unknown'],33
+127,1990,2017,3,2,0.967758064516129,2,0,['Unknown'],33
+127,1990,2011,3,2,0.9545385365853658,1,0,['Unknown'],33
+127,1990,2001,3,2,0.9522153125,2,0,['Unknown'],33
+127,1990,2000,3,2,0.9864231250000001,2,0,['Unknown'],33
+126,2007,2006,17,2,0.962225,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2007,16,2,0.959395,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2006,16,3,0.9569566666666667,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2008,15,2,0.93686,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2007,15,3,0.9508433333333333,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2006,15,3,0.9697966666666668,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2008,14,2,0.93431,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2007,14,3,0.9700066666666666,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2006,14,3,0.9655466666666666,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2008,13,2,0.982595,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2007,13,3,0.9628466666666666,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2007,2006,13,3,0.9587266666666666,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2008,2010,11,2,0.932825,1,0,"['Social Sector', 'Finance Economy Sector']",33
+126,2008,2006,10,2,0.9433750000000001,1,0,"['Sovereignty', 'Social Sector']",33
+126,2009,2008,3,2,0.9567650000000001,1,0,['Political State Sector'],33
+126,2008,2008,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+127,2009,2008,3,2,0.95284,1,0,['Political State Sector'],33
+123,2009,2016,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+123,1990,2005,3,2,0.9548,1,0,['Unknown'],33
+122,2008,2015,9,2,0.93655,1,0,"['Sovereignty', 'Political State Sector']",33
+122,2009,2016,7,2,0.9283,1,0,"['Sovereignty', 'Political State Sector']",33
+122,2008,2008,7,2,0.936645,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+122,2008,2017,6,2,0.9241550000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+122,2008,2016,6,2,0.9334899999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+122,2008,2009,6,2,0.943665,1,0,['Social Sector'],33
+122,2008,2008,6,2,0.922925,1,0,"['Social Sector', 'Finance Economy Sector']",33
+122,2010,2009,5,2,0.9581850000000001,1,0,"['Political State Sector', 'Social Sector']",33
+122,2009,2016,4,2,0.921375,1,0,"['Political State Sector', 'Social Sector']",33
+122,2009,2014,4,2,0.95363,1,0,"['Social Sector', 'Finance Economy Sector']",33
+122,2009,2009,4,2,0.96138,1,0,"['Political State Sector', 'Social Sector']",33
+122,2009,2020,3,3,0.94315,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+122,2009,2018,3,2,0.937115,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+122,2009,2017,3,2,0.9659150000000001,1,0,"['Political State Sector', 'Social Sector']",33
+122,2009,2016,3,2,0.9519500000000001,1,0,"['Political State Sector', 'Social Sector']",33
+122,2009,2014,3,2,0.9613050000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+122,2008,2011,3,2,0.9724550000000001,1,0,['Social Sector'],33
+122,1990,2014,3,2,0.9817042105263158,1,0,['Unknown'],33
+122,1990,2008,3,2,0.9785112499999999,1,0,['Unknown'],33
+121,2007,2007,17,2,0.90683,1,0,['Social Sector'],33
+123,2009,2015,3,3,0.9507033333333333,1,0,"['Political State Sector', 'Social Sector']",33
+123,2009,2017,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+126,1990,2015,3,2,0.954898,2,0,['Unknown'],33
+123,2009,2016,4,2,0.938925,1,0,['Social Sector'],33
+126,1990,2001,3,2,0.9883423809523809,2,0,['Unknown'],33
+126,1990,2000,3,2,0.961074,2,0,['Unknown'],33
+126,1990,1994,3,2,0.9919795238095238,2,0,['Unknown'],33
+124,2009,2016,4,3,0.95395,1,0,"['Social Sector', 'Finance Economy Sector']",33
+124,2009,2008,4,2,0.9171750000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+124,2009,2020,3,2,0.960985,1,0,"['Social Sector', 'Finance Economy Sector']",33
+124,2009,2017,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+124,2009,2016,3,2,0.99312,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+124,2009,2015,3,2,0.9613050000000001,1,0,['Political State Sector'],33
+124,2008,2021,3,2,0.95284,1,0,"['Human Rights Development', 'Social Sector']",33
+124,1990,2008,3,2,0.9331593103448277,2,0,['Unknown'],33
+124,1990,2000,3,2,0.979388275862069,2,0,['Unknown'],33
+124,1990,1999,3,2,0.9895696551724138,2,0,['Unknown'],33
+124,1990,1995,3,2,0.9728224137931034,2,0,['Unknown'],33
+123,2008,2015,9,2,0.948955,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+123,2008,2014,9,2,0.942855,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+123,2008,2016,8,2,0.929825,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+123,2008,2015,8,2,0.937225,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+123,2008,2014,8,2,0.92039,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+123,2008,2016,6,2,0.9174549999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+123,2008,2015,6,2,0.934855,1,0,"['Social Sector', 'Finance Economy Sector']",33
+127,2009,2007,3,2,0.944195,1,0,"['Political State Sector', 'Social Sector']",33
+127,2009,2009,3,2,0.987035,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+131,2009,2009,4,2,0.945215,1,0,"['Social Sector', 'Finance Economy Sector']",33
+130,2008,2009,12,2,0.920795,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+130,2008,2014,8,2,0.918165,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+130,2010,2009,5,2,0.95424,1,0,"['Political State Sector', 'Social Sector']",33
+130,2009,2010,4,2,0.95556,1,0,"['Political State Sector', 'Social Sector']",33
+130,2009,2009,4,2,0.935345,1,0,"['Social Sector', 'Finance Economy Sector']",33
+130,2009,2017,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+130,2009,2016,3,2,0.98341,1,0,"['Political State Sector', 'Social Sector']",33
+130,2009,2013,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+130,2009,2010,3,2,0.9261900000000001,1,0,"['Political State Sector', 'Social Sector']",33
+130,2008,2011,3,2,0.9724550000000001,1,0,['Social Sector'],33
+130,1990,2001,3,2,0.9973200000000001,1,0,['Unknown'],33
+129,2008,2015,8,2,0.92589,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+129,2008,2016,6,2,0.961195,1,0,"['Social Sector', 'Finance Economy Sector']",33
+129,2008,2015,6,2,0.9154450000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+129,2009,2017,5,2,0.94418,1,0,"['Social Sector', 'Finance Economy Sector']",33
+129,2009,2016,4,2,0.921375,1,0,"['Political State Sector', 'Social Sector']",33
+129,2009,2009,4,2,0.9242049999999999,1,0,['Social Sector'],33
+129,2009,2012,3,2,0.9966999999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+129,2009,2010,3,2,0.982065,1,0,"['Political State Sector', 'Social Sector']",33
+129,2008,2019,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+129,1990,2018,3,2,0.9660335897435898,1,0,['Unknown'],33
+129,1990,2011,3,3,0.9375104081632653,2,0,['Unknown'],33
+130,2008,2014,9,2,0.93816,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+130,2008,2010,12,2,0.916335,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+129,1990,2009,3,2,0.9648433333333333,2,0,['Unknown'],33
+130,2007,2009,13,2,0.9258,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+131,2002,2004,4,2,0.96025,1,0,['Military Sector'],33
+131,1990,2017,4,2,0.9452,2,0,['Unknown'],33
+131,1990,2005,4,2,0.9436863414634146,1,0,['Unknown'],33
+131,1990,2002,4,2,0.9535951219512195,1,0,['Unknown'],33
+131,1990,1995,4,2,0.9714561290322581,2,0,['Unknown'],33
+131,2009,2018,3,3,0.9373166666666667,1,0,"['Political State Sector', 'Social Sector']",33
+131,2009,2017,3,3,0.9594766666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+131,2009,2015,3,2,0.948145,1,0,"['Political State Sector', 'Social Sector']",33
+131,2009,2006,3,2,0.952725,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+131,2008,2019,3,2,1.0,1,0,"['Human Rights Development', 'Social Sector']",33
+131,1990,2017,3,3,0.9505325490196078,2,0,['Unknown'],33
+131,1990,2002,3,2,0.9711833333333334,2,0,['Unknown'],33
+131,1990,2001,3,2,0.9311066666666666,2,0,['Unknown'],33
+131,1990,2000,3,2,0.99839,2,0,['Unknown'],33
+131,1990,1999,3,2,0.9658490322580645,2,0,['Unknown'],33
+131,1990,1998,3,2,0.9752117073170732,1,0,['Unknown'],33
+131,1990,1994,3,2,0.9771966666666666,2,0,['Unknown'],33
+130,2007,2009,15,2,0.934525,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+130,2007,2010,14,2,0.92058,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+130,2007,2009,14,2,0.931555,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+130,2007,2010,13,2,0.92332,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+129,1990,2010,3,2,0.9859166666666667,2,0,['Unknown'],33
+129,1990,2007,3,2,0.982121724137931,2,0,['Unknown'],33
+127,2009,2011,3,2,0.939215,1,0,"['Political State Sector', 'Social Sector']",33
+127,2008,2007,12,2,0.92519,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2007,10,3,0.9123233333333333,1,0,"['Human Rights Development', 'Finance Economy Sector']",33
+127,2008,2008,9,2,0.91869,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2008,2008,8,2,0.9563699999999999,1,0,['Finance Economy Sector'],33
+127,2009,2013,7,2,0.945195,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2009,2009,7,2,0.965905,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+127,2010,2010,6,2,0.9569449999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+127,2008,2008,6,2,0.943955,1,0,"['Social Sector', 'Finance Economy Sector']",33
+127,2009,2009,5,2,0.97416,1,0,"['Social Sector', 'Finance Economy Sector']",33
+127,2009,2007,5,2,0.9037299999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+127,2009,2015,4,2,0.978585,1,0,"['Political State Sector', 'Social Sector']",33
+127,2009,2013,4,2,0.96967,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+127,2009,2009,4,3,0.9845700000000001,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+127,2009,2008,4,2,0.961545,1,0,"['Political State Sector', 'Social Sector']",33
+127,1990,2022,4,2,0.9803775862068965,2,0,['Unknown'],33
+127,1990,2005,4,2,0.9496439024390244,1,0,['Unknown'],33
+127,1990,1990,4,2,0.9628340624999999,2,0,['Unknown'],33
+127,2009,2021,3,2,0.9803850000000001,1,0,['Political State Sector'],33
+127,2009,2019,3,2,0.9966999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+127,2009,2018,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+127,2009,2017,3,3,0.9742033333333334,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+127,2009,2016,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+127,2008,2013,10,2,0.91832,1,0,"['Sovereignty', 'Social Sector']",33
+127,2008,2008,12,3,0.94346,1,0,"['Human Rights Development', 'Finance Economy Sector', 'Sovereignty']",33
+129,1990,2006,3,3,0.9497706122448979,2,0,['Unknown'],33
+127,2008,2009,12,2,0.958405,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+129,1990,2005,3,3,0.969525306122449,2,0,['Unknown'],33
+129,1990,1997,3,2,0.9543366666666666,2,0,['Unknown'],33
+129,1990,1996,3,2,0.9582700000000001,2,0,['Unknown'],33
+129,1990,1995,3,4,0.9618201449275362,2,0,['Unknown'],33
+129,1990,1994,3,2,0.97063,2,0,['Unknown'],33
+129,1990,1991,3,2,0.9477366666666666,2,0,['Unknown'],33
+128,1990,2015,3,2,0.99500625,1,0,['Unknown'],33
+127,2007,2007,17,2,0.967285,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2008,16,2,0.9584999999999999,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2007,16,2,0.9635800000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2009,15,2,0.943445,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2008,15,2,0.954895,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2007,15,2,0.96402,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2009,14,2,0.9372,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2008,14,2,0.9515,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2007,14,2,0.967475,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2009,13,2,0.93285,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2008,13,2,0.95916,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2007,2007,13,2,0.960885,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+127,2008,2012,12,2,0.9341349999999999,1,0,"['Sovereignty', 'Social Sector']",33
+127,2008,2011,12,2,0.935325,1,0,"['Sovereignty', 'Social Sector']",33
+137,2009,2016,3,2,0.98601,1,0,"['Political State Sector', 'Social Sector']",33
+137,2009,2017,3,2,0.9617899999999999,1,0,"['Political State Sector', 'Social Sector']",33
+137,2009,2020,3,2,0.9588300000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+149,1990,1998,3,2,0.9936450000000001,1,0,['Unknown'],33
+148,1990,2017,3,2,0.9827975,2,0,['Unknown'],33
+148,1990,2014,3,2,0.9937249999999999,2,0,['Unknown'],33
+148,1990,2004,3,2,0.9731349999999999,2,0,['Unknown'],33
+148,1990,1995,3,2,0.9342758333333334,2,0,['Unknown'],33
+147,2007,2007,17,4,0.91811,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+147,2007,2006,17,2,0.922385,1,0,['Social Sector'],33
+147,2007,2008,16,3,0.9436599999999999,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+147,2007,2007,16,3,0.9210133333333334,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+147,2007,2009,15,2,0.943405,1,0,"['Social Sector', 'Finance Economy Sector']",33
+147,2007,2008,15,3,0.9445833333333332,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+147,2007,2007,15,2,0.92531,1,0,"['Political State Sector', 'Social Sector']",33
+147,2007,2010,14,2,0.93267,1,0,"['Social Sector', 'Finance Economy Sector']",33
+147,2007,2009,14,3,0.9328500000000001,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+147,2007,2008,14,3,0.9452600000000001,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+147,2007,2007,14,2,0.9442,1,0,"['Political State Sector', 'Social Sector']",33
+147,2007,2010,13,2,0.926875,1,0,"['Social Sector', 'Finance Economy Sector']",33
+147,2007,2009,13,3,0.9468033333333333,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+147,2007,2008,13,2,0.970905,1,0,"['Political State Sector', 'Social Sector']",33
+147,2007,2007,13,2,0.93546,1,0,"['Political State Sector', 'Social Sector']",33
+147,2007,2009,12,2,0.9754050000000001,1,0,"['Political State Sector', 'Social Sector']",33
+147,2007,2008,12,2,0.963075,1,0,"['Political State Sector', 'Social Sector']",33
+148,2009,2010,3,2,0.96575,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+149,1990,2002,3,3,0.9834440000000001,2,0,['Unknown'],33
+147,2007,2010,11,2,0.9543900000000001,1,0,"['Political State Sector', 'Social Sector']",33
+149,1990,2011,3,2,0.9361566666666667,2,0,['Unknown'],33
+150,2008,2021,3,2,0.976355,1,0,"['Human Rights Development', 'Social Sector']",33
+150,2008,2018,3,2,0.9666,1,0,"['Human Rights Development', 'Social Sector']",33
+150,2008,2010,3,2,0.983675,1,0,"['Human Rights Development', 'Social Sector']",33
+150,2008,2006,3,2,0.9803850000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+150,1990,2018,3,2,0.92998,1,0,['Unknown'],33
+150,1990,2017,3,2,0.9459,2,0,['Unknown'],33
+150,1990,2012,3,3,0.9945613333333334,2,0,['Unknown'],33
+150,1990,2009,3,2,0.95364375,2,0,['Unknown'],33
+150,1990,2007,3,2,0.9635427272727273,2,0,['Unknown'],33
+150,1990,2003,3,2,0.99365625,2,0,['Unknown'],33
+150,1990,1993,3,2,0.9909208333333334,2,0,['Unknown'],33
+149,2008,2008,10,2,0.9412545454545455,2,0,"['Social Sector', 'Unknown']",33
+149,2008,2009,6,2,0.971835,1,0,"['Social Sector', 'Finance Economy Sector']",33
+149,2009,2016,4,2,0.96204,1,0,"['Political State Sector', 'Social Sector']",33
+149,2009,2019,3,2,0.931285,1,0,"['Political State Sector', 'Social Sector']",33
+149,2008,2021,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+149,2008,2009,3,2,0.9642850000000001,1,0,['Social Sector'],33
+149,1990,2017,3,2,0.9670033333333333,2,0,['Unknown'],33
+149,1990,2015,3,2,0.97608,2,0,['Unknown'],33
+149,1990,2014,3,2,0.9766,2,0,['Unknown'],33
+149,1990,2012,3,2,0.9557033333333333,2,0,['Unknown'],33
+147,2007,2007,12,2,0.91798,1,0,"['Political State Sector', 'Social Sector']",33
+147,2007,2009,11,2,0.96855,1,0,"['Political State Sector', 'Social Sector']",33
+150,2009,2015,3,2,0.94567,1,0,"['Political State Sector', 'Social Sector']",33
+147,1990,1995,3,2,0.9999471875,2,0,['Unknown'],33
+147,1990,1991,3,2,0.9882753125,2,0,['Unknown'],33
+145,2009,2017,4,2,0.96223,1,0,"['Social Sector', 'Finance Economy Sector']",33
+145,2009,2016,4,2,0.939975,1,0,"['Political State Sector', 'Social Sector']",33
+145,2009,2012,4,2,0.9574,1,0,"['Political State Sector', 'Social Sector']",33
+145,2009,2010,4,2,0.95842,1,0,"['Social Sector', 'Finance Economy Sector']",33
+145,2009,2020,3,2,0.95076,1,0,"['Political State Sector', 'Social Sector']",33
+145,2009,2018,3,2,0.99425,1,0,"['Political State Sector', 'Social Sector']",33
+145,2009,2017,3,3,0.95199,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+145,1990,2018,3,2,0.9930236363636364,1,0,['Unknown'],33
+145,1990,2016,3,2,0.9746042857142856,2,0,['Unknown'],33
+145,1990,2009,3,2,0.9138828571428572,2,0,['Unknown'],33
+144,2007,2007,17,3,0.9205066666666667,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2007,2006,17,2,0.9192800000000001,1,0,['Social Sector'],33
+144,2007,2008,16,3,0.9092366666666667,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2007,2007,16,2,0.91754,1,0,['Social Sector'],33
+144,2007,2009,15,2,0.9479949999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2007,2008,15,2,0.90412,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2007,2010,14,2,0.9312400000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2007,2009,14,2,0.946005,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2007,2011,13,3,0.9201833333333332,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+144,2007,2010,13,2,0.9242900000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+147,1990,1992,3,2,0.9515934374999999,2,0,['Unknown'],33
+147,1990,1997,3,2,0.954574193548387,2,0,['Unknown'],33
+147,2007,2008,11,2,0.953465,1,0,"['Political State Sector', 'Social Sector']",33
+147,1990,2004,3,2,0.991192258064516,2,0,['Unknown'],33
+147,2008,2012,10,2,0.944545,1,0,['Social Sector'],33
+147,2007,2009,10,2,0.929195,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+147,2008,2012,9,2,0.9429449999999999,1,0,"['Political State Sector', 'Social Sector']",33
+147,2008,2009,9,2,0.9555,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+147,2008,2016,8,2,0.9158550000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+147,2009,2009,7,2,0.94758,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+147,2010,2010,6,2,0.98366,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+147,2008,2009,6,2,0.959055,1,0,"['Social Sector', 'Finance Economy Sector']",33
+147,2009,2013,4,2,0.989115,1,0,"['Social Sector', 'Finance Economy Sector']",33
+147,2009,2009,4,2,0.95356,1,0,"['Political State Sector', 'Social Sector']",33
+147,1990,2009,4,3,0.9431326923076924,2,0,['Unknown'],33
+147,1990,2003,4,2,0.9586634375,2,0,['Unknown'],33
+147,1990,1992,4,3,0.9312982,2,0,['Unknown'],33
+147,2009,2020,3,2,0.9966999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+147,2009,2018,3,2,0.96223,1,0,['Political State Sector'],33
+147,2009,2013,3,3,0.9880433333333333,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+147,2009,2011,3,3,0.9576766666666666,1,0,"['Political State Sector', 'Social Sector']",33
+147,2009,2010,3,2,0.978485,1,0,"['Political State Sector', 'Social Sector']",33
+147,2009,2007,3,2,0.98769,1,0,"['Political State Sector', 'Social Sector']",33
+147,2008,2020,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+147,1990,2009,3,2,0.9696041935483871,2,0,['Unknown'],33
+150,2009,2010,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+150,2009,2016,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+137,1990,1995,4,2,0.9290872727272728,2,0,['Unknown'],33
+153,1990,2015,3,2,0.9445474193548387,2,0,['Unknown'],33
+153,1990,2013,3,2,0.9759375609756098,1,0,['Unknown'],33
+153,1990,2002,3,2,0.9915428125,2,0,['Unknown'],33
+153,1990,2001,3,2,0.9505028125,2,0,['Unknown'],33
+153,1990,1994,3,3,0.9542784615384614,2,0,['Unknown'],33
+152,2007,2007,17,2,0.9536899999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2006,17,2,0.95496,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2008,16,2,0.95577,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2007,16,2,0.9493149999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2006,16,2,0.9498150000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2009,15,2,0.94446,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2008,15,2,0.95641,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2007,15,2,0.93774,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2010,14,3,0.92507,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+152,2007,2009,14,2,0.941605,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2008,14,2,0.9465749999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2007,14,2,0.923565,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2010,13,3,0.91377,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+152,2007,2009,13,2,0.925175,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2007,2008,13,2,0.931215,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2008,2011,12,3,0.9284233333333334,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+152,2008,2010,12,2,0.93328,1,0,"['Social Sector', 'Finance Economy Sector']",33
+153,1990,2014,3,3,0.9875238461538463,2,0,['Unknown'],33
+153,2008,2008,3,3,0.9809166666666668,1,0,"['Human Rights Development', 'Social Sector']",33
+152,2008,2008,12,2,0.957255,1,0,"['Social Sector', 'Finance Economy Sector']",33
+153,2009,2011,3,2,0.9966999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+156,2008,2014,3,2,0.94467,1,0,"['Human Rights Development', 'Social Sector']",33
+156,1990,2011,3,3,0.9583829787234044,2,0,['Unknown'],33
+156,1990,2009,3,2,0.9606776923076923,2,0,['Unknown'],33
+156,1990,1995,3,2,0.9925775,2,0,['Unknown'],33
+156,1990,1991,3,2,0.9720453846153846,2,0,['Unknown'],33
+156,1990,1990,3,2,0.9963353125000001,2,0,['Unknown'],33
+153,2008,2015,9,2,0.925905,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+153,2008,2016,8,2,0.94261,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+153,2008,2015,6,2,0.9609449999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+153,2007,2007,6,2,0.9125227272727272,2,0,"['Human Rights Development', 'Unknown']",33
+153,2010,2016,5,2,0.965395,1,0,"['Political State Sector', 'Social Sector']",33
+153,2009,2017,4,3,0.9454233333333333,1,0,"['Political State Sector', 'Social Sector']",33
+153,2009,2009,4,2,0.91381,1,0,"['Political State Sector', 'Social Sector']",33
+153,2009,2007,4,2,0.928175,1,0,['Social Sector'],33
+153,1990,2014,4,2,0.9315371875,2,0,['Unknown'],33
+153,2009,2020,3,2,0.987565,1,0,"['Social Sector', 'Finance Economy Sector']",33
+153,2009,2019,3,2,0.95553,1,0,"['Political State Sector', 'Social Sector']",33
+153,2009,2018,3,2,0.96846,1,0,"['Political State Sector', 'Social Sector']",33
+153,2009,2017,3,2,0.9966999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+153,2009,2016,3,2,0.9807,1,0,"['Political State Sector', 'Social Sector']",33
+153,2009,2013,3,2,0.931285,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2008,2009,12,2,0.95154,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2008,2010,11,2,0.906045,1,0,"['Social Sector', 'Finance Economy Sector']",33
+150,2009,2017,3,3,0.9847066666666667,1,0,"['Political State Sector', 'Social Sector']",33
+152,1990,2019,3,2,0.9594006896551724,2,0,['Unknown'],33
+152,1990,2012,3,2,0.9720037931034482,2,0,['Unknown'],33
+152,1990,2009,3,2,0.95882,2,0,['Unknown'],33
+152,1990,2005,3,2,0.948185,1,0,['Unknown'],33
+152,1990,2002,3,2,0.9698866666666668,2,0,['Unknown'],33
+152,1990,2001,3,2,0.9507966666666667,2,0,['Unknown'],33
+152,1990,1999,3,2,0.9442962068965517,2,0,['Unknown'],33
+152,1990,1998,3,3,0.9851485714285714,2,0,['Unknown'],33
+152,1990,1990,3,2,0.9765866666666666,2,0,['Unknown'],33
+150,2007,2010,14,2,0.923155,1,0,"['Social Sector', 'Finance Economy Sector']",33
+150,2007,2011,13,2,0.917145,1,0,"['Sovereignty', 'Social Sector']",33
+150,2008,2015,9,2,0.954415,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+150,2008,2014,9,2,0.934145,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+150,2008,2016,8,2,0.93744,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+150,2008,2015,8,2,0.94491,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+150,2008,2014,8,2,0.9108,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+150,2008,2018,6,2,0.935855,1,0,"['Social Sector', 'Finance Economy Sector']",33
+150,2008,2017,6,2,0.92293,1,0,"['Social Sector', 'Finance Economy Sector']",33
+150,2008,2016,6,2,0.946615,1,0,"['Social Sector', 'Finance Economy Sector']",33
+150,2010,2009,5,2,0.9707049999999999,1,0,"['Political State Sector', 'Social Sector']",33
+150,2009,2020,4,2,0.9297949999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+150,2009,2020,3,2,0.96652,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,1990,2013,3,2,0.9681233333333333,1,0,['Unknown'],33
+152,2008,2006,3,2,0.9724550000000001,1,0,['Social Sector'],33
+152,2008,2009,11,2,0.930085,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2008,2010,3,3,0.9816366666666667,1,0,"['Human Rights Development', 'Social Sector']",33
+152,2008,2008,11,2,0.944825,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2008,2013,10,2,0.9431449999999999,1,0,"['Sovereignty', 'Social Sector']",33
+152,2008,2012,10,2,0.930015,1,0,"['Sovereignty', 'Social Sector']",33
+152,2007,2009,10,2,0.920505,1,0,"['Human Rights Development', 'Finance Economy Sector']",33
+152,2008,2015,9,2,0.94124,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+152,2008,2014,9,2,0.92496,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+152,2008,2013,9,2,0.91611,1,0,"['Sovereignty', 'Social Sector']",33
+152,2008,2016,8,2,0.9562900000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+152,2008,2015,8,2,0.9505250000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+152,2008,2016,7,2,0.943715,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+152,2015,2018,6,2,0.901565,1,0,"['Human Rights Development', 'Social Sector']",33
+152,2015,2016,6,2,0.9615100000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+152,2008,2016,6,2,0.9621649999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2009,2019,4,2,0.940905,1,0,"['Political State Sector', 'Social Sector']",33
+152,2009,2017,4,2,0.9441649999999999,1,0,"['Political State Sector', 'Social Sector']",33
+152,2009,2008,4,2,0.951445,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+152,2009,2021,3,2,0.95553,1,0,"['Social Sector', 'Finance Economy Sector']",33
+152,2009,2018,3,2,0.94467,1,0,['Political State Sector'],33
+152,2009,2017,3,2,0.977085,1,0,"['Political State Sector', 'Social Sector']",33
+152,2009,2016,3,2,0.99312,1,0,"['Political State Sector', 'Social Sector']",33
+152,2009,2008,3,2,0.94491,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+144,2007,2009,13,2,0.93274,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2008,2011,12,2,0.931435,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2008,2010,12,2,0.92971,1,0,"['Social Sector', 'Finance Economy Sector']",33
+141,2010,2016,5,2,0.97089,1,0,"['Political State Sector', 'Social Sector']",33
+141,2009,2016,5,2,0.9967349999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+141,2009,2016,4,3,0.9497366666666668,1,0,"['Political State Sector', 'Social Sector']",33
+141,2009,2007,4,2,0.989115,1,0,['Social Sector'],33
+141,2009,2021,3,2,0.9519500000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+141,2009,2011,3,2,0.9735050000000001,1,0,"['Political State Sector', 'Social Sector']",33
+141,2008,2019,3,2,1.0,1,0,"['Human Rights Development', 'Social Sector']",33
+141,2008,2017,3,2,0.9642850000000001,1,0,['Social Sector'],33
+141,2008,2008,3,3,0.9847233333333333,1,0,"['Human Rights Development', 'Social Sector']",33
+141,1990,2013,3,2,0.9420268421052631,1,0,['Unknown'],33
+141,1990,2008,3,2,0.9539552631578948,1,0,['Unknown'],33
+140,2007,2006,15,2,0.911675,1,0,"['Sovereignty', 'Social Sector']",33
+140,2007,2007,14,2,0.9197500000000001,1,0,"['Sovereignty', 'Social Sector']",33
+140,2008,2009,8,2,0.95079,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+140,2009,2017,4,2,0.9416100000000001,1,0,"['Political State Sector', 'Social Sector']",33
+140,2009,2009,4,2,0.9845349999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+140,1990,2014,4,2,0.9561856097560975,1,0,['Unknown'],33
+140,2009,2009,3,2,0.99099,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+140,2008,2019,3,2,0.9803850000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+140,1990,2018,3,2,0.9623904878048781,1,0,['Unknown'],33
+140,1990,2014,3,2,0.9183339024390245,1,0,['Unknown'],33
+140,1990,2004,3,2,0.9945921875,2,0,['Unknown'],33
+141,2010,2007,5,2,0.97343,1,0,"['Political State Sector', 'Social Sector']",33
+141,2010,2017,5,2,0.96868,1,0,"['Political State Sector', 'Social Sector']",33
+140,1990,2001,3,2,0.9608968292682928,1,0,['Unknown'],33
+141,2008,2016,6,2,0.94169,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2009,2009,4,4,0.9367075,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2009,2007,4,2,0.9454849999999999,1,0,['Social Sector'],33
+142,2009,2021,3,2,0.94467,1,0,['Political State Sector'],33
+142,2009,2020,3,2,0.97783,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2009,2017,3,2,0.99045,1,0,"['Political State Sector', 'Social Sector']",33
+142,2009,2016,3,3,0.9797933333333333,1,0,"['Political State Sector', 'Social Sector']",33
+142,2009,2015,3,3,0.9470666666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2009,2014,3,2,0.982065,1,0,"['Political State Sector', 'Social Sector']",33
+142,2009,2013,3,2,0.969155,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2009,2012,3,2,0.94467,1,0,['Political State Sector'],33
+142,2009,2010,3,2,0.9261900000000001,1,0,['Political State Sector'],33
+142,2009,2009,3,2,0.95782,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2009,2007,3,2,0.9588300000000001,1,0,"['Political State Sector', 'Social Sector']",33
+142,2008,2011,3,2,0.9724550000000001,1,0,"['Human Rights Development', 'Social Sector']",33
+142,2008,2008,3,2,0.963445,1,0,"['Human Rights Development', 'Social Sector']",33
+142,1990,2015,3,2,0.9547271428571429,2,0,['Unknown'],33
+142,1990,2000,3,3,0.9796236666666667,2,0,['Unknown'],33
+142,1990,1999,3,2,0.9570010526315789,1,0,['Unknown'],33
+141,2007,2007,14,2,0.9219200000000001,1,0,"['Political State Sector', 'Social Sector']",33
+141,2007,2007,13,2,0.92851,1,0,['Social Sector'],33
+141,2008,2014,10,2,0.92905,1,0,['Social Sector'],33
+140,1990,2002,3,2,0.9812529032258064,2,0,['Unknown'],33
+140,1990,2000,3,2,0.9945078125,2,0,['Unknown'],33
+144,2008,2013,11,2,0.9158850000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+138,2009,2016,4,2,0.952675,1,0,"['Political State Sector', 'Social Sector']",33
+138,2009,2014,4,3,0.9298466666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+138,2009,2019,3,2,0.9966999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+138,2009,2018,3,3,0.9767899999999999,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+138,2009,2015,3,2,0.920135,1,0,['Political State Sector'],33
+138,2009,2014,3,2,0.939215,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+138,2009,2010,3,2,0.93746,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+138,2008,2019,3,2,0.9848049999999999,1,0,"['Human Rights Development', 'Social Sector']",33
+138,2008,2018,3,2,0.93483,1,0,"['Human Rights Development', 'Social Sector']",33
+138,1990,2016,3,2,0.9661500000000001,1,0,['Unknown'],33
+138,1990,2005,3,2,0.9811949999999999,1,0,['Unknown'],33
+137,2008,2014,10,2,0.967255,1,0,"['Sovereignty', 'Social Sector']",33
+137,2008,2013,10,3,0.91057,2,0,"['Sovereignty', 'Social Sector', 'Unknown']",33
+137,2008,2015,9,3,0.9578366666666667,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+137,2008,2014,9,2,0.95286,1,0,"['Sovereignty', 'Social Sector']",33
+137,2008,2013,9,2,0.91082,1,0,"['Sovereignty', 'Social Sector']",33
+137,2008,2016,8,2,0.93817,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+137,2008,2015,8,2,0.955595,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+137,2009,2016,7,2,0.921095,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+137,2008,2016,6,2,0.917455,1,0,"['Social Sector', 'Finance Economy Sector']",33
+137,2009,2020,4,2,0.980145,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+137,1990,2013,4,2,0.9185800000000001,2,0,['Unknown'],33
+138,2009,2015,4,3,0.9447666666666666,1,0,"['Political State Sector', 'Social Sector']",33
+138,2010,2014,5,2,0.959055,1,0,"['Political State Sector', 'Social Sector']",33
+140,1990,1999,3,2,0.9691458536585366,1,0,['Unknown'],33
+138,2010,2015,5,2,0.9475899999999999,1,0,"['Political State Sector', 'Social Sector']",33
+140,1990,1996,3,2,0.994150625,2,0,['Unknown'],33
+140,1990,1992,3,2,0.9915525,2,0,['Unknown'],33
+140,1990,1991,3,2,0.9807343749999999,2,0,['Unknown'],33
+140,1990,1990,3,2,0.9572621874999999,2,0,['Unknown'],33
+138,2008,2013,11,2,0.9237,1,0,"['Social Sector', 'Finance Economy Sector']",33
+138,2008,2012,11,2,0.916225,1,0,"['Social Sector', 'Finance Economy Sector']",33
+138,2008,2014,10,2,0.943075,1,0,"['Sovereignty', 'Social Sector']",33
+138,2008,2013,10,2,0.933935,1,0,"['Sovereignty', 'Social Sector']",33
+138,2008,2015,9,3,0.9351666666666666,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+138,2008,2014,9,2,0.9592400000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+138,2008,2013,9,3,0.9172866666666666,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+138,2008,2016,8,2,0.9223250000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+138,2008,2015,8,2,0.94442,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+138,2008,2014,8,2,0.948855,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+138,2009,2014,7,2,0.947805,1,0,"['Sovereignty', 'Political State Sector']",33
+138,2015,2018,6,2,0.951805,1,0,"['Human Rights Development', 'Social Sector']",33
+138,2009,2016,6,2,0.9187000000000001,2,0,"['Military Sector', 'Political State Sector']",33
+138,2008,2016,6,2,0.92199,1,0,"['Social Sector', 'Finance Economy Sector']",33
+138,2008,2015,6,2,0.97177,1,0,"['Social Sector', 'Finance Economy Sector']",33
+138,2008,2014,6,2,0.97653,1,0,"['Social Sector', 'Finance Economy Sector']",33
+138,2010,2016,5,2,0.971425,1,0,"['Political State Sector', 'Social Sector']",33
+142,2009,2012,4,2,0.958845,1,0,"['Political State Sector', 'Social Sector']",33
+142,2009,2015,4,2,0.95567,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2009,2016,4,2,0.9849300000000001,1,0,"['Political State Sector', 'Social Sector']",33
+144,1990,1997,3,3,0.9707145454545455,2,0,['Unknown'],33
+142,2007,2007,17,2,0.957775,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2007,2006,17,2,0.9373,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2007,2007,16,2,0.962565,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2007,2006,16,3,0.9339133333333334,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2007,2009,15,2,0.951415,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2007,2007,15,3,0.9526566666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2007,2006,15,3,0.9475966666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2007,2010,14,2,0.94049,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2007,2009,14,2,0.952345,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2007,2008,14,2,0.946725,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2007,2007,14,3,0.97878,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2007,2006,14,3,0.9635233333333334,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2007,2011,13,2,0.93477,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2007,2010,13,2,0.94824,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2007,2009,13,2,0.94358,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2007,2008,13,3,0.9716366666666666,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2007,2007,13,3,0.9753066666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2007,2006,13,3,0.9541766666666667,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2008,2011,12,2,0.946465,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2010,12,2,0.942135,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2009,12,2,0.95389,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,1990,1993,3,2,0.9993804347826086,1,0,['Unknown'],33
+144,1990,2000,3,2,0.9947930434782609,1,0,['Unknown'],33
+142,2009,2017,4,2,0.92543,1,0,['Social Sector'],33
+144,1990,2005,3,2,0.9928847826086956,2,0,['Unknown'],33
+144,2008,2012,11,2,0.928685,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2008,2011,11,2,0.9168400000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2008,2012,10,2,0.9404699999999999,1,0,['Social Sector'],33
+144,2008,2014,9,2,0.9312849999999999,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2008,2010,7,2,0.9125749999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+144,2015,2016,6,2,0.909195,1,0,"['Human Rights Development', 'Social Sector']",33
+144,2008,2016,6,2,0.935875,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2008,2015,6,3,0.94098,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2008,2014,6,2,0.946135,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2008,2012,6,2,0.923635,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2009,2009,5,2,0.926295,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,2009,2014,4,2,0.907995,1,0,"['Political State Sector', 'Social Sector']",33
+144,2009,2010,4,2,0.921935,1,0,"['Political State Sector', 'Social Sector']",33
+144,2009,2009,4,2,0.917645,1,0,"['Political State Sector', 'Social Sector']",33
+144,2009,2008,4,2,0.96756,1,0,"['Social Sector', 'Finance Economy Sector']",33
+144,1990,2005,4,2,0.967305,2,0,['Unknown'],33
+144,2009,2017,3,2,0.94169,1,0,"['Political State Sector', 'Social Sector']",33
+144,2009,2016,3,2,0.99312,1,0,['Political State Sector'],33
+144,2009,2015,3,2,0.9567650000000001,1,0,['Political State Sector'],33
+144,1990,2014,3,2,0.9802969565217391,1,0,['Unknown'],33
+144,1990,2009,3,2,0.9777095652173913,2,0,['Unknown'],33
+142,2007,2009,12,2,0.947685,1,0,"['Political State Sector', 'Social Sector']",33
+142,2007,2008,12,2,0.96808,1,0,"['Political State Sector', 'Social Sector']",33
+142,2007,2007,12,2,0.971555,1,0,"['Political State Sector', 'Social Sector']",33
+142,2007,2006,12,2,0.975595,1,0,"['Political State Sector', 'Social Sector']",33
+142,2007,2007,8,2,0.933345,1,0,"['Political State Sector', 'Social Sector']",33
+142,2009,2016,7,2,0.9202950000000001,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+142,2008,2016,7,2,0.9206749999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2008,2015,7,2,0.965755,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2008,2009,7,2,0.944715,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2008,2008,7,2,0.94145,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2008,2007,7,2,0.9545,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2015,2012,6,2,0.9494549999999999,1,0,"['Human Rights Development', 'Social Sector']",33
+142,2008,2015,6,2,0.99246,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2014,6,2,0.97203,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2013,6,2,0.94468,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2012,6,2,0.910545,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2011,6,2,0.95313,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2010,6,2,0.9521850000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2009,6,3,0.94625,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2008,6,3,0.9514366666666666,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2007,6,2,0.9571000000000001,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2010,2010,5,2,0.9125650000000001,1,0,"['Political State Sector', 'Social Sector']",33
+142,2010,2009,5,2,0.983745,1,0,"['Political State Sector', 'Social Sector']",33
+142,2010,2008,5,2,0.9500900000000001,1,0,"['Political State Sector', 'Social Sector']",33
+142,2009,2010,5,2,0.94245,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2014,8,2,0.940645,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+142,2008,2015,8,2,0.963455,1,0,"['Sovereignty', 'Finance Economy Sector']",33
+142,2008,2007,9,2,0.95211,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2008,2011,10,2,0.9595400000000001,1,0,['Social Sector'],33
+142,2008,2012,11,3,0.9542066666666668,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2011,11,3,0.9336533333333333,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2010,11,2,0.95264,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2009,11,2,0.95336,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2007,2009,11,2,0.9441,1,0,"['Political State Sector', 'Social Sector']",33
+142,2007,2008,11,2,0.9595450000000001,1,0,"['Political State Sector', 'Social Sector']",33
+142,2007,2007,11,2,0.964145,1,0,"['Political State Sector', 'Social Sector']",33
+142,2007,2006,11,2,0.9683999999999999,1,0,"['Political State Sector', 'Social Sector']",33
+142,2008,2014,10,2,0.92105,1,0,"['Sovereignty', 'Social Sector']",33
+142,2008,2010,10,2,0.947225,1,0,['Social Sector'],33
+142,2008,2008,9,2,0.964725,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2007,2008,10,2,0.9453400000000001,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2007,2007,10,2,0.937825,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2008,2015,9,2,0.924785,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2014,9,3,0.9445399999999999,1,0,"['Sovereignty', 'Social Sector', 'Finance Economy Sector']",33
+142,2008,2013,9,2,0.915495,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2012,9,2,0.91414,1,0,"['Social Sector', 'Finance Economy Sector']",33
+142,2008,2011,9,3,0.9272266666666665,1,0,"['Political State Sector', 'Social Sector', 'Finance Economy Sector']",33
+142,2008,2010,9,2,0.939495,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+142,2008,2009,9,2,0.9687049999999999,1,0,"['Political State Sector', 'Finance Economy Sector']",33
+229,2008,2013,11,3,0.9430033333333334,1,0,"['Social Sector', 'Finance Economy Sector']",33

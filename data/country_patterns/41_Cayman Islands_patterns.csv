@@ -1,0 +1,11 @@
+country_b_id_fk,start_year_a_fk,start_year_b_fk,pattern_length_fk,indexes,avg_corr,orgs,Power,Sectors,country_a_id_fk
+9,2007,2007,11,2,0.923098125,1,0,"['Finance Economy Sector', 'Unknown']",41
+101,2007,1996,11,2,0.9150561904761904,1,0,"['Finance Economy Sector', 'Unknown']",41
+142,2010,2004,6,2,0.9209945454545455,1,0,"['Finance Economy Sector', 'Unknown']",41
+142,2010,2004,7,2,0.9252127272727272,1,0,"['Finance Economy Sector', 'Unknown']",41
+179,2010,2004,6,2,0.9502533333333333,1,0,"['Finance Economy Sector', 'Unknown']",41
+179,2010,2004,7,2,0.9335886666666667,1,0,"['Finance Economy Sector', 'Unknown']",41
+183,2010,2005,6,2,0.9451257894736842,1,0,"['Finance Economy Sector', 'Unknown']",41
+183,2010,2005,7,2,0.9457963157894738,1,0,"['Finance Economy Sector', 'Unknown']",41
+206,2010,1999,7,2,0.9583731818181818,1,0,"['Finance Economy Sector', 'Unknown']",41
+249,2007,1996,11,2,0.9096252380952381,1,0,"['Finance Economy Sector', 'Unknown']",41
