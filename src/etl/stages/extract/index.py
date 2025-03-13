@@ -10,13 +10,12 @@ logger = logging.getLogger(__name__)
 def extract_runner(etl_input):
     logger.info("Starting data extraction")
     try:
-        res = get_indicators_dfs(etl_input)
+        indicators = get_indicators_dfs(etl_input)
         logger.info("Data extraction completed successfully")
-        return res
+        return indicators
     except Exception as e:
         logger.error(f"Data extraction failed: {str(e)}")
         raise
-
 
 
 def get_indicators_dfs(etl_input: dict) -> list[pd.DataFrame]:
@@ -33,3 +32,5 @@ def get_indicators_dfs(etl_input: dict) -> list[pd.DataFrame]:
         print("------------")
         print(str(e))
         print("------------")
+        logger.error(f"Error extracting indicators: {str(e)}")
+        raise

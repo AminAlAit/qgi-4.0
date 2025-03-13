@@ -1,8 +1,8 @@
 """ETL Pipeline Application"""
 
 import logging
+from config import load_config  # pylint: disable=import-error
 from etl_runner.index import etl  # pylint: disable=import-error
-from shared.config import load_config
 
 
 def main():

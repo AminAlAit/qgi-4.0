@@ -1,19 +1,26 @@
 
 import pandas as pd
+import logging
 
 
-def transform_runner(indicators):
-    transformed_indicators = []
-    for indicator in indicators:
-        indicator.data = pivot_dataframe(indicator.data)
-        indicator.data = rename_columns(indicator.data)
-        indicator.data, unmatched_countries = clean_country_names(indicator.data)
-        indicator.data = delete_rows_by_country(indicator.data, unmatched_countries)
+logger = logging.getLogger(__name__)
 
-        # final step
-        transformed_indicators.append(indicator)
 
-    return transformed_indicators
+def transform_runner(indicators, etl_input):
+    logger.info("Starting data transformation")
+    try:
+        transformed_indicators = []
+        for indicator in indicators:
+            indicator.data = pivot_dataframe(indicator.data)
+            indicator.data = rename_columns(indicator.data)
+            indicator.data, unmatched_countries = clean_country_names(indicator.data)
+            indicator.data = delete_rows_by_country(indicator.data, unmatched_countries)
+            transformed_indicators.append(indicator)
+        logger.info("Data transformation completed successfully")
+        return transformed_indicators
+    except Exception as e:
+        logger.error(f"Data transformation failed: {str(e)}")
+        raise
 
 
 def pivot_dataframe(df):
@@ -57,6 +64,7 @@ def rename_columns(df, column_mapping = None):
 
 ## TODO: figure out a better way to link "countries.csv" with this function,
 ## rather than reading it multiple times and taking out the "Unnamed" columns.
+## TODO centralize paths
 def clean_country_names(input_df):
     """
     Cleans the 'country' column of the input DataFrame by replacing codes with their corresponding country names.
@@ -70,7 +78,7 @@ def clean_country_names(input_df):
             - list: A list of unmatched values from the 'country' column.
     """
     # Step 1: Load the reference CSV file
-    reference_df = pd.read_csv(r"/workspaces/qgi-4.0/data/countries.csv")
+    reference_df = pd.read_csv(r"/workspace/qgi\qgi-4.0\data\countries.csv") # r"/workspaces/qgi-4.0/data/countries.csv"
     reference_df = reference_df.loc[:, ~reference_df.columns.str.contains("Unnamed")]
 
     # Ensure 'name_1' exists in the reference DataFrame

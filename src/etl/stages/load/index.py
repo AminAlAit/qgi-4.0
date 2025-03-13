@@ -1,25 +1,34 @@
-# import pandas as pd
-# def load_runner(indicators):
-#     for indicator in indicators:
-#         indicator.data.to_csv(r"/workspaces/qgi-4.0/data/" + indicator.id + ".csv")
+"""TODO"""
 
-
+import pyarrow as pa
 import pyarrow.parquet as pq
 import os
+import logging
 
 
-def load_runner(indicators, config):
-    for indicator in indicators:
-        output_dir = os.path.join(config["output_path"], indicator.id)
-        os.makedirs(output_dir, exist_ok=True)
+logger = logging.getLogger(__name__)
 
-        # Convert DataFrame to Parquet format
-        table = pq.Table.from_pandas(indicator.data)
 
-        # Write Parquet file with partitioning and compression
-        pq.write_to_dataset(
-            table,
-            root_path=output_dir,
-            partition_cols=["year"],
-            compression="snappy"
-        )
+def load_runner(indicators, etl_input):
+    logger.info("Starting data loading")
+    try:
+        config = etl_input["config"]
+        for indicator in indicators:
+            output_dir = os.path.join(config["output_path"], indicator.id)
+            os.makedirs(output_dir, exist_ok=True)
+
+            table = pa.Table.from_pandas(indicator.data)
+
+            # Create a unique filename for each indicator
+            output_file = os.path.join(output_dir, f"{indicator.id}.parquet")
+
+            # Write the entire table to a single Parquet file
+            pq.write_table(
+                table,
+                output_file,
+                compression="snappy"
+            )
+        logger.info("Data loading completed successfully")
+    except Exception as e:
+        logger.error(f"Data loading failed: {str(e)}")
+        raise
