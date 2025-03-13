@@ -1,0 +1,6 @@
+indicators:
+  - "SP.POP.TOTL"
+  - "PV.EST"
+output_format: "parquet"
+output_path: "/workspaces/qgi-4.0/data/etl_output"
+file_size_limit: 1000000

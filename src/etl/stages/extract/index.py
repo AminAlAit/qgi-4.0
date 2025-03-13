@@ -1,10 +1,22 @@
 
 import pandas as pd
 from stages.extract.wb_extractor import get_indicator  # pylint: disable=import-error
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def extract_runner(etl_input):
-    return get_indicators_dfs(etl_input)
+    logger.info("Starting data extraction")
+    try:
+        res = get_indicators_dfs(etl_input)
+        logger.info("Data extraction completed successfully")
+        return res
+    except Exception as e:
+        logger.error(f"Data extraction failed: {str(e)}")
+        raise
+
 
 
 def get_indicators_dfs(etl_input: dict) -> list[pd.DataFrame]:
