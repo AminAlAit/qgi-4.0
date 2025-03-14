@@ -7,3 +7,6 @@ torchvision==0.18.0
 tqdm==4.66.4
 wbgapi==1.0.12
 pyarrow==19.0.1
+pytest==8.3.5
+pytest-cov==6.0.0
+coverage==7.6.12

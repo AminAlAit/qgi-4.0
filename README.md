@@ -9,3 +9,6 @@ running app.py
 
 activating venv
 `.venv\Scripts\activate`
+
+installing requirements
+pip install -r requirements.txt
