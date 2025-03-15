@@ -12,8 +12,8 @@ from pattern import Pattern  # pylint: disable=import-error
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
-    level  = logging.INFO,
-    format = "%(asctime)s - %(message)s"
+    level=logging.INFO,
+    format="%(message)s"
 )
 
 
@@ -50,6 +50,7 @@ class PatternExtractor:
 
         # Find patterns with progress tracking
         patterns = self._find_patterns(
+            indicator_id,
             preprocessed_data,
             total_comparisons,
             min_length,
@@ -111,16 +112,33 @@ class PatternExtractor:
         return total_comparisons
 
     def _find_patterns(
-        self, preprocessed_data, total_comparisons, min_length, max_length, correlation_threshold
+        self, indicator_id, preprocessed_data, total_comparisons, min_length, max_length, correlation_threshold
     ):
         """Find patterns with progress tracking"""
         patterns = []
         progress = 0
+        country_a_progress = {}
         logger.info("Total comparisons: %d", total_comparisons)
 
         for i, country_a in enumerate(preprocessed_data):
             values_a = country_a["values"]
             country_a_name = country_a["country"]
+            country_a_patterns = 0
+
+            # Calculate total comparisons for this country
+            total_comparisons_country = 0
+            for segment_length in range(min_length, max_length + 1):
+                if len(values_a) < segment_length:
+                    continue
+                num_segments_a = len(values_a) - segment_length + 1
+                for country_b in preprocessed_data[i+1:]:
+                    if len(country_b["values"]) >= segment_length:
+                        total_comparisons_country += (len(values_a) - segment_length + 1) * (len(country_b["values"]) - segment_length + 1)
+
+            country_a_progress[country_a_name] = {
+                "total": total_comparisons_country,
+                "completed": 0
+            }
 
             for segment_length in range(min_length, max_length + 1):
                 if len(values_a) < segment_length:
@@ -158,14 +176,25 @@ class PatternExtractor:
                                     segment_b
                                 )
                                 patterns.append(pattern)
+                                country_a_patterns += 1
 
-                            # Update and log progress
+                            # Update progress counters
                             progress += 1
+                            country_a_progress[country_a_name]["completed"] += 1
+
+                            # Calculate progress percentages
+                            overall_percent = (progress / total_comparisons) * 100
+                            country_a_percent = (country_a_progress[country_a_name]["completed"] / country_a_progress[country_a_name]["total"]) * 100 if country_a_progress[country_a_name]["total"] > 0 else 0
+
+                            # Log progress
                             if progress % 1000 == 0 or progress == total_comparisons:
-                                percent_complete = (progress / total_comparisons) * 100
                                 logger.info(
-                                    "Progress: %.2f%% (%d of %d comparisons)",
-                                    percent_complete, progress, total_comparisons
+                                    "%s | %s: %.2f%% | %d (%.2f%%)",
+                                    indicator_id,
+                                    country_a_name,
+                                    country_a_percent,
+                                    len(patterns),
+                                    overall_percent
                                 )
 
         return patterns
