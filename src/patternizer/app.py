@@ -11,10 +11,14 @@ from pattern import Pattern  # pylint: disable=import-error
 
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(
+    level  = logging.INFO,
+    format = "%(asctime)s - %(message)s"
+)
 
 
 class PatternExtractor:
-    """TODO"""
+    """Class for extracting patterns from indicator data"""
 
     def __init__(self, data_path):
         self.data_path = data_path
@@ -22,10 +26,8 @@ class PatternExtractor:
     def load_indicator_data(self, indicator_id):
         """Load cleaned indicator data from Parquet file"""
         try:
-            # Construct the correct path to the Parquet file
             indicator_dir = os.path.join(self.data_path, indicator_id)
             parquet_path = os.path.join(indicator_dir, f"{indicator_id}.parquet")
-
             table = pq.read_table(parquet_path)
             return table.to_pandas()
         except Exception as e:
@@ -33,175 +35,173 @@ class PatternExtractor:
             raise
 
     def find_patterns(self, indicator_id, min_length=3, max_length=5, correlation_threshold=0.9):
-        """Find patterns in the indicator data"""
+        """Main method to find patterns in the indicator data"""
         df = self.load_indicator_data(indicator_id)
-        patterns = []
         countries = df["country"].unique()
+        patterns = []
+
+        # Preprocess data for each country
+        preprocessed_data = self._preprocess_data(df, countries)
 
         # Calculate total number of comparisons for progress tracking
+        total_comparisons = self._calculate_total_comparisons(
+            preprocessed_data, min_length, max_length
+        )
+
+        # Find patterns with progress tracking
+        patterns = self._find_patterns(
+            preprocessed_data,
+            total_comparisons,
+            min_length,
+            max_length,
+            correlation_threshold
+        )
+
+        return patterns
+
+    def _preprocess_data(self, df, countries):
+        """Preprocess data for each country"""
+        preprocessed_data = []
+
+        for country in countries:
+            country_data = df[df["country"] == country].sort_values("year")
+            values = country_data["value"].values.copy()
+
+            # Handle NaN values
+            nan_indices = np.isnan(values)
+            if np.sum(nan_indices) > 1:
+                continue
+
+            if np.sum(nan_indices) == 1:
+                nan_pos = np.where(nan_indices)[0][0]
+                if nan_pos == 0:
+                    values[nan_pos] = values[nan_pos + 1]
+                elif nan_pos == len(values) - 1:
+                    values[nan_pos] = values[nan_pos - 1]
+                else:
+                    values[nan_pos] = (values[nan_pos - 1] + values[nan_pos + 1]) / 2
+
+            preprocessed_data.append({
+                "country": country,
+                "data": country_data,
+                "values": values
+            })
+
+        return preprocessed_data
+
+    def _calculate_total_comparisons(self, preprocessed_data, min_length, max_length):
+        """Calculate total number of comparisons for progress tracking"""
         total_comparisons = 0
-        for country_a in countries:
-            country_a_data = df[df["country"] == country_a].sort_values("year")
-            values_a = country_a_data["value"].values
 
-            # Handle NaN values
-            nan_indices = np.isnan(values_a)
-            if np.sum(nan_indices) > 1:
-                continue
-
-            # Fill single NaN if present
-            if np.sum(nan_indices) == 1:
-                nan_pos = np.where(nan_indices)[0][0]
-                if nan_pos == 0:
-                    values_a[nan_pos] = values_a[nan_pos + 1]
-                elif nan_pos == len(values_a) - 1:
-                    values_a[nan_pos] = values_a[nan_pos - 1]
-                else:
-                    values_a[nan_pos] = (values_a[nan_pos - 1] + values_a[nan_pos + 1]) / 2
+        for i, country_a in enumerate(preprocessed_data):
+            values_a = country_a["values"]
 
             for segment_length in range(min_length, max_length + 1):
                 if len(values_a) < segment_length:
                     continue
 
-                for start_idx in range(len(values_a) - segment_length + 1):
-                    for country_b in countries:
-                        if country_a == country_b:
-                            continue
+                num_segments_a = len(values_a) - segment_length + 1
+                num_segments_b = sum(
+                    len(country_b["values"]) - segment_length + 1
+                    for country_b in preprocessed_data[i+1:]
+                    if len(country_b["values"]) >= segment_length
+                )
+                total_comparisons += num_segments_a * num_segments_b
 
-                        country_b_data = df[df["country"] == country_b].sort_values("year")
-                        values_b = country_b_data["value"].values
+        return total_comparisons
 
-                        # Similar NaN handling for country B
-                        nan_indices_b = np.isnan(values_b)
-                        if np.sum(nan_indices_b) > 1:
-                            continue
-
-                        if np.sum(nan_indices_b) == 1:
-                            nan_pos_b = np.where(nan_indices_b)[0][0]
-                            if nan_pos_b == 0:
-                                values_b[nan_pos_b] = values_b[nan_pos_b + 1]
-                            elif nan_pos_b == len(values_b) - 1:
-                                values_b[nan_pos_b] = values_b[nan_pos_b - 1]
-                            else:
-                                values_b[nan_pos_b] = (
-                                    values_b[nan_pos_b - 1] + values_b[nan_pos_b + 1]
-                                ) / 2
-
-                        if len(values_b) < segment_length:
-                            continue
-
-                        total_comparisons += (len(values_b) - segment_length + 1)
-
-        # Reset progress tracking
+    def _find_patterns(
+        self, preprocessed_data, total_comparisons, min_length, max_length, correlation_threshold
+    ):
+        """Find patterns with progress tracking"""
+        patterns = []
         progress = 0
-        logger.info("Total comparisons for %s: %d", indicator_id, total_comparisons)
+        logger.info("Total comparisons: %d", total_comparisons)
 
-        for country_a in countries:
-            country_a_data = df[df["country"] == country_a].sort_values("year")
-            values_a = country_a_data["value"].values
-
-            # Handle NaN values
-            nan_indices = np.isnan(values_a)
-            if np.sum(nan_indices) > 1:
-                continue
-
-            # Fill single NaN if present
-            if np.sum(nan_indices) == 1:
-                nan_pos = np.where(nan_indices)[0][0]
-                if nan_pos == 0:
-                    values_a[nan_pos] = values_a[nan_pos + 1]
-                elif nan_pos == len(values_a) - 1:
-                    values_a[nan_pos] = values_a[nan_pos - 1]
-                else:
-                    values_a[nan_pos] = (values_a[nan_pos - 1] + values_a[nan_pos + 1]) / 2
+        for i, country_a in enumerate(preprocessed_data):
+            values_a = country_a["values"]
+            country_a_name = country_a["country"]
 
             for segment_length in range(min_length, max_length + 1):
                 if len(values_a) < segment_length:
                     continue
 
-                for start_idx in range(len(values_a) - segment_length + 1):
+                num_segments_a = len(values_a) - segment_length + 1
+
+                for start_idx in range(num_segments_a):
                     segment_a = values_a[start_idx:start_idx + segment_length]
 
-                    for country_b in countries:
-                        if country_a == country_b:
-                            continue
-
-                        country_b_data = df[df["country"] == country_b].sort_values("year")
-                        values_b = country_b_data["value"].values
-
-                        # Similar NaN handling for country B
-                        nan_indices_b = np.isnan(values_b)
-                        if np.sum(nan_indices_b) > 1:
-                            continue
-
-                        if np.sum(nan_indices_b) == 1:
-                            nan_pos_b = np.where(nan_indices_b)[0][0]
-                            if nan_pos_b == 0:
-                                values_b[nan_pos_b] = values_b[nan_pos_b + 1]
-                            elif nan_pos_b == len(values_b) - 1:
-                                values_b[nan_pos_b] = values_b[nan_pos_b - 1]
-                            else:
-                                values_b[nan_pos_b] = (
-                                    values_b[nan_pos_b - 1] + values_b[nan_pos_b + 1]
-                                ) / 2
+                    for country_b in preprocessed_data[i+1:]:
+                        values_b = country_b["values"]
+                        country_b_name = country_b["country"]
 
                         if len(values_b) < segment_length:
                             continue
 
-                        for start_idx_b in range(len(values_b) - segment_length + 1):
+                        num_segments_b = len(values_b) - segment_length + 1
+
+                        for start_idx_b in range(num_segments_b):
                             segment_b = values_b[start_idx_b:start_idx_b + segment_length]
 
                             # Calculate correlation
                             correlation, _ = pearsonr(segment_a, segment_b)
 
                             if correlation >= correlation_threshold:
-                                pattern = Pattern()
-                                pattern.indicator_id = indicator_id
-                                pattern.country_a = country_a
-                                pattern.country_b = country_b
-                                pattern.start_year_a = country_a_data.iloc[start_idx]['year']
-                                pattern.start_year_b = country_b_data.iloc[start_idx_b]['year']
-                                pattern.length = segment_length
-                                pattern.correlation = correlation
-                                pattern.data_segment_a = segment_a
-                                pattern.data_segment_b = segment_b
-
+                                pattern = self._create_pattern(
+                                    country_a_name,
+                                    country_b_name,
+                                    segment_length,
+                                    correlation,
+                                    country_a["data"].iloc[start_idx]['year'],
+                                    country_b["data"].iloc[start_idx_b]['year'],
+                                    segment_a,
+                                    segment_b
+                                )
                                 patterns.append(pattern)
 
                             # Update and log progress
                             progress += 1
                             if progress % 1000 == 0 or progress == total_comparisons:
                                 percent_complete = (progress / total_comparisons) * 100
-                                logger.info("Progress: %.2f%% (%d of %d comparisons)",
-                                            percent_complete, progress, total_comparisons)
+                                logger.info(
+                                    "Progress: %.2f%% (%d of %d comparisons)",
+                                    percent_complete, progress, total_comparisons
+                                )
 
         return patterns
+
+    def _create_pattern(
+        self, country_a, country_b, length, correlation, start_year_a, start_year_b, segment_a, segment_b
+    ):
+        """Create a new Pattern object"""
+        pattern = Pattern()
+        pattern.country_a = country_a
+        pattern.country_b = country_b
+        pattern.length = length
+        pattern.correlation = correlation
+        pattern.start_year_a = start_year_a
+        pattern.start_year_b = start_year_b
+        pattern.data_segment_a = segment_a
+        pattern.data_segment_b = segment_b
+        return pattern
 
 
 def main():
     """Main function to run the pattern extraction pipeline"""
     try:
-        # Load configuration
         config = load_config()
-
-        # Initialize pattern extractor
         extractor = PatternExtractor(config["input_path"])
-
-        # Process each indicator with progress tracking
         indicators = config["indicators"]
         total_indicators = len(indicators)
 
         for index, indicator_id in enumerate(indicators, start=1):
-            # Calculate progress percentage
-            progress_percent = (index / total_indicators) * 100
-
-            # Print progress message
             logger.info(
                 "Processing indicator %d of %d (%.1f%% complete): %s",
-                index, total_indicators, progress_percent, indicator_id
+                index, total_indicators,
+                (index / total_indicators) * 100,
+                indicator_id
             )
 
-            # Find patterns for the indicator
             patterns = extractor.find_patterns(
                 indicator_id=indicator_id,
                 min_length=config["min_length"],
@@ -209,11 +209,9 @@ def main():
                 correlation_threshold=config["correlation_threshold"]
             )
 
-            # Save patterns
             output_dir = os.path.join(config["output_path"], indicator_id)
             os.makedirs(output_dir, exist_ok=True)
 
-            # Save patterns to Parquet
             pattern_df = pd.DataFrame([pattern.__dict__ for pattern in patterns])
             pattern_df.to_parquet(
                 os.path.join(output_dir, f"{indicator_id}_patterns.parquet"),
@@ -231,7 +229,10 @@ def main():
 
 
 def load_config(config_path="config.yaml"):
-    """TODO: move to config.py"""
+    """
+    TODO: move to config.py
+    Load configuration from YAML file
+    """
     # Get the directory of the current script (app.py)
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
