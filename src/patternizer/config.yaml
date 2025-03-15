@@ -1,0 +1,8 @@
+indicators:
+  - "SP.POP.TOTL"
+  - "PV.EST"
+input_path: "data/etl_output"
+output_path: "data/patternizer_output"
+min_length: 3
+max_length: 5
+correlation_threshold: 0.9

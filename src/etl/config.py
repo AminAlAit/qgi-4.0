@@ -1,7 +1,7 @@
 """TODO"""
 
-import yaml
 import os
+import yaml
 
 
 def load_config(config_path = "config.yaml"):
