@@ -10,19 +10,19 @@ import pyarrow.parquet as pq
 
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level = logging.INFO, format = "%(message)s")
+logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 
 class SDCI:
     """Class representing a Single Dyadic Correlating Index"""
 
     def __init__(self):
-        self.country_a      = ""
-        self.country_b      = ""
-        self.length         = 0
-        self.start_year_a   = 0
-        self.start_year_b   = 0
-        self.correlation    = 0.0
+        self.country_a = ""
+        self.country_b = ""
+        self.length = 0
+        self.start_year_a = 0
+        self.start_year_b = 0
+        self.correlation = 0.0
         self.data_segment_a = None
         self.data_segment_b = None
 
@@ -30,8 +30,9 @@ class SDCI:
 class SDCIExtractor:
     """Class for extracting SDCIs from indicator data"""
 
-    def __init__(self, data_path):
+    def __init__(self, data_path, output_path):
         self.data_path = data_path
+        self.output_path = output_path
 
     def load_indicator_data(self, indicator_id):
         """Load cleaned indicator data from Parquet file"""
@@ -48,7 +49,6 @@ class SDCIExtractor:
         """Main method to find SDCIs in the indicator data"""
         df = self.load_indicator_data(indicator_id)
         countries = df["country"].unique()
-        sdcis = []
 
         # Preprocess data for each country
         preprocessed_data = self._preprocess_data(df, countries)
@@ -130,15 +130,35 @@ class SDCIExtractor:
         max_length,
         correlation_threshold
     ):
-        """Find SDCIs with progress tracking"""
+        """Find SDCIs with progress tracking and incremental saving"""
         sdcis = []
         progress = 0
         country_a_progress = {}
         logger.info("Total comparisons: %d", total_comparisons)
 
+        # Create indicator output directory
+        indicator_output_dir = os.path.join(self.output_path, indicator_id)
+        os.makedirs(indicator_output_dir, exist_ok=True)
+
+        # Check if there's an existing SDCI file
+        sdcis_df = pd.DataFrame()
+        existing_countries = set()
+        sdcis_file = os.path.join(indicator_output_dir, f"{indicator_id}_sdcis.parquet")
+        if os.path.exists(sdcis_file):
+            sdcis_df = pd.read_parquet(sdcis_file)
+            existing_countries = set(sdcis_df["country_a"].unique())
+            logger.info("Resuming from existing SDCIs for %s", indicator_id)
+
+        # Filter out countries already processed
+        preprocessed_data = [
+            country for country in preprocessed_data
+            if country["country"] not in existing_countries
+        ]
+
         for i, country_a in enumerate(preprocessed_data):
-            values_a        = country_a["values"]
-            country_a_name  = country_a["country"]
+            values_a = country_a["values"]
+            country_a_name = country_a["country"]
+            country_a_sdcis = []
 
             # Calculate total comparisons for this country
             total_comparisons_country = 0
@@ -191,7 +211,7 @@ class SDCIExtractor:
                                 sdc.start_year_b = country_b["data"].iloc[start_idx_b]['year']
                                 sdc.data_segment_a = segment_a
                                 sdc.data_segment_b = segment_b
-                                sdcis.append(sdc)
+                                country_a_sdcis.append(sdc)
 
                             # Update progress counters
                             progress += 1
@@ -210,11 +230,23 @@ class SDCIExtractor:
                                     indicator_id,
                                     country_a_name,
                                     country_a_percent,
-                                    len(sdcis),
+                                    len(sdcis) + len(country_a_sdcis),
                                     overall_percent
                                 )
 
-        return sdcis
+            # Save SDCIs for this country after processing
+            if country_a_sdcis:
+                country_a_sdcis_df = pd.DataFrame([sdc.__dict__ for sdc in country_a_sdcis])
+                combined_df = pd.concat([sdcis_df, country_a_sdcis_df], ignore_index=True)
+                combined_df.to_parquet(
+                    sdcis_file,
+                    index=False,
+                    compression="snappy"
+                )
+                sdcis_df = combined_df
+                logger.info("Saved SDCIs for country %s", country_a_name)
+
+        return sdcis_df.to_dict("records")
 
     def _create_sdci(
         self,
@@ -229,12 +261,12 @@ class SDCIExtractor:
     ):
         """Create a new SDCI object"""
         sdc = SDCI()
-        sdc.country_a      = country_a
-        sdc.country_b      = country_b
-        sdc.length         = length
-        sdc.correlation    = correlation
-        sdc.start_year_a   = start_year_a
-        sdc.start_year_b   = start_year_b
+        sdc.country_a = country_a
+        sdc.country_b = country_b
+        sdc.length = length
+        sdc.correlation = correlation
+        sdc.start_year_a = start_year_a
+        sdc.start_year_b = start_year_b
         sdc.data_segment_a = segment_a
         sdc.data_segment_b = segment_b
         return sdc
@@ -244,7 +276,7 @@ def main():
     """Main function to run the SDCI extraction pipeline"""
     try:
         config = load_config()
-        extractor = SDCIExtractor(config["input_path"])
+        extractor = SDCIExtractor(config["input_path"], config["output_path"])
         indicators = config["indicators"]
         total_indicators = len(indicators)
 
@@ -261,16 +293,6 @@ def main():
                 min_length=config["min_length"],
                 max_length=config["max_length"],
                 correlation_threshold=config["correlation_threshold"]
-            )
-
-            output_dir = os.path.join(config["output_path"], indicator_id)
-            os.makedirs(output_dir, exist_ok=True)
-
-            sdcis_df = pd.DataFrame([sdc.__dict__ for sdc in sdcis])
-            sdcis_df.to_parquet(
-                os.path.join(output_dir, f"{indicator_id}_sdcis.parquet"),
-                index=False,
-                compression="snappy"
             )
 
             logger.info("Found %d SDCIs for indicator %s", len(sdcis), indicator_id)
