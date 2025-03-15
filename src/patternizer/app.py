@@ -1,4 +1,4 @@
-"""Pattern Extraction Application"""
+"""SDCI Extraction Application"""
 
 import logging
 import os
@@ -7,18 +7,28 @@ import pandas as pd
 import numpy as np
 from scipy.stats import pearsonr
 import pyarrow.parquet as pq
-from pattern import Pattern  # pylint: disable=import-error
 
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(message)s"
-)
+logging.basicConfig(level = logging.INFO, format = "%(message)s")
 
 
-class PatternExtractor:
-    """Class for extracting patterns from indicator data"""
+class SDCI:
+    """Class representing a Single Dyadic Correlating Index"""
+
+    def __init__(self):
+        self.country_a      = ""
+        self.country_b      = ""
+        self.length         = 0
+        self.start_year_a   = 0
+        self.start_year_b   = 0
+        self.correlation    = 0.0
+        self.data_segment_a = None
+        self.data_segment_b = None
+
+
+class SDCIExtractor:
+    """Class for extracting SDCIs from indicator data"""
 
     def __init__(self, data_path):
         self.data_path = data_path
@@ -34,11 +44,11 @@ class PatternExtractor:
             logger.error(f"Error loading data for {indicator_id}: {str(e)}")
             raise
 
-    def find_patterns(self, indicator_id, min_length=3, max_length=5, correlation_threshold=0.9):
-        """Main method to find patterns in the indicator data"""
+    def find_sdcis(self, indicator_id, min_length=3, max_length=5, correlation_threshold=0.9):
+        """Main method to find SDCIs in the indicator data"""
         df = self.load_indicator_data(indicator_id)
         countries = df["country"].unique()
-        patterns = []
+        sdcis = []
 
         # Preprocess data for each country
         preprocessed_data = self._preprocess_data(df, countries)
@@ -48,8 +58,8 @@ class PatternExtractor:
             preprocessed_data, min_length, max_length
         )
 
-        # Find patterns with progress tracking
-        patterns = self._find_patterns(
+        # Find SDCIs with progress tracking
+        sdcis = self._find_sdcis(
             indicator_id,
             preprocessed_data,
             total_comparisons,
@@ -58,7 +68,7 @@ class PatternExtractor:
             correlation_threshold
         )
 
-        return patterns
+        return sdcis
 
     def _preprocess_data(self, df, countries):
         """Preprocess data for each country"""
@@ -111,19 +121,24 @@ class PatternExtractor:
 
         return total_comparisons
 
-    def _find_patterns(
-        self, indicator_id, preprocessed_data, total_comparisons, min_length, max_length, correlation_threshold
+    def _find_sdcis(
+        self,
+        indicator_id,
+        preprocessed_data,
+        total_comparisons,
+        min_length,
+        max_length,
+        correlation_threshold
     ):
-        """Find patterns with progress tracking"""
-        patterns = []
+        """Find SDCIs with progress tracking"""
+        sdcis = []
         progress = 0
         country_a_progress = {}
         logger.info("Total comparisons: %d", total_comparisons)
 
         for i, country_a in enumerate(preprocessed_data):
-            values_a = country_a["values"]
-            country_a_name = country_a["country"]
-            country_a_patterns = 0
+            values_a        = country_a["values"]
+            country_a_name  = country_a["country"]
 
             # Calculate total comparisons for this country
             total_comparisons_country = 0
@@ -133,7 +148,9 @@ class PatternExtractor:
                 num_segments_a = len(values_a) - segment_length + 1
                 for country_b in preprocessed_data[i+1:]:
                     if len(country_b["values"]) >= segment_length:
-                        total_comparisons_country += (len(values_a) - segment_length + 1) * (len(country_b["values"]) - segment_length + 1)
+                        total_comparisons_country += (
+                            len(values_a) - segment_length + 1
+                        ) * (len(country_b["values"]) - segment_length + 1)
 
             country_a_progress[country_a_name] = {
                 "total": total_comparisons_country,
@@ -165,18 +182,16 @@ class PatternExtractor:
                             correlation, _ = pearsonr(segment_a, segment_b)
 
                             if correlation >= correlation_threshold:
-                                pattern = self._create_pattern(
-                                    country_a_name,
-                                    country_b_name,
-                                    segment_length,
-                                    correlation,
-                                    country_a["data"].iloc[start_idx]['year'],
-                                    country_b["data"].iloc[start_idx_b]['year'],
-                                    segment_a,
-                                    segment_b
-                                )
-                                patterns.append(pattern)
-                                country_a_patterns += 1
+                                sdc = SDCI()
+                                sdc.country_a = country_a_name
+                                sdc.country_b = country_b_name
+                                sdc.length = segment_length
+                                sdc.correlation = correlation
+                                sdc.start_year_a = country_a["data"].iloc[start_idx]['year']
+                                sdc.start_year_b = country_b["data"].iloc[start_idx_b]['year']
+                                sdc.data_segment_a = segment_a
+                                sdc.data_segment_b = segment_b
+                                sdcis.append(sdc)
 
                             # Update progress counters
                             progress += 1
@@ -184,7 +199,9 @@ class PatternExtractor:
 
                             # Calculate progress percentages
                             overall_percent = (progress / total_comparisons) * 100
-                            country_a_percent = (country_a_progress[country_a_name]["completed"] / country_a_progress[country_a_name]["total"]) * 100 if country_a_progress[country_a_name]["total"] > 0 else 0
+                            country_a_percent = (
+                                country_a_progress[country_a_name]["completed"] / country_a_progress[country_a_name]["total"]
+                            ) * 100 if country_a_progress[country_a_name]["total"] > 0 else 0
 
                             # Log progress
                             if progress % 1000 == 0 or progress == total_comparisons:
@@ -193,33 +210,41 @@ class PatternExtractor:
                                     indicator_id,
                                     country_a_name,
                                     country_a_percent,
-                                    len(patterns),
+                                    len(sdcis),
                                     overall_percent
                                 )
 
-        return patterns
+        return sdcis
 
-    def _create_pattern(
-        self, country_a, country_b, length, correlation, start_year_a, start_year_b, segment_a, segment_b
+    def _create_sdci(
+        self,
+        country_a,
+        country_b,
+        length,
+        correlation,
+        start_year_a,
+        start_year_b,
+        segment_a,
+        segment_b
     ):
-        """Create a new Pattern object"""
-        pattern = Pattern()
-        pattern.country_a = country_a
-        pattern.country_b = country_b
-        pattern.length = length
-        pattern.correlation = correlation
-        pattern.start_year_a = start_year_a
-        pattern.start_year_b = start_year_b
-        pattern.data_segment_a = segment_a
-        pattern.data_segment_b = segment_b
-        return pattern
+        """Create a new SDCI object"""
+        sdc = SDCI()
+        sdc.country_a      = country_a
+        sdc.country_b      = country_b
+        sdc.length         = length
+        sdc.correlation    = correlation
+        sdc.start_year_a   = start_year_a
+        sdc.start_year_b   = start_year_b
+        sdc.data_segment_a = segment_a
+        sdc.data_segment_b = segment_b
+        return sdc
 
 
 def main():
-    """Main function to run the pattern extraction pipeline"""
+    """Main function to run the SDCI extraction pipeline"""
     try:
         config = load_config()
-        extractor = PatternExtractor(config["input_path"])
+        extractor = SDCIExtractor(config["input_path"])
         indicators = config["indicators"]
         total_indicators = len(indicators)
 
@@ -231,7 +256,7 @@ def main():
                 indicator_id
             )
 
-            patterns = extractor.find_patterns(
+            sdcis = extractor.find_sdcis(
                 indicator_id=indicator_id,
                 min_length=config["min_length"],
                 max_length=config["max_length"],
@@ -241,19 +266,19 @@ def main():
             output_dir = os.path.join(config["output_path"], indicator_id)
             os.makedirs(output_dir, exist_ok=True)
 
-            pattern_df = pd.DataFrame([pattern.__dict__ for pattern in patterns])
-            pattern_df.to_parquet(
-                os.path.join(output_dir, f"{indicator_id}_patterns.parquet"),
+            sdcis_df = pd.DataFrame([sdc.__dict__ for sdc in sdcis])
+            sdcis_df.to_parquet(
+                os.path.join(output_dir, f"{indicator_id}_sdcis.parquet"),
                 index=False,
                 compression="snappy"
             )
 
-            logger.info("Found %d patterns for indicator %s", len(patterns), indicator_id)
+            logger.info("Found %d SDCIs for indicator %s", len(sdcis), indicator_id)
 
-        logger.info("Pattern extraction pipeline completed successfully")
+        logger.info("SDCI extraction pipeline completed successfully")
 
     except Exception as e:
-        logger.error("Pattern extraction pipeline failed: %s", str(e))
+        logger.error("SDCI extraction pipeline failed: %s", str(e))
         raise
 
 
