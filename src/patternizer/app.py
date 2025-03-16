@@ -7,6 +7,8 @@ import pandas as pd
 import numpy as np
 from scipy.stats import pearsonr
 import pyarrow.parquet as pq
+import json
+from datetime import datetime
 
 
 logger = logging.getLogger(__name__)
@@ -33,6 +35,7 @@ class SDCIExtractor:
     def __init__(self, data_path, output_path):
         self.data_path = data_path
         self.output_path = output_path
+        self.processing_log_path = os.path.join(data_path, "processing_log.json")
 
     def load_indicator_data(self, indicator_id):
         """Load cleaned indicator data from Parquet file"""
@@ -40,7 +43,8 @@ class SDCIExtractor:
             indicator_dir = os.path.join(self.data_path, indicator_id)
             parquet_path = os.path.join(indicator_dir, f"{indicator_id}.parquet")
             table = pq.read_table(parquet_path)
-            return table.to_pandas()
+            df = table.to_pandas()
+            return df
         except Exception as e:
             logger.error(f"Error loading data for {indicator_id}: {str(e)}")
             raise
@@ -271,6 +275,42 @@ class SDCIExtractor:
         sdc.data_segment_b = segment_b
         return sdc
 
+    def update_processing_log(self, indicator_id, status, num_sdcis=0, error_message=None, last_year=None, correlation_threshold=None):
+        """Update the processing log with status for an indicator"""
+        try:
+            # Load existing log or create new
+            if os.path.exists(self.processing_log_path):
+                try:
+                    with open(self.processing_log_path, 'r') as f:
+                        log = json.load(f)
+                except json.JSONDecodeError:
+                    # If JSON is invalid, start with an empty log
+                    log = {}
+                    logger.warning("Processing log was corrupted. Starting with a new log.")
+            else:
+                log = {}
+
+            # Ensure last_year is a standard integer
+            if last_year is not None:
+                last_year = int(last_year)
+
+            # Update indicator entry
+            log[indicator_id] = {
+                "status": status,
+                "num_sdcis": num_sdcis,
+                "error_message": error_message,
+                "last_updated": datetime.now().isoformat(),
+                "last_year": last_year,
+                "correlation_threshold": correlation_threshold
+            }
+
+            # Save updated log
+            with open(self.processing_log_path, 'w') as f:
+                json.dump(log, f, indent=2)
+
+        except Exception as e:
+            logger.error(f"Error updating processing log: {str(e)}")
+
 
 def main():
     """Main function to run the SDCI extraction pipeline"""
@@ -288,14 +328,48 @@ def main():
                 indicator_id
             )
 
-            sdcis = extractor.find_sdcis(
-                indicator_id=indicator_id,
-                min_length=config["min_length"],
-                max_length=config["max_length"],
+            # Load indicator data to get last year
+            df = extractor.load_indicator_data(indicator_id)
+            last_year = df['year'].max()
+
+            # Update processing log to "in progress"
+            extractor.update_processing_log(
+                indicator_id, 
+                "in progress", 
+                last_year=last_year,
                 correlation_threshold=config["correlation_threshold"]
             )
 
-            logger.info("Found %d SDCIs for indicator %s", len(sdcis), indicator_id)
+            try:
+                sdcis = extractor.find_sdcis(
+                    indicator_id=indicator_id,
+                    min_length=config["min_length"],
+                    max_length=config["max_length"],
+                    correlation_threshold=config["correlation_threshold"]
+                )
+
+                # Update processing log to "completed"
+                extractor.update_processing_log(
+                    indicator_id,
+                    "completed",
+                    num_sdcis=len(sdcis),
+                    last_year=last_year,
+                    correlation_threshold=config["correlation_threshold"]
+                )
+
+                logger.info("Found %d SDCIs for indicator %s", len(sdcis), indicator_id)
+
+            except Exception as e:
+                # Update processing log to "failed"
+                extractor.update_processing_log(
+                    indicator_id,
+                    "failed",
+                    error_message=str(e),
+                    last_year=last_year,
+                    correlation_threshold=config["correlation_threshold"]
+                )
+                logger.error("Processing failed for indicator %s: %s", indicator_id, str(e))
+                continue
 
         logger.info("SDCI extraction pipeline completed successfully")
 
@@ -306,7 +380,6 @@ def main():
 
 def load_config(config_path="config.yaml"):
     """
-    TODO: move to config.py
     Load configuration from YAML file
     """
     # Get the directory of the current script (app.py)
