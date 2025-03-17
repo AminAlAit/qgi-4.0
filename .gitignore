@@ -19,3 +19,6 @@ env/
 # Ignore log files and other temporary files
 *.log
 *.tmp
+
+# Ignore pattenir parquet outputs
+*_sdcis.parquet
