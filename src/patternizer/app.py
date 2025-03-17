@@ -52,7 +52,7 @@ class SDCIExtractor:
             logger.error(f"Error loading data for {indicator_id}: {str(e)}")
             raise
 
-    def find_sdcis(self, indicator_id, min_length=3, max_length=5, correlation_threshold=0.9):
+    def find_sdcis(self, indicator_id, min_length=3, correlation_threshold=0.9):
         """Main method to find SDCIs in the indicator data"""
         df = self.load_indicator_data(indicator_id)
         countries = df["country"].unique()
@@ -62,7 +62,7 @@ class SDCIExtractor:
 
         # Calculate total number of comparisons for progress tracking
         total_comparisons = self._calculate_total_comparisons(
-            preprocessed_data, min_length, max_length
+            preprocessed_data, min_length
         )
 
         # Find SDCIs with progress tracking
@@ -71,7 +71,6 @@ class SDCIExtractor:
             preprocessed_data,
             total_comparisons,
             min_length,
-            max_length,
             correlation_threshold
         )
 
@@ -125,7 +124,7 @@ class SDCIExtractor:
 
         return preprocessed_data
 
-    def _calculate_total_comparisons(self, preprocessed_data, min_length, max_length):
+    def _calculate_total_comparisons(self, preprocessed_data, min_length):
         """
         Calculate the total number of segment comparisons for progress tracking.
 
@@ -142,7 +141,6 @@ class SDCIExtractor:
         Parameters:
         preprocessed_data (list): List of dictionaries containing preprocessed data for each country
         min_length (int): Minimum segment length to consider
-        max_length (int): Maximum segment length to consider
 
         Returns:
         int: Total number of comparisons that will be performed
@@ -151,8 +149,9 @@ class SDCIExtractor:
 
         for i, country_a in enumerate(preprocessed_data):
             values_a = country_a["values"]
+            max_length_a = len(values_a) - 1
 
-            for segment_length in range(min_length, max_length + 1):
+            for segment_length in range(min_length, max_length_a + 1):
                 if len(values_a) < segment_length:
                     continue
 
@@ -172,7 +171,6 @@ class SDCIExtractor:
         preprocessed_data,
         total_comparisons,
         min_length,
-        max_length,
         correlation_threshold
     ):
         """
@@ -193,7 +191,6 @@ class SDCIExtractor:
         preprocessed_data (list): List of dictionaries containing preprocessed data for each country
         total_comparisons (int): Total number of comparisons to be made for progress tracking
         min_length (int): Minimum segment length to consider
-        max_length (int): Maximum segment length to consider
         correlation_threshold (float): Minimum correlation required to qualify as an SDCI
 
         Returns:
@@ -228,9 +225,11 @@ class SDCIExtractor:
             country_a_name = country_a["country"]
             country_a_sdcis = []
 
+            max_length_a = len(values_a) - 1
+
             # Calculate total comparisons for this country
             total_comparisons_country = 0
-            for segment_length in range(min_length, max_length + 1):
+            for segment_length in range(min_length, max_length_a + 1):
                 if len(values_a) < segment_length:
                     continue
                 num_segments_a = len(values_a) - segment_length + 1
@@ -245,7 +244,7 @@ class SDCIExtractor:
                 "completed": 0
             }
 
-            for segment_length in range(min_length, max_length + 1):
+            for segment_length in range(min_length, max_length_a + 1):
                 if len(values_a) < segment_length:
                     continue
 
@@ -258,7 +257,8 @@ class SDCIExtractor:
                         values_b = country_b["values"]
                         country_b_name = country_b["country"]
 
-                        if len(values_b) < segment_length:
+                        max_length_b = len(values_b) - 1
+                        if segment_length > max_length_b:
                             continue
 
                         num_segments_b = len(values_b) - segment_length + 1
@@ -417,7 +417,7 @@ def main():
                 sdcis = extractor.find_sdcis(
                     indicator_id=indicator_id,
                     min_length=config["min_length"],
-                    max_length=config["max_length"],
+                    #max_length=config["max_length"],
                     correlation_threshold=config["correlation_threshold"]
                 )
 
