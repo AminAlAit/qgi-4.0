@@ -19,14 +19,12 @@ class SDCI:
     """Class representing a Single Dyadic Correlating Index"""
 
     def __init__(self):
-        self.country_a = ""
-        self.country_b = ""
+        self.country_a_id = 0
+        self.country_b_id = 0
         self.length = 0
         self.start_year_a = 0
         self.start_year_b = 0
         self.correlation = 0.0
-        self.data_segment_a = None
-        self.data_segment_b = None
 
 
 class SDCIExtractor:
@@ -36,6 +34,11 @@ class SDCIExtractor:
         self.data_path = data_path
         self.output_path = output_path
         self.processing_log_path = os.path.join(data_path, "processing_log.json")
+        
+        # Load countries.csv to create name-to-id mapping
+        countries_csv_path = r"/workspace/qgi\qgi-4.0\data\countries.csv"
+        self.countries_df = pd.read_csv(countries_csv_path)
+        self.country_name_to_id = {row["name_1"]: row["id"] for _, row in self.countries_df.iterrows()}
 
     def load_indicator_data(self, indicator_id):
         """Load cleaned indicator data from Parquet file"""
@@ -203,15 +206,15 @@ class SDCIExtractor:
 
         # Create indicator output directory
         indicator_output_dir = os.path.join(self.output_path, indicator_id)
-        os.makedirs(indicator_output_dir, exist_ok = True)
+        os.makedirs(indicator_output_dir, exist_ok=True)
 
         # Check if there's an existing SDCI file
-        sdcis_df           = pd.DataFrame()
+        sdcis_df = pd.DataFrame()
         existing_countries = set()
-        sdcis_file         = os.path.join(indicator_output_dir, f"{indicator_id}_sdcis.parquet")
+        sdcis_file = os.path.join(indicator_output_dir, f"{indicator_id}_sdcis.parquet")
         if os.path.exists(sdcis_file):
             sdcis_df = pd.read_parquet(sdcis_file)
-            existing_countries = set(sdcis_df["country_a"].unique())
+            existing_countries = set(sdcis_df["country_a_id"].unique())
             logger.info("Resuming from existing SDCIs for %s", indicator_id)
 
         # Filter out countries already processed
@@ -251,8 +254,6 @@ class SDCIExtractor:
                 for start_idx in range(num_segments_a):
                     segment_a = values_a[start_idx:start_idx + segment_length]
 
-                    ## TODO: do countries_b list start from the beginning (letter A)? because when I ran the script in debug mode
-                    ## it showed me that country A is Belgium while Country B is Benin. Instead Country B should be something like Afghanistan
                     for country_b in preprocessed_data[i+1:]:
                         values_b = country_b["values"]
                         country_b_name = country_b["country"]
@@ -270,14 +271,13 @@ class SDCIExtractor:
 
                             if correlation >= correlation_threshold:
                                 sdc = SDCI()
-                                sdc.country_a = country_a_name
-                                sdc.country_b = country_b_name
+                                # Convert country names to ids using the mapping
+                                sdc.country_a_id = self.country_name_to_id.get(country_a_name, 0)
+                                sdc.country_b_id = self.country_name_to_id.get(country_b_name, 0)
                                 sdc.length = segment_length
                                 sdc.correlation = correlation
                                 sdc.start_year_a = country_a["data"].iloc[start_idx]["year"]
                                 sdc.start_year_b = country_b["data"].iloc[start_idx_b]["year"]
-                                sdc.data_segment_a = segment_a
-                                sdc.data_segment_b = segment_b
                                 country_a_sdcis.append(sdc)
 
                             # Update progress counters
@@ -303,40 +303,48 @@ class SDCIExtractor:
 
             # Save SDCIs for this country after processing
             if country_a_sdcis:
-                country_a_sdcis_df = pd.DataFrame([sdc.__dict__ for sdc in country_a_sdcis])
-                combined_df = pd.concat([sdcis_df, country_a_sdcis_df], ignore_index=True)
+                # Create DataFrame with only the relevant columns
+                country_a_sdcis_df = pd.DataFrame([
+                    {
+                        "country_a_id": sdc.country_a_id,
+                        "country_b_id": sdc.country_b_id,
+                        "length":       sdc.length,
+                        "start_year_a": sdc.start_year_a,
+                        "start_year_b": sdc.start_year_b,
+                        "correlation":  round(sdc.correlation, 6)
+                    } for sdc in country_a_sdcis
+                ])
+
+                # Convert to optimal data types
+                country_a_sdcis_df = country_a_sdcis_df.astype({
+                    "country_a_id": "uint16",
+                    "country_b_id": "uint16",
+                    "length":       "uint16",
+                    "start_year_a": "uint16",
+                    "start_year_b": "uint16",
+                    "correlation":  "float32"
+                })
+
+                # Convert country IDs to categorical if there are many repeated values
+                country_a_sdcis_df["country_a_id"] = country_a_sdcis_df["country_a_id"].astype("category")
+                country_a_sdcis_df["country_b_id"] = country_a_sdcis_df["country_b_id"].astype("category")
+
+                combined_df = pd.concat(
+                    [sdcis_df, country_a_sdcis_df],
+                    ignore_index = True
+                )
+                # saving When to Parquet, specify compression settings
                 combined_df.to_parquet(
                     sdcis_file,
-                    index=False,
-                    compression="snappy"
+                    index                      = False,
+                    compression                = "gzip",
+                    coerce_timestamps          = "ms",
+                    allow_truncated_timestamps = True
                 )
                 sdcis_df = combined_df
                 logger.info("Saved SDCIs for country %s", country_a_name)
 
         return sdcis_df.to_dict("records")
-
-    def _create_sdci(
-        self,
-        country_a,
-        country_b,
-        length,
-        correlation,
-        start_year_a,
-        start_year_b,
-        segment_a,
-        segment_b
-    ):
-        """Create a new SDCI object"""
-        sdc = SDCI()
-        sdc.country_a = country_a
-        sdc.country_b = country_b
-        sdc.length = length
-        sdc.correlation = correlation
-        sdc.start_year_a = start_year_a
-        sdc.start_year_b = start_year_b
-        sdc.data_segment_a = segment_a
-        sdc.data_segment_b = segment_b
-        return sdc
 
     def update_processing_log(
         self, indicator_id, status, num_sdcis=0, error_message=None, last_year=None, correlation_threshold=None
@@ -385,7 +393,7 @@ def main():
         indicators = config["indicators"]
         total_indicators = len(indicators)
 
-        for index, indicator_id in enumerate(indicators, start = 1):
+        for index, indicator_id in enumerate(indicators, start=1):
             logger.info(
                 "Processing indicator %d of %d (%.1f%% complete): %s",
                 index, total_indicators,
@@ -407,10 +415,10 @@ def main():
 
             try:
                 sdcis = extractor.find_sdcis(
-                    indicator_id = indicator_id,
-                    min_length = config["min_length"],
-                    max_length = config["max_length"],
-                    correlation_threshold = config["correlation_threshold"]
+                    indicator_id=indicator_id,
+                    min_length=config["min_length"],
+                    max_length=config["max_length"],
+                    correlation_threshold=config["correlation_threshold"]
                 )
 
                 # Update processing log to "completed"

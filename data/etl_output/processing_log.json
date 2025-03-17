@@ -3,7 +3,23 @@
     "status": "in progress",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-03-16T14:42:24.661535",
+    "last_updated": "2025-03-16T23:18:09.087525",
+    "last_year": 2023,
+    "correlation_threshold": 0.9
+  },
+  "SP.POP.TOTL_shrinked": {
+    "status": "completed",
+    "num_sdcis": 82769,
+    "error_message": null,
+    "last_updated": "2025-03-16T23:14:45.788551",
+    "last_year": 2023,
+    "correlation_threshold": 0.9
+  },
+  "PV.EST_shrinked": {
+    "status": "completed",
+    "num_sdcis": 0,
+    "error_message": null,
+    "last_updated": "2025-03-16T23:14:45.823225",
     "last_year": 2023,
     "correlation_threshold": 0.9
   }
