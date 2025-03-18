@@ -2,7 +2,7 @@
 
 SDCI: Single dyadic correlating index
 
-
+TODO: remove and uninstall `sdcis`, `sdci_database`, and everything related to MySQL.
 TODO: optimize the use of these commands
 running app.py
 `& /workspace/qgi/qgi-4.0/.venv/Scripts/python.exe /workspace/qgi/qgi-4.0/src/etl/app.py`

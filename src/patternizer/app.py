@@ -317,9 +317,6 @@ class SDCIExtractor:
                 logger.info("Saving SDCIs for country %s to Parquet", country_a_name)
                 self._save_to_parquet(country_a_sdcis, sdcis_file, sdcis_df)
 
-                logger.info("Saving SDCIs for country %s to MySQL", country_a_name)
-                self._save_to_mysql(country_a_sdcis, indicator_id)
-
                 sdcis_df = pd.concat([sdcis_df, self._convert_sdcis_to_df(country_a_sdcis)], ignore_index=True)
                 sdcis.extend(country_a_sdcis)
 
@@ -363,38 +360,6 @@ class SDCIExtractor:
             allow_truncated_timestamps=True
         )
 
-    def _save_to_mysql(self, country_a_sdcis, indicator_id):
-        """Save SDCIs to MySQL database"""
-        sdcis_df = self._convert_sdcis_to_df(country_a_sdcis)
-        sdcis_df["indicator_id"] = indicator_id  # Add indicator_id column
-
-        try:
-            connection = mysql.connector.connect(**self.mysql_config)
-            if connection.is_connected():
-                cursor = connection.cursor()
-
-                # Prepare INSERT query
-                insert_query = """
-                INSERT INTO sdcis 
-                (country_a_id, country_b_id, length, start_year_a, start_year_b, correlation, indicator_id)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-                """
-
-                # Convert DataFrame to list of tuples for batch insert
-                data_to_insert = list(sdcis_df.itertuples(index=False, name=None))
-
-                # Execute batch insert
-                cursor.executemany(insert_query, data_to_insert)
-                connection.commit()
-                logger.info("Inserted %d SDCIs into MySQL", len(data_to_insert))
-
-        except Error as e:
-            logger.error("Error saving to MySQL: %s", e)
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
-
     def update_processing_log(
         self, indicator_id, status, num_sdcis=0, error_message=None, last_year=None, correlation_threshold=None
     ):
@@ -434,71 +399,94 @@ class SDCIExtractor:
             logger.error(f"Error updating processing log: {str(e)}")
 
 
-def main():
-    """Main function to run the SDCI extraction pipeline"""
+def initialize_extractor(config):
+    """
+    Initialize the SDCIExtractor with the given configuration
+    """
+    return SDCIExtractor(config["input_path"], config["output_path"])
+
+def process_indicators(extractor, indicators, config):
+    """
+    Process all indicators in the list
+    """
+    total_indicators = len(indicators)
+
+    for index, indicator_id in enumerate(indicators, start=1):
+        logger.info(
+            "Processing indicator %d of %d (%.1f%% complete): %s",
+            index, total_indicators,
+            (index / total_indicators) * 100,
+            indicator_id
+        )
+
+        process_indicator(extractor, indicator_id, config)
+
+def process_indicator(extractor, indicator_id, config):
+    """
+    Process a single indicator
+    """
     try:
-        config = load_config()
-        extractor = SDCIExtractor(config["input_path"], config["output_path"])
-        indicators = config["indicators"]
-        total_indicators = len(indicators)
+        # Load indicator data to get last year
+        df = extractor.load_indicator_data(indicator_id)
+        last_year = df["year"].max()
 
-        for index, indicator_id in enumerate(indicators, start=1):
-            logger.info(
-                "Processing indicator %d of %d (%.1f%% complete): %s",
-                index, total_indicators,
-                (index / total_indicators) * 100,
-                indicator_id
-            )
+        # Update processing log to "in progress"
+        update_processing_status(
+            extractor,
+            indicator_id,
+            "in progress",
+            last_year=last_year,
+            correlation_threshold=config["correlation_threshold"]
+        )
 
-            # Load indicator data to get last year
-            df = extractor.load_indicator_data(indicator_id)
-            last_year = df["year"].max()
+        # Find SDCIs for the indicator
+        sdcis = extractor.find_sdcis(
+            indicator_id=indicator_id,
+            min_length=config["min_length"],
+            correlation_threshold=config["correlation_threshold"]
+        )
 
-            # Update processing log to "in progress"
-            extractor.update_processing_log(
-                indicator_id,
-                "in progress", 
-                last_year=last_year,
-                correlation_threshold=config["correlation_threshold"]
-            )
+        # Update processing log to "completed"
+        update_processing_status(
+            extractor,
+            indicator_id,
+            "completed",
+            num_sdcis=len(sdcis),
+            last_year=last_year,
+            correlation_threshold=config["correlation_threshold"]
+        )
 
-            try:
-                sdcis = extractor.find_sdcis(
-                    indicator_id=indicator_id,
-                    min_length=config["min_length"],
-                    #max_length=config["max_length"],
-                    correlation_threshold=config["correlation_threshold"]
-                )
-
-                # Update processing log to "completed"
-                extractor.update_processing_log(
-                    indicator_id,
-                    "completed",
-                    num_sdcis=len(sdcis),
-                    last_year=last_year,
-                    correlation_threshold=config["correlation_threshold"]
-                )
-
-                logger.info("Found %d SDCIs for indicator %s", len(sdcis), indicator_id)
-
-            except Exception as e:
-                # Update processing log to "failed"
-                extractor.update_processing_log(
-                    indicator_id,
-                    "failed",
-                    error_message=str(e),
-                    last_year=last_year,
-                    correlation_threshold=config["correlation_threshold"]
-                )
-                logger.error("Processing failed for indicator %s: %s", indicator_id, str(e))
-                continue
-
-        logger.info("SDCI extraction pipeline completed successfully")
+        logger.info("Found %d SDCIs for indicator %s", len(sdcis), indicator_id)
 
     except Exception as e:
-        logger.error("SDCI extraction pipeline failed: %s", str(e))
+        # Update processing log to "failed"
+        update_processing_status(
+            extractor,
+            indicator_id,
+            "failed",
+            error_message=str(e),
+            last_year=last_year,
+            correlation_threshold=config["correlation_threshold"]
+        )
+        logger.error("Processing failed for indicator %s: %s", indicator_id, str(e))
         raise
 
+def update_processing_status(extractor, indicator_id, status, **kwargs):
+    """
+    Update the processing status for an indicator
+    """
+    extractor.update_processing_log(indicator_id, status, **kwargs)
+
+def load_configuration(config_path="config.yaml"):
+    """
+    Load configuration from YAML file
+    """
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    config_full_path = os.path.join(current_dir, config_path)
+
+    with open(config_full_path, "r") as f:
+        config = yaml.safe_load(f)
+    return config
 
 def load_config(config_path="config.yaml"):
     """
@@ -514,6 +502,19 @@ def load_config(config_path="config.yaml"):
         config = yaml.safe_load(f)
     return config
 
+def main():
+    """Main function to run the SDCI extraction pipeline"""
+    try:
+        config = load_configuration()
+        extractor = initialize_extractor(config)
+        indicators = config["indicators"]
+
+        process_indicators(extractor, indicators, config)
+
+        logger.info("SDCI extraction pipeline completed successfully")
+    except Exception as e:
+        logger.error("SDCI extraction pipeline failed: %s", str(e))
+        raise
 
 if __name__ == "__main__":
     main()
