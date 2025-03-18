@@ -1,5 +1,5 @@
 indicators:
-  #- "SP.POP.TOTL"
+  - "SP.POP.TOTL"
   - "PV.EST"
 input_path: "data/etl_output"
 output_path: "data/patternizer_output"

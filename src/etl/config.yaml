@@ -1,4 +1,5 @@
 indicators:
+  - "NY.GDP.MKTP.KD.ZG"
   - "SP.POP.TOTL"
   - "PV.EST"
 output_format: "parquet"

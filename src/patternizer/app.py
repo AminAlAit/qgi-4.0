@@ -9,6 +9,8 @@ from scipy.stats import pearsonr
 import pyarrow.parquet as pq
 import json
 from datetime import datetime
+import mysql.connector
+from mysql.connector import Error
 
 
 logger = logging.getLogger(__name__)
@@ -39,6 +41,14 @@ class SDCIExtractor:
         countries_csv_path = r"/workspace/qgi\qgi-4.0\data\countries.csv"
         self.countries_df = pd.read_csv(countries_csv_path)
         self.country_name_to_id = {row["name_1"]: row["id"] for _, row in self.countries_df.iterrows()}
+
+        # MySQL connection configuration
+        self.mysql_config = {
+            'host': 'localhost',
+            'user': 'amin',
+            'password': '<MYSQL_PASSWORD>',
+            'database': 'sdci_database'
+        }
 
     def load_indicator_data(self, indicator_id):
         """Load cleaned indicator data from Parquet file"""
@@ -220,6 +230,7 @@ class SDCIExtractor:
             if country["country"] not in existing_countries
         ]
 
+        ## TODO: give each loop a short one line description
         for i, country_a in enumerate(preprocessed_data):
             values_a = country_a["values"]
             country_a_name = country_a["country"]
@@ -303,48 +314,86 @@ class SDCIExtractor:
 
             # Save SDCIs for this country after processing
             if country_a_sdcis:
-                # Create DataFrame with only the relevant columns
-                country_a_sdcis_df = pd.DataFrame([
-                    {
-                        "country_a_id": sdc.country_a_id,
-                        "country_b_id": sdc.country_b_id,
-                        "length":       sdc.length,
-                        "start_year_a": sdc.start_year_a,
-                        "start_year_b": sdc.start_year_b,
-                        "correlation":  round(sdc.correlation, 6)
-                    } for sdc in country_a_sdcis
-                ])
+                logger.info("Saving SDCIs for country %s to Parquet", country_a_name)
+                self._save_to_parquet(country_a_sdcis, sdcis_file, sdcis_df)
 
-                # Convert to optimal data types
-                country_a_sdcis_df = country_a_sdcis_df.astype({
-                    "country_a_id": "uint16",
-                    "country_b_id": "uint16",
-                    "length":       "uint16",
-                    "start_year_a": "uint16",
-                    "start_year_b": "uint16",
-                    "correlation":  "float32"
-                })
+                logger.info("Saving SDCIs for country %s to MySQL", country_a_name)
+                self._save_to_mysql(country_a_sdcis, indicator_id)
 
-                # Convert country IDs to categorical if there are many repeated values
-                country_a_sdcis_df["country_a_id"] = country_a_sdcis_df["country_a_id"].astype("category")
-                country_a_sdcis_df["country_b_id"] = country_a_sdcis_df["country_b_id"].astype("category")
+                sdcis_df = pd.concat([sdcis_df, self._convert_sdcis_to_df(country_a_sdcis)], ignore_index=True)
+                sdcis.extend(country_a_sdcis)
 
-                combined_df = pd.concat(
-                    [sdcis_df, country_a_sdcis_df],
-                    ignore_index = True
-                )
-                # saving When to Parquet, specify compression settings
-                combined_df.to_parquet(
-                    sdcis_file,
-                    index                      = False,
-                    compression                = "gzip",
-                    coerce_timestamps          = "ms",
-                    allow_truncated_timestamps = True
-                )
-                sdcis_df = combined_df
-                logger.info("Saved SDCIs for country %s", country_a_name)
+        return sdcis
 
-        return sdcis_df.to_dict("records")
+    def _convert_sdcis_to_df(self, sdcis):
+        """Convert list of SDCI objects to DataFrame"""
+        sdcis_df = pd.DataFrame([
+            {
+                "country_a_id": sdc.country_a_id,
+                "country_b_id": sdc.country_b_id,
+                "length":       sdc.length,
+                "start_year_a": sdc.start_year_a,
+                "start_year_b": sdc.start_year_b,
+                "correlation":  round(sdc.correlation, 6)
+            } for sdc in sdcis
+        ])
+
+        # Convert to optimal data types
+        sdcis_df = sdcis_df.astype({
+            "country_a_id": "uint16",
+            "country_b_id": "uint16",
+            "length":       "uint16",
+            "start_year_a": "uint16",
+            "start_year_b": "uint16",
+            "correlation":  "float32"
+        })
+
+        return sdcis_df
+
+    def _save_to_parquet(self, country_a_sdcis, sdcis_file, sdcis_df):
+        """Save SDCIs to Parquet file"""
+        country_a_sdcis_df = self._convert_sdcis_to_df(country_a_sdcis)
+
+        combined_df = pd.concat([sdcis_df, country_a_sdcis_df], ignore_index=True)
+        combined_df.to_parquet(
+            sdcis_file,
+            index=False,
+            compression="gzip",
+            coerce_timestamps="ms",
+            allow_truncated_timestamps=True
+        )
+
+    def _save_to_mysql(self, country_a_sdcis, indicator_id):
+        """Save SDCIs to MySQL database"""
+        sdcis_df = self._convert_sdcis_to_df(country_a_sdcis)
+        sdcis_df["indicator_id"] = indicator_id  # Add indicator_id column
+
+        try:
+            connection = mysql.connector.connect(**self.mysql_config)
+            if connection.is_connected():
+                cursor = connection.cursor()
+
+                # Prepare INSERT query
+                insert_query = """
+                INSERT INTO sdcis 
+                (country_a_id, country_b_id, length, start_year_a, start_year_b, correlation, indicator_id)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """
+
+                # Convert DataFrame to list of tuples for batch insert
+                data_to_insert = list(sdcis_df.itertuples(index=False, name=None))
+
+                # Execute batch insert
+                cursor.executemany(insert_query, data_to_insert)
+                connection.commit()
+                logger.info("Inserted %d SDCIs into MySQL", len(data_to_insert))
+
+        except Error as e:
+            logger.error("Error saving to MySQL: %s", e)
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
 
     def update_processing_log(
         self, indicator_id, status, num_sdcis=0, error_message=None, last_year=None, correlation_threshold=None
