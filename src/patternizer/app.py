@@ -185,24 +185,20 @@ class SDCIExtractor:
     ):
         """
         Identify Single Dyadic Correlating Indexes (SDCIs) between country pairs.
-
         This method performs the core pattern identification by:
         1. Iterating over all country pairs
         2. Generating all possible segments of specified lengths
         3. Calculating correlations between segments
         4. Saving qualifying SDCIs to disk incrementally
         5. Tracking and logging progress throughout the process
-
         The method resumes from previously identified SDCIs if they exist and
         processes only new country pairs.
-
         Parameters:
         indicator_id (str): The ID of the indicator being processed
         preprocessed_data (list): List of dictionaries containing preprocessed data for each country
         total_comparisons (int): Total number of comparisons to be made for progress tracking
         min_length (int): Minimum segment length to consider
         correlation_threshold (float): Minimum correlation required to qualify as an SDCI
-
         Returns:
         dict: A dictionary representation of all identified SDCIs
         """
@@ -230,20 +226,21 @@ class SDCIExtractor:
             if country["country"] not in existing_countries
         ]
 
-        ## TODO: give each loop a short one line description
+        # Loop through each country A
         for i, country_a in enumerate(preprocessed_data):
             values_a = country_a["values"]
             country_a_name = country_a["country"]
             country_a_sdcis = []
-
             max_length_a = len(values_a) - 1
-
+            
             # Calculate total comparisons for this country
             total_comparisons_country = 0
+            # Loop through each possible segment length for country A
             for segment_length in range(min_length, max_length_a + 1):
                 if len(values_a) < segment_length:
                     continue
                 num_segments_a = len(values_a) - segment_length + 1
+                # Loop through each subsequent country B
                 for country_b in preprocessed_data[i+1:]:
                     if len(country_b["values"]) >= segment_length:
                         total_comparisons_country += (
@@ -255,31 +252,31 @@ class SDCIExtractor:
                 "completed": 0
             }
 
+            # Loop through each possible segment length for country A
             for segment_length in range(min_length, max_length_a + 1):
                 if len(values_a) < segment_length:
                     continue
 
                 num_segments_a = len(values_a) - segment_length + 1
-
+                # Loop through each starting index for segments in country A
                 for start_idx in range(num_segments_a):
                     segment_a = values_a[start_idx:start_idx + segment_length]
 
+                    # Loop through each subsequent country B
                     for country_b in preprocessed_data[i+1:]:
                         values_b = country_b["values"]
                         country_b_name = country_b["country"]
-
                         max_length_b = len(values_b) - 1
                         if segment_length > max_length_b:
                             continue
 
                         num_segments_b = len(values_b) - segment_length + 1
-
+                        # Loop through each starting index for segments in country B
                         for start_idx_b in range(num_segments_b):
                             segment_b = values_b[start_idx_b:start_idx_b + segment_length]
 
                             # Calculate correlation
                             correlation, _ = pearsonr(segment_a, segment_b)
-
                             if correlation >= correlation_threshold:
                                 sdc = SDCI()
                                 # Convert country names to ids using the mapping
@@ -316,7 +313,6 @@ class SDCIExtractor:
             if country_a_sdcis:
                 logger.info("Saving SDCIs for country %s to Parquet", country_a_name)
                 self._save_to_parquet(country_a_sdcis, sdcis_file, sdcis_df)
-
                 sdcis_df = pd.concat([sdcis_df, self._convert_sdcis_to_df(country_a_sdcis)], ignore_index=True)
                 sdcis.extend(country_a_sdcis)
 
