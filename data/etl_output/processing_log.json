@@ -3,9 +3,9 @@
     "status": "in progress",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-03-18T00:14:24.089274",
+    "last_updated": "2025-03-19T01:08:03.752480",
     "last_year": 2023,
-    "correlation_threshold": 0.9
+    "correlation_threshold": 0.5
   },
   "SP.POP.TOTL_shrinked": {
     "status": "completed",

@@ -22,3 +22,6 @@ env/
 
 # Ignore pattenir parquet outputs
 *_sdcis.parquet
+
+# Ignoring mega SDCI parquets
+patternizer_output/

@@ -209,16 +209,16 @@ class SDCIExtractor:
 
         # Create indicator output directory
         indicator_output_dir = os.path.join(self.output_path, indicator_id)
-        os.makedirs(indicator_output_dir, exist_ok=True)
+        os.makedirs(indicator_output_dir, exist_ok = True)
 
-        # Check if there's an existing SDCI file
-        sdcis_df = pd.DataFrame()
+        # Check existing country files to resume processing
         existing_countries = set()
-        sdcis_file = os.path.join(indicator_output_dir, f"{indicator_id}_sdcis.parquet")
-        if os.path.exists(sdcis_file):
-            sdcis_df = pd.read_parquet(sdcis_file)
-            existing_countries = set(sdcis_df["country_a_id"].unique())
-            logger.info("Resuming from existing SDCIs for %s", indicator_id)
+        if os.path.exists(indicator_output_dir):
+            for filename in os.listdir(indicator_output_dir):
+                if filename.endswith('.parquet'):
+                    country_name = filename.rsplit('.', 1)[0]  # Remove .parquet extension
+                    existing_countries.add(country_name)
+        logger.info("Resuming from existing SDCIs for %s", indicator_id)
 
         # Filter out countries already processed
         preprocessed_data = [
@@ -232,7 +232,7 @@ class SDCIExtractor:
             country_a_name = country_a["country"]
             country_a_sdcis = []
             max_length_a = len(values_a) - 1
-            
+
             # Calculate total comparisons for this country
             total_comparisons_country = 0
             # Loop through each possible segment length for country A
@@ -312,8 +312,14 @@ class SDCIExtractor:
             # Save SDCIs for this country after processing
             if country_a_sdcis:
                 logger.info("Saving SDCIs for country %s to Parquet", country_a_name)
-                self._save_to_parquet(country_a_sdcis, sdcis_file, sdcis_df)
-                sdcis_df = pd.concat([sdcis_df, self._convert_sdcis_to_df(country_a_sdcis)], ignore_index=True)
+                country_parquet_path = os.path.join(indicator_output_dir, f"{country_a_name}.parquet")
+                country_sdcis_df = self._convert_sdcis_to_df(country_a_sdcis)
+                country_sdcis_df.to_parquet(
+                    country_parquet_path,
+                    index=False,
+                    compression="brotli",
+                    compression_level=11
+                )
                 sdcis.extend(country_a_sdcis)
 
         return sdcis
