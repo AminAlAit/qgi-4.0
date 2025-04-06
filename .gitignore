@@ -24,7 +24,7 @@ env/
 *_sdcis.parquet
 
 # Ignoring mega SDCI parquets
-patternizer_output/
+scdi_finder_output/
 
 # Ignoring side topics
 Sarah/

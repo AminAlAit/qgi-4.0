@@ -2,7 +2,7 @@ import wbgapi as wb
 from domain.indicator import Indicator  # pylint: disable=import-error
 
 
-## TODO: Indicators are linked from ETL pipeline to patternizer pipeline only via string IDs 
+## TODO: Indicators are linked from ETL pipeline to the SCDI Finder pipeline only via string IDs
 ## in the config.yaml file. Find a way to link them via the Indicator class.
 def get_indicator(indicator_id):
     """

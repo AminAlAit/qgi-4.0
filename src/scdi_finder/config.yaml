@@ -3,7 +3,7 @@ indicators:
   - "PV.EST"
   - "NY.GDP.MKTP.KD.ZG"
 input_path: "data/etl_output"
-output_path: "data/patternizer_output"
+output_path: "data/scdi_finder_output"
 min_length: 3
 max_length: 5 #TODO: remove later, or keep for parameter tuning
 correlation_threshold: 0.5
