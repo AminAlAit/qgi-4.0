@@ -1,6 +1,7 @@
 indicators:
   - "SP.POP.TOTL"
   - "PV.EST"
+  - "NY.GDP.MKTP.KD.ZG"
 input_path: "data/etl_output"
 output_path: "data/patternizer_output"
 min_length: 3

@@ -1,7 +1,7 @@
 indicators:
-  - "NY.GDP.MKTP.KD.ZG"
-  - "SP.POP.TOTL"
-  - "PV.EST"
+  #- "NY.GDP.MKTP.KD.ZG" # GDP growth (annual %)
+  #- "SP.POP.TOTL"       # Population, total
+  - "PV.EST"            # Political Stability and Absence of Violence/Terrorism: Estimate
 output_format: "parquet"
 output_path:  "/workspace/qgi/qgi-4.0/data/etl_output" # "/workspaces/qgi-4.0/data/etl_output"
 file_size_limit: 1000000

@@ -1,9 +1,9 @@
 {
   "SP.POP.TOTL": {
-    "status": "in progress",
+    "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-03-19T01:08:03.752480",
+    "last_updated": "2025-04-05T20:32:19.110970",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -27,8 +27,16 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-03-18T00:05:11.598178",
+    "last_updated": "2025-04-05T20:32:19.310159",
     "last_year": 2023,
-    "correlation_threshold": 0.9
+    "correlation_threshold": 0.5
+  },
+  "NY.GDP.MKTP.KD.ZG": {
+    "status": "completed",
+    "num_sdcis": 0,
+    "error_message": null,
+    "last_updated": "2025-04-05T20:32:19.525727",
+    "last_year": 2023,
+    "correlation_threshold": 0.5
   }
 }

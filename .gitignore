@@ -25,3 +25,6 @@ env/
 
 # Ignoring mega SDCI parquets
 patternizer_output/
+
+# Ignoring side topics
+Sarah/

@@ -8,7 +8,6 @@ from etl_runner.index import etl  # pylint: disable=import-error
 def main():
     """Main function to run the ETL pipeline"""
     try:
-        # Load configuration
         config = load_config()
 
         # Prepare ETL input
