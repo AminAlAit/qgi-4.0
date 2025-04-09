@@ -7,5 +7,5 @@ from stages.load.index import load_runner  # pylint: disable=import-error
 
 def etl(etl_input):
     indicators = extract_runner(etl_input)
-    indicators = transform_runner(indicators, etl_input)
+    indicators = transform_runner(indicators)
     load_runner(indicators, etl_input)

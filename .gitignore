@@ -31,3 +31,6 @@ Sarah/
 
 # Archiving QGI 3.0 data
 misc/
+
+# hiding raw data
+orgs_data/

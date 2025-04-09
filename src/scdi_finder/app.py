@@ -218,6 +218,7 @@ class SDCIExtractor:
                 if filename.endswith('.parquet'):
                     country_name = filename.rsplit('.', 1)[0]  # Remove .parquet extension
                     existing_countries.add(country_name)
+        logger.info("------------------")
         logger.info("Resuming from existing SDCIs for %s", indicator_id)
 
         # Filter out countries already processed
@@ -414,6 +415,7 @@ def process_indicators(extractor, indicators, config):
     total_indicators = len(indicators)
 
     for index, indicator_id in enumerate(indicators, start=1):
+        logger.info("-----------")
         logger.info(
             "Processing indicator %d of %d (%.1f%% complete): %s",
             index, total_indicators,

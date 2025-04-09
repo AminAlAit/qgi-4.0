@@ -2,6 +2,13 @@ indicators:
   - "SP.POP.TOTL"
   - "PV.EST"
   - "NY.GDP.MKTP.KD.ZG"
+  - "SP.DYN.LE00.IN"
+  - "NY.GDP.MKTP.CD"
+  - "SE.PRM.ENRR"
+  - "SL.EMP.TOTL.SP.ZS"
+  - "SL.UEM.TOTL.ZS"
+  - "NY.GDP.PCAP.CD"
+  - "MS.MIL.MPRT.KD"
 input_path: "data/etl_output"
 output_path: "data/scdi_finder_output"
 min_length: 3

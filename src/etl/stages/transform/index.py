@@ -1,16 +1,21 @@
+"""TODO"""
 
 import pandas as pd
+import numpy as np
 import logging
+from domain.indicator import Indicator
 
 
 logger = logging.getLogger(__name__)
 
 
-def transform_runner(indicators, etl_input):
+def transform_runner(indicators: list[Indicator]):
+    """TODO"""
     logger.info("Starting data transformation")
     try:
         transformed_indicators = []
         for indicator in indicators:
+            indicator.data = remove_all_nan_year_columns(indicator.data)
             indicator.data = pivot_dataframe(indicator.data)
             indicator.data = rename_columns(indicator.data)
             indicator.data, unmatched_countries = clean_country_names(indicator.data)
@@ -23,9 +28,20 @@ def transform_runner(indicators, etl_input):
         raise
 
 
+def remove_all_nan_year_columns(df):
+    """TODO"""
+
+    for year_col in list(df):
+        nan_status = list(set(np.isnan(list(df[year_col]))))
+        if len(nan_status) == 1 and str(nan_status[0]) == "True":
+            df = df.drop([year_col], axis = 1)
+
+    return df
+
+
 def pivot_dataframe(df):
     """
-    Reads a wide-format CSV file and pivots it into a long format.
+    Pivots a Dataframe into a long format.
 
     Parameters:
         file_path (str): Path to the input CSV file.

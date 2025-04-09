@@ -1,3 +1,4 @@
+"""TODO"""
 
 import pandas as pd
 from stages.extract.wb_extractor import get_indicator  # pylint: disable=import-error
@@ -8,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def extract_runner(etl_input):
+    """TODO"""
     logger.info("Starting data extraction")
     try:
         indicators = get_indicators_dfs(etl_input)
@@ -19,6 +21,7 @@ def extract_runner(etl_input):
 
 
 def get_indicators_dfs(etl_input: dict) -> list[pd.DataFrame]:
+    """TODO"""
     try:
         extracted_indicators = []
         for indicator_id in etl_input["indicator_ids"]:
