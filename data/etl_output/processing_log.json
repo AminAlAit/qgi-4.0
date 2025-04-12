@@ -3,7 +3,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-09T17:05:58.421031",
+    "last_updated": "2025-04-13T00:11:04.155394",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -27,7 +27,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-09T17:05:58.643727",
+    "last_updated": "2025-04-13T00:11:04.350371",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -35,16 +35,24 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-09T17:05:59.002198",
+    "last_updated": "2025-04-13T00:11:04.573292",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
   "SP.DYN.LE00.IN": {
+    "status": "completed",
+    "num_sdcis": 0,
+    "error_message": null,
+    "last_updated": "2025-04-13T00:11:04.855142",
+    "last_year": 2022,
+    "correlation_threshold": 0.5
+  },
+  "NY.GDP.MKTP.CD": {
     "status": "in progress",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-09T17:05:59.039315",
-    "last_year": 2022,
+    "last_updated": "2025-04-13T00:11:04.870466",
+    "last_year": 2023,
     "correlation_threshold": 0.5
   }
 }
