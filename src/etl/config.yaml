@@ -11,4 +11,4 @@ indicators:
   - "MS.MIL.MPRT.KD"    # Arms imports (SIPRI trend indicator values)
 output_format: "parquet"
 output_path:  "/workspace/qgi/qgi-4.0/data/etl_output" # "/workspaces/qgi-4.0/data/etl_output"
-file_size_limit: 1000000
+file_size_limit: 100000000
