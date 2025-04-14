@@ -9,8 +9,6 @@ from scipy.stats import pearsonr
 import pyarrow.parquet as pq
 import json
 from datetime import datetime
-import mysql.connector
-from mysql.connector import Error
 
 
 logger = logging.getLogger(__name__)

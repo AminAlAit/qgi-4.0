@@ -26,6 +26,9 @@ env/
 # Ignoring mega SDCI parquets
 scdi_finder_output/
 
+# Ignoring mega patterns parquets
+pattern_maker_output/
+
 # Ignoring side topics
 Sarah/
 
