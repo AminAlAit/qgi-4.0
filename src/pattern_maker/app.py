@@ -8,6 +8,9 @@ import pandas as pd
 import dask.dataframe as dd
 
 
+TOP_PPS_PATTERNS_COUNT = 100_000
+
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 logger = logging.getLogger()
 
@@ -16,8 +19,6 @@ class PatternMaker:
     """TODO"""
 
     def __init__(self, scdi_finder_output: str, pattern_maker_output: str, countries_csv: str):
-        """Initialize the query manager with the base folder path"""
-
         self.scdi_finder_output = scdi_finder_output
         self.pattern_maker_output = pattern_maker_output
         self.countries_csv = countries_csv
@@ -30,15 +31,33 @@ class PatternMaker:
             self.create_patterns()
             logger.info("Pattern creation completed successfully")
 
-            # Step 2: Process country subfolders, merge Parquets, filter, reorder, and save
-            logger.info("Starting processing of country subfolders...")
-            self.process_country_subfolders()
-            logger.info("Processing of country subfolders completed successfully")
+            # Step 2: Filter out patterns with scdi_count = 1
+            logger.info("Filtering out patterns with scdi_count = 1...")
+            self.filter_scdi_count()
+            logger.info("Filtering completed successfully")
 
-            # Step 3: Rename Parquet files to country names
-            logger.info("Starting renaming of Parquet files to country names...")
-            self.rename_parquets_by_country_name()
-            logger.info("Renaming of Parquet files completed successfully")
+            # logger.info("Starting creation of symmetric patterns...")
+            # self.create_symmetric_patterns()
+            # logger.info("Symmetric pattern creation completed successfully")
+
+            logger.info("Removing duplicate patterns...")
+            self.remove_duplicate_patterns()
+            logger.info("Duplicate removal completed successfully")
+
+            # Step 3: Add PPS to each Parquet file
+            logger.info("Starting PPS calculation...")
+            self.add_pps()
+            logger.info("PPS calculation completed successfully")
+
+            # Step 4: Normalize PPS across all Parquets
+            logger.info("Starting PPS normalization...")
+            self.normalize_pps()
+            logger.info("PPS normalization completed successfully")
+
+            # Step 5: Create 'top_pps.parquet' with top patterns
+            logger.info("Starting creation of 'top_pps.parquet'...")
+            self.create_top_pps()
+            logger.info("'top_pps.parquet' creation completed successfully")
 
             logger.info("Entire pipeline executed successfully")
 
@@ -46,7 +65,7 @@ class PatternMaker:
             logger.error(f"Pipeline execution failed: {str(e)}")
             raise
 
-    def _find_parquet_files(self):
+    def _find_scdi_parquet_files(self):
         """Find all Parquet files in the directory structure"""
         parquet_files = []
         logger.info("Searching for Parquet files...")
@@ -71,10 +90,10 @@ class PatternMaker:
         """Create patterns by grouping SCDIs and save to Parquet"""
         logger.info("Creating patterns by grouping SCDIs...")
 
-        parquet_files = self._find_parquet_files()
+        scdi_parquet_files = self._find_scdi_parquet_files()
 
         logger.info("Creating a Dask DataFrame from all Parquet files...")
-        ddf = dd.read_parquet(parquet_files)
+        ddf = dd.read_parquet(scdi_parquet_files)
 
         logger.info("Grouping and aggregating data...")
         patterns_ddf = ddf.groupby([
@@ -97,136 +116,240 @@ class PatternMaker:
             'scdi_count'
         ]
 
-        # Partition by 'country_a_id' and save the patterns to Parquet files
+        # Save the patterns to Parquet files
         logger.info(f"Saving patterns to {self.pattern_maker_output}...")
         patterns_ddf.to_parquet(
-            path=self.pattern_maker_output,
+            self.pattern_maker_output,
             compression="brotli",
-            write_index=False,
-            partition_on=['country_a_id'],
-            name_function=lambda i: f"part.{i}.parquet"
+            write_index=False
         )
 
         logger.info(f"Created and saved the 'patterns' table successfully")
 
-    def process_country_subfolders(self):
-        """
-        Process each country_a_id subfolder, merge Parquets, filter, reorder, and save.
-        """
-        # Find all country_a_id subfolders
-        subfolders = glob.glob(os.path.join(self.pattern_maker_output, "country_a_id=*"))
-        filtered_out_scdis = 0
+    def filter_scdi_count(self):
+        """Filter out patterns with scdi_count = 1"""
 
-        for subfolder in subfolders:
-            # Extract country_a_id from the subfolder name
-            country_a_id = os.path.basename(subfolder).split('=')[1]
-            logger.info(f"Processing subfolder: {subfolder} (country_a_id={country_a_id})")
+        logger.info("Filtering out patterns with scdi_count = 1...")
+        patterns_files = glob.glob(os.path.join(self.pattern_maker_output, "*.parquet"))
+        if not patterns_files:
+            logger.warning("No pattern files found. Skipping filtering...")
+            return
 
-            # Find all Parquet files in the subfolder
-            parquet_files = glob.glob(os.path.join(subfolder, "*.parquet"))
-            if not parquet_files:
-                logger.warning(f"No Parquet files found in {subfolder}. Skipping...")
-                continue
+        for file in patterns_files:
+            logger.info(f"Processing file: {file}")
+            df = pd.read_parquet(file)
 
-            # Read and merge all Parquet files
-            dfs = []
-            for file in parquet_files:
-                df = pd.read_parquet(file)
-                dfs.append(df)
+            # Filter out rows where scdi_count == 1
+            df = df[df['scdi_count'] != 1]
 
-            if not dfs:
-                logger.warning(f"No data found in {subfolder}. Skipping...")
-                continue
-
-            merged_df = pd.concat(dfs, ignore_index=True)
-            logger.info(f"Merged {len(parquet_files)} Parquet files into a DataFrame with {len(merged_df)} rows")
-
-            # Filter rows where scdi_count == 1
-            filtered_df = merged_df[merged_df['scdi_count'] != 1]
-            logger.info(f"Filtered out {len(merged_df) - len(filtered_df)} rows with scdi_count == 1")
-            filtered_out_scdis += len(merged_df) - len(filtered_df)
-
-            # Reorder columns
-            column_order = [
-                "country_a_id",
-                "country_b_id",
-                "length",
-                "start_year_a",
-                "start_year_b",
-                "average_correlation",
-                "scdi_count"
-            ]
-            filtered_df = filtered_df.reindex(columns=column_order)
-            logger.info("Reordered columns successfully")
-
-            # Save the merged and filtered DataFrame to a new Parquet file
-            output_filename = f"country_a_id={country_a_id}.parquet"
-            output_path = os.path.join(self.pattern_maker_output, output_filename)
-            filtered_df.to_parquet(
-                output_path,
+            # Save the updated DataFrame back to Parquet
+            df.to_parquet(
+                file,
                 index=False,
                 compression="brotli"
             )
-            logger.info(f"Saved merged and filtered data to {output_path}")
+            logger.info(f"Saved filtered Parquet file: {file}")
 
-            # Move the new Parquet file to the parent directory (if needed)
-            # and delete the original subfolder
-            try:
-                # Remove the original subfolder
-                shutil.rmtree(subfolder)
-                logger.info(f"Removed original subfolder: {subfolder}")
-            except Exception as e:
-                logger.error(f"Failed to remove subfolder {subfolder}: {str(e)}")
+    def create_symmetric_patterns(self):
+        """Create symmetric patterns by swapping country_a_id with country_b_id and start_year_a with start_year_b"""
+        logger.info("Creating symmetric patterns by swapping country_a_id with country_b_id and start_year_a with start_year_b...")
 
-        logger.info(f"Filtered out a total of {filtered_out_scdis} patterns with single SCDIs.")
+        scdi_parquet_files = self._find_scdi_parquet_files()
 
-    def rename_parquets_by_country_name(self):
-        """
-        Rename Parquet files from "country_a_id=<id>.parquet" to the country's real name.
-        """
-        # Read the countries CSV file to create a mapping from id to name_1
-        logger.info(f"Reading countries CSV file: {self.countries_csv}")
-        countries_df = pd.read_csv(self.countries_csv)
-        id_to_name = dict(zip(countries_df['id'], countries_df['name_1']))
+        logger.info("Creating a Dask DataFrame from all Parquet files...")
+        ddf = dd.read_parquet(scdi_parquet_files)
 
-        # Find all Parquet files in the base directory that match the pattern "country_a_id=*.parquet"
-        parquet_files = glob.glob(os.path.join(self.pattern_maker_output, "country_a_id=*.parquet"))
+        # Swap country_a_id with country_b_id and start_year_a with start_year_b
+        logger.info("Swapping country_a_id with country_b_id and start_year_a with start_year_b...")
+        ddf_swapped = ddf.rename(columns={
+            'country_a_id': 'country_b_id',
+            'country_b_id': 'country_a_id',
+            'start_year_a': 'start_year_b',
+            'start_year_b': 'start_year_a'
+        })
 
-        for file_path in parquet_files:
-            # Extract the country_a_id from the filename
-            filename = os.path.basename(file_path)
-            country_id_str = filename.split('=')[1].split('.')[0]
-            try:
-                country_id = int(country_id_str)
-            except ValueError:
-                logger.warning(f"Could not extract country ID from filename: {filename}")
-                continue
+        # Group by the new columns and aggregate
+        logger.info("Grouping and aggregating data for symmetric patterns...")
+        symmetric_patterns_ddf = ddf_swapped.groupby([
+            'country_a_id',
+            'country_b_id',
+            'length',
+            'start_year_a',
+            'start_year_b'
+        ]).agg({
+            'correlation': ['mean', 'count']
+        }).reset_index()
 
-            # Get the corresponding country name
-            country_name = id_to_name.get(country_id)
-            if not country_name:
-                logger.warning(f"No country name found for ID {country_id}")
-                continue
+        symmetric_patterns_ddf.columns = [
+            'country_a_id',
+            'country_b_id',
+            'length',
+            'start_year_a',
+            'start_year_b',
+            'average_correlation',
+            'scdi_count'
+        ]
 
-            # Create the new filename
-            new_filename = f"{country_name}.parquet"
-            new_file_path = os.path.join(self.pattern_maker_output, new_filename)
+        # Combine with original patterns
+        logger.info("Combining symmetric patterns with original patterns...")
+        original_patterns_ddf = dd.read_parquet(os.path.join(self.pattern_maker_output, "*.parquet"))
+        combined_patterns_ddf = dd.concat([original_patterns_ddf, symmetric_patterns_ddf])
 
-            # Rename the file
-            try:
-                shutil.move(file_path, new_file_path)
-                logger.info(f"Renamed {filename} to {new_filename}")
-            except Exception as e:
-                logger.error(f"Failed to rename {filename}: {str(e)}")
+        # Save the combined patterns to Parquet files
+        logger.info(f"Saving combined patterns to {self.pattern_maker_output}...")
+        combined_patterns_ddf.to_parquet(
+            self.pattern_maker_output,
+            index=False,
+            compression="brotli",
+            write_index=False
+        )
 
+        logger.info("Combined patterns saved successfully")
 
-pattern_maker_output_path = r"/workspace/qgi\qgi-4.0\data\pattern_maker_output"
-scdi_finder_output_path = r"/workspace/qgi\qgi-4.0\data\scdi_finder_output"
-countries_csv_path = r"/workspace/qgi\qgi-4.0\data\countries.csv"
+    def remove_duplicate_patterns(self):
+        """Remove duplicate patterns across all Parquet files"""
+        logger.info("Removing duplicate patterns across all Parquet files...")
+        patterns_files = glob.glob(os.path.join(self.pattern_maker_output, "*.parquet"))
+        if not patterns_files:
+            logger.warning("No pattern files found. Skipping duplicate removal...")
+            return
 
+        # Read all Parquet files into a Dask DataFrame
+        logger.info("Reading all Parquet files into a Dask DataFrame...")
+        ddf = dd.read_parquet(patterns_files)
+
+        # Remove duplicates based on the specified columns
+        logger.info("Removing duplicates...")
+        unique_patterns_ddf = ddf.drop_duplicates(
+            subset=['country_a_id', 'country_b_id', 'length', 'start_year_a', 'start_year_b']
+        )
+
+        # Save the unique patterns to a temporary directory
+        temp_dir = os.path.join(self.pattern_maker_output, "temp")
+        os.makedirs(temp_dir, exist_ok=True)
+        logger.info(f"Saving unique patterns to temporary directory: {temp_dir}...")
+        unique_patterns_ddf.to_parquet(
+            temp_dir,
+            compression="brotli",
+            write_index=False
+        )
+
+        # Replace original files with the unique patterns
+        logger.info("Replacing original files with unique patterns...")
+        # Remove original Parquet files
+        for file in patterns_files:
+            os.remove(file)
+            logger.debug(f"Removed original file: {file}")
+
+        # Move files from temporary directory to the original directory
+        temp_parquet_files = glob.glob(os.path.join(temp_dir, "*.parquet"))
+        for file in temp_parquet_files:
+            shutil.move(file, self.pattern_maker_output)
+            logger.debug(f"Moved file to {self.pattern_maker_output}: {file}")
+
+        # Remove the temporary directory
+        shutil.rmtree(temp_dir)
+        logger.info("Removed temporary directory: {temp_dir}")
+
+        logger.info("Duplicate removal completed successfully")
+
+    def add_pps(self):
+        """Add Pattern Power Score (PPS) to each Parquet file"""
+
+        logger.info("Calculating Pattern Power Score (PPS) for each Parquet file...")
+        patterns_files = glob.glob(os.path.join(self.pattern_maker_output, "*.parquet"))
+        if not patterns_files:
+            logger.warning("No pattern files found. Skipping PPS calculation...")
+            return
+
+        for file in patterns_files:
+            logger.info(f"Processing file: {file}")
+            df = pd.read_parquet(file)
+
+            # Calculate PPS
+            df['pps'] = (
+                0.33 * df['length'] +
+                0.33 * df['average_correlation'] +
+                0.34 * df['scdi_count']
+            )
+
+            # Save the updated DataFrame back to Parquet
+            df.to_parquet(
+                file,
+                compression="brotli"
+            )
+            logger.info(f"Saved updated Parquet file with PPS: {file}")
+
+    def normalize_pps(self):
+        """Normalize PPS values across all Parquet files"""
+
+        logger.info("Normalizing PPS values across all Parquet files...")
+        patterns_files = glob.glob(os.path.join(self.pattern_maker_output, "*.parquet"))
+        if not patterns_files:
+            logger.warning("No pattern files found. Skipping PPS normalization...")
+            return
+
+        # Read all Parquet files into a Dask DataFrame
+        logger.info("Reading all Parquet files into a Dask DataFrame...")
+        ddf = dd.read_parquet(patterns_files)
+
+        # Calculate global min and max PPS
+        logger.info("Calculating global min and max PPS...")
+        pps_min = ddf['pps'].min().compute()
+        pps_max = ddf['pps'].max().compute()
+
+        logger.info(f"Global PPS min: {pps_min}, max: {pps_max}")
+
+        # Normalize PPS in each Parquet file
+        for file in patterns_files:
+            logger.info(f"Normalizing PPS in file: {file}")
+            df = pd.read_parquet(file)
+
+            # Normalize PPS
+            df['pps_normalized'] = ((df['pps'] - pps_min) / (pps_max - pps_min)) * 100
+
+            # Save the updated DataFrame back to Parquet
+            df.to_parquet(
+                file,
+                compression="brotli"
+            )
+            logger.info(f"Saved normalized Parquet file: {file}")
+
+    def create_top_pps(self):
+        """Create a Parquet file with top N patterns based on PPS"""
+
+        logger.info(f"Creating 'top_pps.parquet' with top {TOP_PPS_PATTERNS_COUNT} patterns based on PPS...")
+        patterns_files = glob.glob(os.path.join(self.pattern_maker_output, "*.parquet"))
+        if not patterns_files:
+            logger.warning("No pattern files found. Skipping creation of 'top_pps.parquet'...")
+            return
+
+        # Read all Parquet files into a Dask DataFrame
+        logger.info("Reading all Parquet files into a Dask DataFrame...")
+        ddf = dd.read_parquet(patterns_files)
+
+        # Ensure ddf is a Dask DataFrame
+        if not isinstance(ddf, dd.DataFrame):
+            logger.error("ddf is not a Dask DataFrame. Cannot proceed.")
+            return
+
+        # Sort by PPS and select top N patterns
+        logger.info(f"Selecting top {TOP_PPS_PATTERNS_COUNT} patterns based on PPS...")
+        top_patterns = ddf.sort_values('pps', ascending=False).head(TOP_PPS_PATTERNS_COUNT).compute()
+
+        # Save top patterns to a Parquet file
+        output_path = os.path.join(self.pattern_maker_output, "top_pps.parquet")
+        top_patterns.to_parquet(
+            output_path,
+            index=False,
+            compression="brotli"
+        )
+        logger.info(f"Saved 'top_pps.parquet' to {output_path}")
+
+# TODO: replace/add country names?
 creator = PatternMaker(
-    scdi_finder_output=scdi_finder_output_path,
-    pattern_maker_output=pattern_maker_output_path,
-    countries_csv=countries_csv_path
+    scdi_finder_output   = r"/workspace/qgi\qgi-4.0\data\scdi_finder_output",
+    pattern_maker_output = r"/workspace/qgi\qgi-4.0\data\pattern_maker_output",
+    countries_csv        = r"/workspace/qgi\qgi-4.0\data\countries.csv"
 )
 creator.run()

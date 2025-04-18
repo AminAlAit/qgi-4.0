@@ -1,7 +1,7 @@
 # A ranked list of 100 core indicators by importance and significance across various sectors
 
 1. **GDP (current US$)** - Measure of economic output
-2. **GDP growth (annual %)** - Economic growth rate
+2. ✅ **GDP growth (annual %)** - Economic growth rate
 3. **GDP per capita (current US$)** - Economic well-being per person
 4. **Gini index** - Income inequality
 5. **Poverty headcount ratio at $2.15 a day (2017 PPP)** - Extreme poverty
