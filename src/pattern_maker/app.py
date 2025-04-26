@@ -3,15 +3,14 @@
 import logging
 import os
 import glob
-import shutil
 import pandas as pd
 import dask.dataframe as dd
-import numpy as np
-from collections import defaultdict
+import pyarrow.parquet as pq
+import pyarrow as pa
 
 
 TOP_PPS_PATTERNS_COUNT = 100_000
-
+CHECKPOINT_PATH = r"/workspace/qgi\qgi-4.0\src\pattern_maker\checkpoint.txt"
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 logger = logging.getLogger()
@@ -20,18 +19,18 @@ logger = logging.getLogger()
 class SymmetricPatternGenerator:
     """
     A class used to generate symmetric patterns from existing pattern data.
-    
+
     This class processes existing patterns to create symmetric counterparts by swapping country_a_id with country_b_id and start_year_a with start_year_b.
     It ensures relationships between countries are bidirectional and aggregates symmetric patterns with existing patterns.
-    
+
     Attributes:
         pattern_maker_output (str): Path to the directory where pattern data is stored.
         countries_csv (str): Path to the CSV file containing country mappings.
         logger (logging.Logger): Logger instance for logging events.
         checkpoint_file (str): Path to the checkpoint file for tracking progress.
     """
-    
-    def __init__(self, pattern_maker_output, countries_csv, checkpoint_file = "checkpoint.txt"):
+
+    def __init__(self, pattern_maker_output, countries_csv, checkpoint_file = CHECKPOINT_PATH):
         """
         Initialize the SymmetricPatternGenerator with necessary file paths.
         
@@ -45,7 +44,7 @@ class SymmetricPatternGenerator:
         self.checkpoint_file = checkpoint_file
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.INFO)
-    
+
     def create_symmetric_patterns(self):
         """
         Create symmetric patterns by swapping country_a_id with country_b_id and start_year_a with start_year_b.
@@ -56,25 +55,25 @@ class SymmetricPatternGenerator:
         country relationships.
         """
         self.logger.info("Creating symmetric patterns...")
-        
+
         # Load checkpoint
         processed_countries = self._load_checkpoint()
-        
+
         # Get list of pattern directories
         pattern_dirs = self._get_pattern_directories()
-        
+
         # Preload country mappings
         country_id_to_name = self._load_country_mappings()
-        
+
         # Process each country directory
         for country_dir in pattern_dirs:
             country_name = os.path.basename(country_dir)
-            
+
             # Skip already processed countries
             if country_name in processed_countries:
                 self.logger.info(f"Skipping already processed country: {country_name}")
                 continue
-            
+
             try:
                 self._process_country_directory(country_dir, country_id_to_name)
                 # Update checkpoint
@@ -84,9 +83,9 @@ class SymmetricPatternGenerator:
                 self.logger.error(f"Error processing country {country_name}: {str(e)}")
                 # Optionally re-raise the exception if you want the program to stop
                 # raise
-            
+
         self.logger.info("Symmetric pattern creation completed successfully")
-        
+
         # Reset checkpoint if all countries are processed
         if len(processed_countries) == len(pattern_dirs):
             self.logger.info("All countries processed. Resetting checkpoint.")
@@ -100,10 +99,10 @@ class SymmetricPatternGenerator:
         """
         if not os.path.exists(self.checkpoint_file):
             return set()
-        
+
         with open(self.checkpoint_file, 'r') as f:
             return set(f.read().splitlines())
-    
+
     def _save_checkpoint(self, processed_countries):
         """Save the set of processed countries to the checkpoint file
         
@@ -140,33 +139,33 @@ class SymmetricPatternGenerator:
 
     def _process_country_directory(self, country_dir, country_id_to_name):
         """Process a single country directory to create symmetric patterns
-        
+
         Args:
             country_dir (str): Path to the directory containing pattern data for a country
             country_id_to_name (dict): Dictionary mapping country IDs to names
         """
         country_name = os.path.basename(country_dir)
         self.logger.info(f"Processing country directory: {country_name}")
-        
+
         # Read existing patterns for the country
         existing_patterns = self._read_country_patterns(country_dir)
-        
+
         if existing_patterns.empty:
             self.logger.warning(f"No patterns found for country: {country_name}. Skipping...")
             return
-        
+
         # Convert key columns to integers
         existing_patterns = self._convert_key_columns_to_int(existing_patterns)
-        
+
         # Create symmetric patterns
         symmetric_patterns = self.swap_key_element_column_names(existing_patterns)
-        
+
         # Track patterns that will be merged
         merged_pattern_keys = set()
-        
+
         # Distribute symmetric patterns to their respective country directories
         merged_pattern_keys = self._distribute_symmetric_patterns(symmetric_patterns, country_id_to_name, merged_pattern_keys)
-        
+
         # Remove merged patterns from original directory
         self._update_original_country_patterns(country_dir, existing_patterns, merged_pattern_keys)
 
@@ -182,8 +181,11 @@ class SymmetricPatternGenerator:
         parquet_files = glob.glob(os.path.join(country_dir, "*.parquet"))
         if not parquet_files:
             return pd.DataFrame()
+
+        # Using PyArrow to read Parquet files
+        table = pq.read_table(parquet_files)
+        df = table.to_pandas()
         
-        df = pd.concat([pd.read_parquet(f) for f in parquet_files], ignore_index=True)
         return self._convert_key_columns_to_int(df)
 
     def _convert_key_columns_to_int(self, df):
@@ -197,12 +199,12 @@ class SymmetricPatternGenerator:
         """
         if df.empty:
             return df
-        
+
         key_columns = ['country_a_id', 'country_b_id', 'length', 'start_year_a', 'start_year_b']
         for col in key_columns:
             if col in df.columns:
                 df[col] = df[col].astype(int)
-        
+
         return df
 
     def swap_key_element_column_names(self, existing_patterns):
@@ -217,7 +219,7 @@ class SymmetricPatternGenerator:
         self.logger.info("Creating symmetric patterns by swapping columns...")
         # Create a copy to avoid modifying the original DataFrame
         symmetric_patterns = existing_patterns.copy()
-        
+
         # Swap country and year columns to create symmetric patterns
         symmetric_patterns.rename(columns={
             'country_a_id': 'country_b_id',
@@ -225,7 +227,7 @@ class SymmetricPatternGenerator:
             'start_year_a': 'start_year_b',
             'start_year_b': 'start_year_a'
         }, inplace=True)
-        
+
         return self._convert_key_columns_to_int(symmetric_patterns)
 
     def _distribute_symmetric_patterns(self, symmetric_patterns, country_id_to_name, merged_pattern_keys):
@@ -240,26 +242,26 @@ class SymmetricPatternGenerator:
             set: Updated set of merged pattern keys
         """
         self.logger.info("Distributing symmetric patterns to country directories...")
-        
+
         # Group symmetric patterns by new country_a_id (original country_b_id)
         grouped = symmetric_patterns.groupby('country_a_id')
-        
+
         for new_country_id, group in grouped:
             new_country_name = country_id_to_name.get(new_country_id)
             if not new_country_name:
                 self.logger.warning(f"Country ID {new_country_id} not found in country mapping. Skipping...")
                 continue
-            
+
             # Track pattern keys before merging
             pattern_keys = set(group.apply(
                 lambda row: f"{row['country_a_id']}{row['country_b_id']}{row['length']}{row['start_year_a']}{row['start_year_b']}", 
                 axis=1
             ))
-            
+
             merged_pattern_keys.update(pattern_keys)
-            
+
             self._update_country_patterns(new_country_name, group)
-        
+
         return merged_pattern_keys
 
     def _update_original_country_patterns(self, country_dir, existing_patterns, merged_pattern_keys):
@@ -271,20 +273,20 @@ class SymmetricPatternGenerator:
             merged_pattern_keys (set): Set of keys for patterns that were merged
         """
         self.logger.info("Updating original country patterns by removing merged patterns...")
-        
+
         if not merged_pattern_keys:
             self.logger.info("No patterns were merged. Skipping update...")
             return
-        
+
         # Create pattern keys for existing patterns
         existing_patterns['pattern_key'] = existing_patterns.apply(
             lambda row: f"{row['country_a_id']}{row['country_b_id']}{row['length']}{row['start_year_a']}{row['start_year_b']}", 
             axis=1
         )
-        
+
         # Filter out merged patterns
         updated_patterns = existing_patterns[~existing_patterns['pattern_key'].isin(merged_pattern_keys)].drop(columns=['pattern_key'])
-        
+
         # Save the updated patterns
         self._save_updated_original_patterns(updated_patterns, country_dir)
 
@@ -298,13 +300,15 @@ class SymmetricPatternGenerator:
         self.logger.info(f"Saving updated original patterns for country directory: {country_dir}")
         country_name = os.path.basename(country_dir)
         output_path = os.path.join(country_dir, f"patterns_{country_name}.parquet")
-        
+
         # Remove existing pattern files to avoid duplication
         for file in glob.glob(os.path.join(country_dir, "*.parquet")):
             os.remove(file)
-        
+
         if not updated_patterns.empty:
-            updated_patterns.to_parquet(output_path, compression='brotli', index=False)
+            # Using PyArrow to write Parquet files
+            table = pa.Table.from_pandas(updated_patterns)
+            pq.write_table(table, output_path, compression='brotli')
             self.logger.info(f"Saved updated original patterns to {output_path}")
         else:
             self.logger.info(f"No patterns remaining for {country_dir}. Directory will be empty.")
@@ -318,11 +322,16 @@ class SymmetricPatternGenerator:
         """
         new_country_dir = os.path.join(self.pattern_maker_output, new_country_name)
         os.makedirs(new_country_dir, exist_ok=True)
-        
+
         # Read existing patterns for the new country
         existing_files = glob.glob(os.path.join(new_country_dir, "*.parquet"))
-        existing_patterns = pd.concat([pd.read_parquet(f) for f in existing_files], ignore_index=True) if existing_files else pd.DataFrame()
-        
+        if existing_files:
+            # Using PyArrow to read existing patterns
+            existing_table = pq.read_table(existing_files)
+            existing_patterns = existing_table.to_pandas()
+        else:
+            existing_patterns = pd.DataFrame()
+
         # Convert key columns to integers
         existing_patterns = self._convert_key_columns_to_int(existing_patterns)
         new_patterns = self._convert_key_columns_to_int(new_patterns)
@@ -344,20 +353,20 @@ class SymmetricPatternGenerator:
             pd.DataFrame: Combined DataFrame of existing and new patterns
         """
         self.logger.info("Combining existing and new patterns with proper merging...")
-        
+
         if existing_patterns.empty and new_patterns.empty:
             return pd.DataFrame()
-        
+
         if existing_patterns.empty:
             return new_patterns
-        
+
         if new_patterns.empty:
             return existing_patterns
-        
+
         # Ensure key columns are integers
         existing_patterns = self._convert_key_columns_to_int(existing_patterns)
         new_patterns = self._convert_key_columns_to_int(new_patterns)
-        
+
         # Create a temporary merge key
         existing_patterns['merge_key'] = existing_patterns.apply(
             lambda row: f"{row['country_a_id']}{row['country_b_id']}{row['length']}{row['start_year_a']}{row['start_year_b']}", 
@@ -367,10 +376,10 @@ class SymmetricPatternGenerator:
             lambda row: f"{row['country_a_id']}{row['country_b_id']}{row['length']}{row['start_year_a']}{row['start_year_b']}", 
             axis=1
         )
-        
+
         # Find matching patterns
         merged = pd.merge(existing_patterns, new_patterns, on='merge_key', suffixes=('_existing', '_new'))
-        
+
         if not merged.empty:
             # Process matched patterns
             matched_existing = merged[['country_a_id_existing', 'country_b_id_existing', 'length_existing', 
@@ -378,21 +387,21 @@ class SymmetricPatternGenerator:
                                     'scdi_count_existing']]
             matched_existing.columns = ['country_a_id', 'country_b_id', 'length', 'start_year_a', 'start_year_b', 
                                     'average_correlation', 'scdi_count']
-            
+
             # Calculate new average and sum using .loc for explicit assignment
             matched_existing.loc[:, 'average_correlation'] = (matched_existing['average_correlation'] + 
                                                         merged['average_correlation_new']) / 2
             matched_existing.loc[:, 'scdi_count'] = matched_existing['scdi_count'] + merged['scdi_count_new']
-            
+
             # Drop merge key from existing patterns
             existing_patterns = existing_patterns[~existing_patterns['merge_key'].isin(merged['merge_key'])].drop(columns=['merge_key'])
-            
+
             # Combine results
             combined = pd.concat([existing_patterns, matched_existing, new_patterns[~new_patterns['merge_key'].isin(merged['merge_key'])].drop(columns=['merge_key'])])
         else:
             # No matches found, just concatenate
             combined = pd.concat([existing_patterns.drop(columns=['merge_key']), new_patterns.drop(columns=['merge_key'])])
-        
+
         return combined
 
     def _save_combined_patterns(self, combined_patterns, country_dir, country_name):
@@ -405,19 +414,37 @@ class SymmetricPatternGenerator:
         """
         self.logger.info(f"Saving updated patterns for country: {country_name}")
         output_path = os.path.join(country_dir, f"patterns_{country_name}.parquet")
-        
+
         # Remove existing pattern files to avoid duplication
         for file in glob.glob(os.path.join(country_dir, "*.parquet")):
             os.remove(file)
-        
-        combined_patterns.to_parquet(output_path, compression='brotli', index=False)
-        self.logger.info(f"Saved updated patterns to {output_path}")
+
+        if not combined_patterns.empty:
+            # Using PyArrow to write Parquet files
+            table = pa.Table.from_pandas(combined_patterns)
+            pq.write_table(table, output_path, compression='brotli')
+            self.logger.info(f"Saved updated patterns to {output_path}")
+        else:
+            self.logger.info(f"No patterns to save for {country_dir}.")
 
 # pattern_maker_output = r"/workspace/qgi\qgi-4.0\data\pattern_maker_output"
 # countries_csv        = r"/workspace/qgi\qgi-4.0\data\countries.csv"
 # generator = SymmetricPatternGenerator(pattern_maker_output, countries_csv)
 # generator.create_symmetric_patterns()
 
+# Add these lines to `PatternMaker`'s `run()`:
+# # Step 3: Create symmetric patterns
+# logger.info("Starting creation of symmetric patterns...")
+# self._create_symmetric_patterns()
+# logger.info("Symmetric pattern creation completed successfully")
+# And add this method to `PatternMaker`:
+# def _create_symmetric_patterns(self):
+#     """Create symmetric patterns using the SymmetricPatternGenerator"""
+#     symmetric_generator = SymmetricPatternGenerator(
+#         pattern_maker_output=self.pattern_maker_output,
+#         countries_csv=self.countries_csv
+#     )
+#     symmetric_generator.create_symmetric_patterns()
 
 class PatternMaker:
     """Class for creating and processing patterns from SCDI data"""
@@ -440,12 +467,13 @@ class PatternMaker:
         try:
             # Step 1: Create patterns by country
             logger.info("Starting pattern creation by country...")
-            self.create_patterns_by_country()
+            # self.create_patterns_by_country_dask()
+            #self.create_patterns_by_country_pyarrow()
             logger.info("Pattern creation by country completed successfully")
 
             # Step 2: Process all patterns (filter scdi_count == 1 and add PPS)
             logger.info("Starting processing of all patterns...")
-            self._process_all_patterns()
+            #self._process_all_patterns()
             logger.info("Pattern processing completed successfully")
 
             # Step 3: Create symmetric patterns
@@ -455,7 +483,7 @@ class PatternMaker:
 
             # Step 4: Create 'top_pps.parquet' with top patterns
             logger.info("Starting creation of 'top_pps.parquet'...")
-            self.create_top_pps()
+            # self.create_top_pps()
             logger.info("'top_pps.parquet' creation completed successfully")
 
             logger.info("Entire pipeline executed successfully")
@@ -504,7 +532,51 @@ class PatternMaker:
         logger.info(f"Found {len(country_names)} country names")
         return country_names
 
-    def create_patterns_by_country(self):
+    def create_patterns_by_country_pyarrow(self):
+        """Create patterns by grouping SCDIs for each country individually."""
+        logger.info("Starting pattern creation by country...")
+
+        country_names = self._get_country_names()
+
+        for country_name in country_names:
+            parquet_files = self._find_scdi_parquet_files_by_country(country_name)
+            if not parquet_files:
+                continue
+
+            logger.info(f"Reading Parquet files for country: {country_name}...")
+            table = pq.read_table(parquet_files)
+
+            logger.info(f"Grouping and aggregating data for country: {country_name}...")
+            aggregated_table = table.group_by([
+                'country_a_id',
+                'country_b_id',
+                'length',
+                'start_year_a',
+                'start_year_b'
+            ]).aggregate([
+                ('correlation', 'mean'),
+                ('correlation', 'count')
+            ])
+
+            aggregated_table = aggregated_table.rename_columns([
+                'country_a_id',
+                'country_b_id',
+                'length',
+                'start_year_a',
+                'start_year_b',
+                'average_correlation',
+                'scdi_count'
+            ])
+
+            country_dir = os.path.join(self.pattern_maker_output, country_name)
+            os.makedirs(country_dir, exist_ok=True)
+
+            logger.info(f"Saving patterns for country {country_name}...")
+            pq.write_table(aggregated_table, os.path.join(country_dir, 'patterns.parquet'), compression='brotli')
+
+        logger.info("Pattern creation by country completed successfully")
+
+    def create_patterns_by_country_dask(self):
         """Create patterns by grouping SCDIs for each country individually."""
         logger.info("Starting pattern creation by country...")
 
@@ -633,13 +705,11 @@ class PatternMaker:
 
     def _create_symmetric_patterns(self):
         """Create symmetric patterns using the SymmetricPatternGenerator"""
-
         symmetric_generator = SymmetricPatternGenerator(
             pattern_maker_output=self.pattern_maker_output,
             countries_csv=self.countries_csv
         )
         symmetric_generator.create_symmetric_patterns()
-
 
 creator = PatternMaker(
     scdi_finder_output=r"/workspace/qgi\qgi-4.0\data\scdi_finder_output",

@@ -34,7 +34,7 @@ class SDCIExtractor:
         self.data_path = data_path
         self.output_path = output_path
         self.processing_log_path = os.path.join(data_path, "processing_log.json")
-        
+
         # Load countries.csv to create name-to-id mapping
         countries_csv_path = r"/workspace/qgi\qgi-4.0\data\countries.csv"
         self.countries_df = pd.read_csv(countries_csv_path)

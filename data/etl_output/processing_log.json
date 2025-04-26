@@ -3,7 +3,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-17T11:48:40.290015",
+    "last_updated": "2025-04-26T03:43:21.074755",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -27,7 +27,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-17T11:48:40.487421",
+    "last_updated": "2025-04-26T03:43:21.248932",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -35,15 +35,15 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-17T11:48:40.752472",
+    "last_updated": "2025-04-26T03:43:20.715279",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
   "SP.DYN.LE00.IN": {
-    "status": "in progress",
+    "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-17T11:48:40.784792",
+    "last_updated": "2025-04-26T03:43:21.622954",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -51,7 +51,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-16T01:11:56.792379",
+    "last_updated": "2025-04-26T03:43:21.876404",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -59,7 +59,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-16T01:11:56.945541",
+    "last_updated": "2025-04-26T03:43:22.061407",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -67,31 +67,63 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-16T01:11:57.115562",
-    "last_year": 2023,
+    "last_updated": "2025-04-26T03:43:22.261449",
+    "last_year": 2024,
     "correlation_threshold": 0.5
   },
   "SL.UEM.TOTL.ZS": {
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-16T01:11:57.292574",
-    "last_year": 2023,
+    "last_updated": "2025-04-26T03:43:22.498606",
+    "last_year": 2024,
     "correlation_threshold": 0.5
   },
   "NY.GDP.PCAP.CD": {
     "status": "completed",
-    "num_sdcis": 41059108,
+    "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-16T04:49:34.344226",
+    "last_updated": "2025-04-26T03:43:22.739245",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
   "MS.MIL.MPRT.KD": {
     "status": "completed",
-    "num_sdcis": 5632335,
+    "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-16T06:54:47.348815",
+    "last_updated": "2025-04-26T03:43:22.939723",
+    "last_year": 2023,
+    "correlation_threshold": 0.5
+  },
+  "EG.ELC.ACCS.RU.ZS": {
+    "status": "completed",
+    "num_sdcis": 0,
+    "error_message": null,
+    "last_updated": "2025-04-26T04:17:18.553348",
+    "last_year": 2023,
+    "correlation_threshold": 0.5
+  },
+  "EG.ELC.ACCS.UR.ZS": {
+    "status": "completed",
+    "num_sdcis": 0,
+    "error_message": null,
+    "last_updated": "2025-04-26T04:44:14.193258",
+    "last_year": 2023,
+    "correlation_threshold": 0.5
+  },
+  "IT.NET.USER.ZS": {
+    "status": "completed",
+    "num_sdcis": 0,
+    "error_message": null,
+    "last_updated": "2025-04-26T04:44:14.320085",
+    "last_year": 2024,
+    "correlation_threshold": 0.5
+  },
+  "SH.DYN.MORT": {
+    "status": "in progress",
+    "num_sdcis": 0,
+    "error_message": null,
+    "last_updated": "2025-04-26T04:44:14.334062",
     "last_year": 2023,
     "correlation_threshold": 0.5
   }
