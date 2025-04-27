@@ -661,52 +661,79 @@ class PatternMaker:
         symmetric_generator.create_symmetric_patterns()
         logger.info("Symmetric pattern creation completed successfully")
 
-    def create_top_pps(self):
-        """Create a Parquet file with top N patterns based on PPS using PyArrow"""
-        logger.info(f"Creating 'top_pps.parquet' with top {TOP_PPS_PATTERNS_COUNT} patterns based on PPS...")
-
+    def _get_pattern_files(self):
         # Get list of pattern directories
         pattern_dirs = glob.glob(os.path.join(self.pattern_maker_output, "*"))
         pattern_dirs = [d for d in pattern_dirs if os.path.isdir(d)]
-        
+
         # Collect all Parquet files
         parquet_files = []
         for country_dir in pattern_dirs:
             files = glob.glob(os.path.join(country_dir, "*.parquet"))
             parquet_files.extend(files)
-        
+
         if not parquet_files:
             logger.warning("No pattern files found. Skipping creation of 'top_pps.parquet'...")
             return
-        
-        # Read all Parquet files into a PyArrow Table
-        logger.info("Reading all Parquet files into a PyArrow Table...")
-        #try:
-        table = pq.read_table(parquet_files)
-        # except Exception as e:
-        #     logger.error(f"Error reading Parquet files: {str(e)}")
-        #     return
-        
-        # Convert PyArrow Table to pandas DataFrame
-        logger.info("Converting PyArrow Table to pandas DataFrame...")
-        df = table.to_pandas()
-        
-        # Sort by PPS and select top N patterns
-        logger.info(f"Selecting top {TOP_PPS_PATTERNS_COUNT} patterns based on PPS...")
-        df_sorted = df.sort_values('pps', ascending=False)
-        top_patterns = df_sorted.head(TOP_PPS_PATTERNS_COUNT)
-        
-        # Save top patterns to a Parquet file using PyArrow
-        output_path = os.path.join(self.pattern_maker_output, "top_pps.parquet")
-        logger.info(f"Saving 'top_pps.parquet' to {output_path}...")
-        try:
-            # Convert pandas DataFrame to PyArrow Table
-            top_table = pa.Table.from_pandas(top_patterns)
-            # Write PyArrow Table to Parquet file
-            pq.write_table(top_table, output_path, compression='brotli')
-            logger.info(f"Saved 'top_pps.parquet' to {output_path}")
-        except Exception as e:
-            logger.error(f"Error writing Parquet file: {str(e)}")
+
+        return parquet_files
+
+    def create_top_pps(self):
+        """Create a Parquet file with top N patterns based on PPS using incremental processing"""
+        logger.info(f"Creating 'top_pps.parquet' with top {TOP_PPS_PATTERNS_COUNT} patterns based on PPS...")
+
+        parquet_files = self._get_pattern_files()
+        top_patterns = None
+        total_files = len(parquet_files)
+
+        for i, file in enumerate(parquet_files):
+            try:
+                # Read current Parquet file
+                table = pq.read_table(file)
+                df = table.to_pandas()
+
+                # Check if 'pps' column exists
+                if 'pps' not in df.columns:
+                    logger.warning(f"'pps' column not found in file: {file}. Skipping...")
+                    continue
+
+                # Get top N patterns from current file
+                current_top = df.sort_values('pps', ascending=False).head(TOP_PPS_PATTERNS_COUNT)
+
+                # Merge with global top patterns
+                if top_patterns is None:
+                    top_patterns = current_top
+                else:
+                    combined = pd.concat([top_patterns, current_top])
+                    top_patterns = combined.sort_values('pps', ascending=False).head(TOP_PPS_PATTERNS_COUNT)
+
+                # Calculate and log progress
+                progress_percent = (i + 1) / total_files * 100
+                if not top_patterns.empty:
+                    min_corr = round(top_patterns['pps'].min(), 2)
+                    max_corr = round(top_patterns['pps'].max(), 2)
+                    logger.info(f"Progress: {i+1}/{total_files} ({progress_percent:.2f}%) | Corr: [{min_corr}-{max_corr}]")
+                else:
+                    logger.info(f"Progress: {i+1}/{total_files} ({progress_percent:.2f}%) ")
+
+            except Exception as e:
+                logger.error(f"Error processing file {file}: {str(e)}")
+                continue
+
+        if top_patterns is not None and not top_patterns.empty:
+            # Save top patterns to a Parquet file using PyArrow
+            output_path = os.path.join(self.pattern_maker_output, "top_pps.parquet")
+            logger.info(f"Saving 'top_pps.parquet' to {output_path}...")
+            try:
+                # Convert pandas DataFrame to PyArrow Table
+                top_table = pa.Table.from_pandas(top_patterns)
+                # Write PyArrow Table to Parquet file
+                pq.write_table(top_table, output_path, compression='brotli')
+                logger.info(f"Saved 'top_pps.parquet' to {output_path}")
+            except Exception as e:
+                logger.error(f"Error writing Parquet file: {str(e)}")
+        else:
+            logger.warning("No valid patterns found. 'top_pps.parquet' was not created.")
 
 creator = PatternMaker(
     scdi_finder_output=r"/workspace/qgi\qgi-4.0\data\scdi_finder_output",
