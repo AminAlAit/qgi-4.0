@@ -465,26 +465,11 @@ class PatternMaker:
     def run(self):
         """Run the entire pattern creation and processing pipeline"""
         try:
-            # Step 1: Create patterns by country
-            logger.info("Starting pattern creation by country...")
             # self.create_patterns_by_country_dask()
-            #self.create_patterns_by_country_pyarrow()
-            logger.info("Pattern creation by country completed successfully")
-
-            # Step 2: Process all patterns (filter scdi_count == 1 and add PPS)
-            logger.info("Starting processing of all patterns...")
-            #self._process_all_patterns()
-            logger.info("Pattern processing completed successfully")
-
-            # Step 3: Create symmetric patterns
-            logger.info("Starting creation of symmetric patterns...")
-            self._create_symmetric_patterns()
-            logger.info("Symmetric pattern creation completed successfully")
-
-            # Step 4: Create 'top_pps.parquet' with top patterns
-            logger.info("Starting creation of 'top_pps.parquet'...")
-            # self.create_top_pps()
-            logger.info("'top_pps.parquet' creation completed successfully")
+            # self.create_patterns_by_country_pyarrow()
+            # self._process_all_patterns()
+            # self._create_symmetric_patterns()
+            self.create_top_pps()
 
             logger.info("Entire pipeline executed successfully")
 
@@ -632,7 +617,7 @@ class PatternMaker:
 
     def _process_all_patterns(self):
         """Process all patterns by filtering scdi_count == 1 and adding PPS"""
-        logger.info("Processing all patterns...")
+        logger.info("Starting processing of all patterns...")
         pattern_dirs = glob.glob(os.path.join(self.pattern_maker_output, "*"))
         pattern_dirs = [d for d in pattern_dirs if os.path.isdir(d)]
 
@@ -663,53 +648,65 @@ class PatternMaker:
                 )
                 logger.info(f"Saved processed Parquet file: {file}")
 
-        logger.info("Pattern processing completed")
-
-    def create_top_pps(self):
-        """Create a Parquet file with top N patterns based on PPS"""
-        logger.info(f"Creating 'top_pps.parquet' with top {TOP_PPS_PATTERNS_COUNT} patterns based on PPS...")
-        pattern_dirs = glob.glob(os.path.join(self.pattern_maker_output, "*"))
-        pattern_dirs = [d for d in pattern_dirs if os.path.isdir(d)]
-
-        # Collect all Parquet files
-        parquet_files = []
-        for country_dir in pattern_dirs:
-            files = glob.glob(os.path.join(country_dir, "*.parquet"))
-            parquet_files.extend(files)
-
-        if not parquet_files:
-            logger.warning("No pattern files found. Skipping creation of 'top_pps.parquet'...")
-            return
-
-        # Read all Parquet files into a Dask DataFrame
-        logger.info("Reading all Parquet files into a Dask DataFrame...")
-        ddf = dd.read_parquet(parquet_files)
-
-        # Ensure ddf is a Dask DataFrame
-        if not isinstance(ddf, dd.DataFrame):
-            logger.error("ddf is not a Dask DataFrame. Cannot proceed.")
-            return
-
-        # Sort by PPS and select top N patterns
-        logger.info(f"Selecting top {TOP_PPS_PATTERNS_COUNT} patterns based on PPS...")
-        top_patterns = ddf.sort_values('pps', ascending=False).head(TOP_PPS_PATTERNS_COUNT).compute()
-
-        # Save top patterns to a Parquet file
-        output_path = os.path.join(self.pattern_maker_output, "top_pps.parquet")
-        top_patterns.to_parquet(
-            output_path,
-            index=False,
-            compression="brotli"
-        )
-        logger.info(f"Saved 'top_pps.parquet' to {output_path}")
+        logger.info("Pattern processing completed successfully")
 
     def _create_symmetric_patterns(self):
         """Create symmetric patterns using the SymmetricPatternGenerator"""
+
+        logger.info("Starting creation of symmetric patterns...")
         symmetric_generator = SymmetricPatternGenerator(
             pattern_maker_output=self.pattern_maker_output,
             countries_csv=self.countries_csv
         )
         symmetric_generator.create_symmetric_patterns()
+        logger.info("Symmetric pattern creation completed successfully")
+
+    def create_top_pps(self):
+        """Create a Parquet file with top N patterns based on PPS using PyArrow"""
+        logger.info(f"Creating 'top_pps.parquet' with top {TOP_PPS_PATTERNS_COUNT} patterns based on PPS...")
+
+        # Get list of pattern directories
+        pattern_dirs = glob.glob(os.path.join(self.pattern_maker_output, "*"))
+        pattern_dirs = [d for d in pattern_dirs if os.path.isdir(d)]
+        
+        # Collect all Parquet files
+        parquet_files = []
+        for country_dir in pattern_dirs:
+            files = glob.glob(os.path.join(country_dir, "*.parquet"))
+            parquet_files.extend(files)
+        
+        if not parquet_files:
+            logger.warning("No pattern files found. Skipping creation of 'top_pps.parquet'...")
+            return
+        
+        # Read all Parquet files into a PyArrow Table
+        logger.info("Reading all Parquet files into a PyArrow Table...")
+        #try:
+        table = pq.read_table(parquet_files)
+        # except Exception as e:
+        #     logger.error(f"Error reading Parquet files: {str(e)}")
+        #     return
+        
+        # Convert PyArrow Table to pandas DataFrame
+        logger.info("Converting PyArrow Table to pandas DataFrame...")
+        df = table.to_pandas()
+        
+        # Sort by PPS and select top N patterns
+        logger.info(f"Selecting top {TOP_PPS_PATTERNS_COUNT} patterns based on PPS...")
+        df_sorted = df.sort_values('pps', ascending=False)
+        top_patterns = df_sorted.head(TOP_PPS_PATTERNS_COUNT)
+        
+        # Save top patterns to a Parquet file using PyArrow
+        output_path = os.path.join(self.pattern_maker_output, "top_pps.parquet")
+        logger.info(f"Saving 'top_pps.parquet' to {output_path}...")
+        try:
+            # Convert pandas DataFrame to PyArrow Table
+            top_table = pa.Table.from_pandas(top_patterns)
+            # Write PyArrow Table to Parquet file
+            pq.write_table(top_table, output_path, compression='brotli')
+            logger.info(f"Saved 'top_pps.parquet' to {output_path}")
+        except Exception as e:
+            logger.error(f"Error writing Parquet file: {str(e)}")
 
 creator = PatternMaker(
     scdi_finder_output=r"/workspace/qgi\qgi-4.0\data\scdi_finder_output",

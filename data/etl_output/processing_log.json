@@ -3,7 +3,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:21.074755",
+    "last_updated": "2025-04-27T03:54:36.438823",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -27,7 +27,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:21.248932",
+    "last_updated": "2025-04-27T03:54:36.602692",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -35,7 +35,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:20.715279",
+    "last_updated": "2025-04-27T03:54:36.082139",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -43,7 +43,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:21.622954",
+    "last_updated": "2025-04-27T03:54:36.980135",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -51,7 +51,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:21.876404",
+    "last_updated": "2025-04-27T03:54:37.231471",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -59,7 +59,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:22.061407",
+    "last_updated": "2025-04-27T03:54:37.434820",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -67,7 +67,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:22.261449",
+    "last_updated": "2025-04-27T03:54:37.682547",
     "last_year": 2024,
     "correlation_threshold": 0.5
   },
@@ -75,7 +75,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:22.498606",
+    "last_updated": "2025-04-27T03:54:37.934749",
     "last_year": 2024,
     "correlation_threshold": 0.5
   },
@@ -83,7 +83,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:22.739245",
+    "last_updated": "2025-04-27T03:54:38.200901",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -91,7 +91,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T03:43:22.939723",
+    "last_updated": "2025-04-27T03:54:38.465039",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -99,7 +99,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T04:17:18.553348",
+    "last_updated": "2025-04-27T04:30:59.682913",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -107,7 +107,7 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T04:44:14.193258",
+    "last_updated": "2025-04-27T04:58:51.609260",
     "last_year": 2023,
     "correlation_threshold": 0.5
   },
@@ -115,15 +115,23 @@
     "status": "completed",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T04:44:14.320085",
+    "last_updated": "2025-04-27T04:58:51.765060",
     "last_year": 2024,
     "correlation_threshold": 0.5
   },
   "SH.DYN.MORT": {
+    "status": "completed",
+    "num_sdcis": 75453242,
+    "error_message": null,
+    "last_updated": "2025-04-27T10:27:37.060340",
+    "last_year": 2023,
+    "correlation_threshold": 0.5
+  },
+  "SP.DYN.TFRT.IN": {
     "status": "in progress",
     "num_sdcis": 0,
     "error_message": null,
-    "last_updated": "2025-04-26T04:44:14.334062",
+    "last_updated": "2025-04-27T10:27:44.207737",
     "last_year": 2023,
     "correlation_threshold": 0.5
   }
