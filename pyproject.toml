@@ -24,6 +24,7 @@ pylint = "^3.2.5"
 
 
 ## Configuration migrated from mypy.ini
+pytest-mock = "^3.14.1"
 [tool.mypy]
 mypy_path = "src,tests"
 warn_return_any = true

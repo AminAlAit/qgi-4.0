@@ -1,32 +1,38 @@
 Directory structure for: /workspace/qgi\qgi-4.0
+├── [dummy_path]
+│   └── [EMPTY.DATA]
 ├── [src]
 │   └── [pipelines]
-│       ├── [1_indicator_extractors]
+│       ├── [a_indicator_extractors]
 │       │   └── [wb_indicators_etl]
 │       │       ├── wb_config.yaml
 │       │       └── wb_indicators_etl.py
-│       ├── [2_scdi_finder]
+│       ├── [b_scdi_finder]
 │       │   ├── app.py
 │       │   └── config.yaml
-│       ├── [3_pattern_maker]
+│       ├── [c_pattern_maker]
 │       │   ├── app.py
 │       │   ├── checkpoint.txt
 │       │   ├── inner_checkpoint.txt
 │       │   ├── main.ipynb
 │       │   └── merged_pattern_keys.txt
-│       ├── [4_recipe_maker]
+│       ├── [d_recipe_maker]
 │       │   ├── app.py
 │       │   ├── recipe_generation_state.json
 │       │   └── recipes_eda.ipynb
-│       └── [5_top_patterns_maker]
+│       └── [d_top_patterns_maker]
 │           ├── config.yaml
 │           └── create_top_patterns.py
 ├── [tests]
+│   ├── [pipelines]
+│   │   └── test_wb_indicators_etl.py
+│   └── conftest.py
 ├── .coverage
 ├── .coveragerc
 ├── .gitignore
 ├── .python-version
 ├── README.md
+├── coverage.xml
 ├── poetry.lock
 ├── pyproject.toml
 └── requirements.txt

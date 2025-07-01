@@ -49,3 +49,4 @@ indicator_extractors/
 wb/
 
 .coverage
+coverage.xml
