@@ -1,122 +1,122 @@
-"""SDCI Extraction Application"""
+"""
+SDCI Finder Pipeline
 
-import logging
+This script discovers pre-processed indicator data, performs a correlation
+analysis to find all Single Dyadic Correlating Indexes (SDCIs), and saves
+the results. It includes checkpointing to resume an interrupted run.
+"""
+
 import os
-import yaml
-import pandas as pd
+import glob
+import logging
+from dataclasses import dataclass
+from typing import List
 import numpy as np
+import pandas as pd
 from scipy.stats import pearsonr
-import pyarrow.parquet as pq
-import json
-from datetime import datetime
+import yaml
 
 
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO, format="%(message)s")
+@dataclass(frozen=True)
+class ScdiFinderConfig:
+    """A validated configuration object for the pipeline."""
+    input_path: str
+    output_path: str
+    countries_csv_path: str
+    min_length: int
+    correlation_threshold: float
+
+    def __post_init__(self):
+        """Validate paths after initialization."""
+        if not os.path.exists(self.input_path):
+            raise FileNotFoundError(f"Input data path not found: {self.input_path}")
+        if not os.path.exists(self.countries_csv_path):
+            raise FileNotFoundError(f"Countries CSV not found: {self.countries_csv_path}")
 
 
+@dataclass
 class SDCI:
-    """Class representing a Single Dyadic Correlating Index"""
-
-    def __init__(self):
-        self.country_a_id = 0
-        self.country_b_id = 0
-        self.length = 0
-        self.start_year_a = 0
-        self.start_year_b = 0
-        self.correlation = 0.0
+    """Represents a Single Dyadic Correlating Index."""
+    country_a_id: int = 0
+    country_b_id: int = 0
+    length: int = 0
+    start_year_a: int = 0
+    start_year_b: int = 0
+    correlation: float = 0.0
 
 
-class SDCIExtractor:
-    """Class for extracting SDCIs from indicator data"""
+class ScdiFinder:
+    """Finds SDCIs from a directory of indicator parquet files."""
 
-    def __init__(self, data_path, output_path):
-        self.data_path = data_path
-        self.output_path = output_path
-        self.processing_log_path = os.path.join(data_path, "processing_log.json")
-
-        # Load countries.csv to create name-to-id mapping
-        countries_csv_path = r"/workspace/qgi\qgi-4.0\data\countries.csv"
-        self.countries_df = pd.read_csv(countries_csv_path)
+    def __init__(self, config: ScdiFinderConfig):
+        """Initializes the finder with a validated configuration."""
+        self.config = config
+        self.logger = logging.getLogger(self.__class__.__name__)
+        
+        countries_df = pd.read_csv(self.config.countries_csv_path)
         self.country_name_to_id = {
-            row["name_1"]: row["id"] for _, row in self.countries_df.iterrows()
+            row["name_1"]: row["id"] for _, row in countries_df.iterrows()
         }
 
-        # MySQL connection configuration
-        self.mysql_config = {
-            "host": "localhost",
-            "user": "amin",
-            "password": "<MYSQL_PASSWORD>",
-            "database": "sdci_database",
-        }
+    def run(self):
+        """Main method to run the entire SDCI finding pipeline."""
+        self.logger.info("Starting SDCI Finder pipeline...")
+        
+        discovered_indicators = self._discover_indicators()
+        total_indicators = len(discovered_indicators)
+        self.logger.info(f"Discovered {total_indicators} indicators to process.")
 
-    def load_indicator_data(self, indicator_id):
-        """Load cleaned indicator data from Parquet file"""
+        for index, (indicator_id, file_path) in enumerate(discovered_indicators, start=1):
+            self.logger.info("-" * 40)
+            # This log already includes the indicator ID, so it will look good.
+            self.logger.info(
+                "Processing indicator %d of %d (%.1f%%): %s",
+                index, total_indicators, (index / total_indicators) * 100, indicator_id
+            )
+            self._process_one_indicator(indicator_id, file_path)
+        
+        self.logger.info("SDCI Finder pipeline completed successfully.")
+
+    def _discover_indicators(self) -> List[tuple[str, str]]:
+        """Finds all indicator parquet files in the input directory."""
+        search_path = os.path.join(self.config.input_path, "**", "*.parquet")
+        all_files = glob.glob(search_path, recursive=True)
+
+        # Extract (indicator_id, path) tuples
+        indicators = []
+        for file_path in all_files:
+            # Assumes indicator ID is the file name without extension
+            indicator_id = os.path.splitext(os.path.basename(file_path))[0]
+            indicators.append((indicator_id, file_path))
+
+        return indicators
+
+    def _process_one_indicator(self, indicator_id: str, file_path: str):
+        """Loads data and finds SDCIs for a single indicator."""
         try:
-            indicator_dir = os.path.join(self.data_path, indicator_id)
-            parquet_path = os.path.join(indicator_dir, f"{indicator_id}.parquet")
-            table = pq.read_table(parquet_path)
-            df = table.to_pandas()
-            return df
+            df = pd.read_parquet(file_path)
+            countries = df["country"].unique()
+            preprocessed_data = self._preprocess_data(df, countries)
+            
+            # MODIFIED: Added indicator_id for context
+            self.logger.info(f"[{indicator_id}] Finding SDCIs for {len(preprocessed_data)} countries...")
+            sdcis = self._find_sdcis_for_indicator(indicator_id, preprocessed_data)
+            self.logger.info(f"[{indicator_id}] Found {len(sdcis):,} total SDCIs")
+
         except Exception as e:
-            logger.error(f"Error loading data for {indicator_id}: {str(e)}")
-            raise
+            self.logger.error(f"[{indicator_id}] Processing failed: {e}", exc_info=True)
 
-    def find_sdcis(self, indicator_id, min_length=3, correlation_threshold=0.9):
-        """Main method to find SDCIs in the indicator data"""
-        df = self.load_indicator_data(indicator_id)
-        countries = df["country"].unique()
+    def _preprocess_data(self, df: pd.DataFrame, countries: list) -> list:
+        """Prepares data for each country, handling NaNs."""
 
-        # Preprocess data for each country
-        preprocessed_data = self._preprocess_data(df, countries)
-
-        # Calculate total number of comparisons for progress tracking
-        total_comparisons = self._calculate_total_comparisons(
-            preprocessed_data, min_length
-        )
-
-        # Find SDCIs with progress tracking
-        sdcis = self._find_sdcis(
-            indicator_id,
-            preprocessed_data,
-            total_comparisons,
-            min_length,
-            correlation_threshold,
-        )
-
-        return sdcis
-
-    def _preprocess_data(self, df, countries):
-        """
-        Preprocesses data for each country by handling NaN values and organizing data for analysis.
-
-        This function processes the input DataFrame to prepare data for each country:
-        1. Filters the data for each country
-        2. Sorts the data by year
-        3. Handles NaN values by either skipping countries with more than one NaN or interpolating single NaN values
-        4. Creates a list of dictionaries containing the country name, original data, and cleaned values
-
-        Parameters:
-        df (pd.DataFrame): The input DataFrame containing indicator data for multiple countries
-        countries (list): List of country names to process
-
-        Returns:
-        list: A list of dictionaries, where each dictionary contains:
-            - "country": The country name
-            - "data": The original country data sorted by year
-            - "values": Cleaned numeric values with NaNs handled
-        """
         preprocessed_data = []
-
         for country in countries:
             country_data = df[df["country"] == country].sort_values("year")
             values = country_data["value"].values.copy()
 
-            # Handle NaN values
-            nan_indices = np.isnan(values)
+            nan_indices = pd.isna(values)
             if np.sum(nan_indices) > 1:
                 continue
-
             if np.sum(nan_indices) == 1:
                 nan_pos = np.where(nan_indices)[0][0]
                 if nan_pos == 0:
@@ -126,437 +126,109 @@ class SDCIExtractor:
                 else:
                     values[nan_pos] = (values[nan_pos - 1] + values[nan_pos + 1]) / 2
 
-            preprocessed_data.append(
-                {"country": country, "data": country_data, "values": values}
-            )
-
+            preprocessed_data.append({
+                "country": country,
+                "data": country_data,
+                "values": values,
+            })
         return preprocessed_data
 
-    def _calculate_total_comparisons(self, preprocessed_data, min_length):
-        """
-        Calculate the total number of segment comparisons for progress tracking.
-
-        This function computes the total number of comparisons that will be made
-        during the pattern extraction process. It considers all possible segment
-        lengths within the specified range and all country pairs.
-
-        The calculation is based on:
-        1. For each country A, considering all valid segment lengths
-        2. For each segment length, determining how many segments can be created
-        3. For each segment of country A, counting how many valid segments exist
-        in all subsequent countries (B) that can be compared with it
-
-        Parameters:
-        preprocessed_data (list): List of dictionaries containing preprocessed data for each country
-        min_length (int): Minimum segment length to consider
-
-        Returns:
-        int: Total number of comparisons that will be performed
-        """
-        total_comparisons = 0
-
-        for i, country_a in enumerate(preprocessed_data):
-            values_a = country_a["values"]
-            max_length_a = len(values_a) - 1
-
-            for segment_length in range(min_length, max_length_a + 1):
-                if len(values_a) < segment_length:
-                    continue
-
-                num_segments_a = len(values_a) - segment_length + 1
-                num_segments_b = sum(
-                    len(country_b["values"]) - segment_length + 1
-                    for country_b in preprocessed_data[i + 1 :]
-                    if len(country_b["values"]) >= segment_length
-                )
-                total_comparisons += num_segments_a * num_segments_b
-
-        return total_comparisons
-
-    def _find_sdcis(
-        self,
-        indicator_id,
-        preprocessed_data,
-        total_comparisons,
-        min_length,
-        correlation_threshold,
-    ):
-        """
-        Identify Single Dyadic Correlating Indexes (SDCIs) between country pairs.
-        This method performs the core pattern identification by:
-        1. Iterating over all country pairs
-        2. Generating all possible segments of specified lengths
-        3. Calculating correlations between segments
-        4. Saving qualifying SDCIs to disk incrementally
-        5. Tracking and logging progress throughout the process
-        The method resumes from previously identified SDCIs if they exist and
-        processes only new country pairs.
-        Parameters:
-        indicator_id (str): The ID of the indicator being processed
-        preprocessed_data (list): List of dictionaries containing preprocessed data for each country
-        total_comparisons (int): Total number of comparisons to be made for progress tracking
-        min_length (int): Minimum segment length to consider
-        correlation_threshold (float): Minimum correlation required to qualify as an SDCI
-        Returns:
-        dict: A dictionary representation of all identified SDCIs
-        """
-        sdcis = []
-        progress = 0
-        country_a_progress = {}
-        logger.info("Total comparisons: %d", total_comparisons)
-
-        # Create indicator output directory
-        indicator_output_dir = os.path.join(self.output_path, indicator_id)
+    def _find_sdcis_for_indicator(self, indicator_id: str, preprocessed_data: list) -> list:
+        """Finds all SDCIs for a given indicator, with checkpointing."""
+        all_sdcis = []
+        indicator_output_dir = os.path.join(self.config.output_path, indicator_id)
         os.makedirs(indicator_output_dir, exist_ok=True)
 
-        # Check existing country files to resume processing
-        existing_countries = set()
-        if os.path.exists(indicator_output_dir):
-            for filename in os.listdir(indicator_output_dir):
-                if filename.endswith(".parquet"):
-                    country_name = filename.rsplit(".", 1)[
-                        0
-                    ]  # Remove .parquet extension
-                    existing_countries.add(country_name)
-        logger.info("------------------")
-        logger.info("Resuming from existing SDCIs for %s", indicator_id)
+        for i, country_a_data in enumerate(preprocessed_data):
+            country_a_name = country_a_data["country"]
 
-        # Filter out countries already processed
-        preprocessed_data = [
-            country
-            for country in preprocessed_data
-            if country["country"] not in existing_countries
-        ]
+            country_output_path = os.path.join(indicator_output_dir, f"{country_a_name}.parquet")
+            if os.path.exists(country_output_path):
+                # MODIFIED: Added indicator_id for context
+                self.logger.info(f"[{indicator_id}] Skipping '{country_a_name}': Output already exists.")
+                continue
 
-        # Loop through each country A
-        for i, country_a in enumerate(preprocessed_data):
-            values_a = country_a["values"]
-            country_a_name = country_a["country"]
+            # MODIFIED: Added indicator_id for context
+            self.logger.info(f"[{indicator_id}] Processing country: {country_a_name} ({i+1}/{len(preprocessed_data)})")
+
             country_a_sdcis = []
-            max_length_a = len(values_a) - 1
+            values_a = country_a_data["values"]
 
-            # Calculate total comparisons for this country
-            total_comparisons_country = 0
-            # Loop through each possible segment length for country A
-            for segment_length in range(min_length, max_length_a + 1):
-                if len(values_a) < segment_length:
-                    continue
-                num_segments_a = len(values_a) - segment_length + 1
-                # Loop through each subsequent country B
-                for country_b in preprocessed_data[i + 1 :]:
-                    if len(country_b["values"]) >= segment_length:
-                        total_comparisons_country += (
-                            len(values_a) - segment_length + 1
-                        ) * (len(country_b["values"]) - segment_length + 1)
+            for segment_len in range(self.config.min_length, len(values_a) + 1):
+                for start_a in range(len(values_a) - segment_len + 1):
+                    segment_a = values_a[start_a : start_a + segment_len]
 
-            country_a_progress[country_a_name] = {
-                "total": total_comparisons_country,
-                "completed": 0,
-            }
-
-            # Loop through each possible segment length for country A
-            for segment_length in range(min_length, max_length_a + 1):
-                if len(values_a) < segment_length:
-                    continue
-
-                num_segments_a = len(values_a) - segment_length + 1
-                # Loop through each starting index for segments in country A
-                for start_idx in range(num_segments_a):
-                    segment_a = values_a[start_idx : start_idx + segment_length]
-
-                    # Loop through each subsequent country B
-                    for country_b in preprocessed_data[i + 1 :]:
-                        values_b = country_b["values"]
-                        country_b_name = country_b["country"]
-                        max_length_b = len(values_b) - 1
-                        if segment_length > max_length_b:
+                    for country_b_data in preprocessed_data[i + 1:]:
+                        values_b = country_b_data["values"]
+                        if len(values_b) < segment_len:
                             continue
 
-                        num_segments_b = len(values_b) - segment_length + 1
-                        # Loop through each starting index for segments in country B
-                        for start_idx_b in range(num_segments_b):
-                            segment_b = values_b[
-                                start_idx_b : start_idx_b + segment_length
-                            ]
-
-                            # Calculate correlation
+                        for start_b in range(len(values_b) - segment_len + 1):
+                            segment_b = values_b[start_b : start_b + segment_len]
+                            if np.std(segment_a) == 0 or np.std(segment_b) == 0:
+                                continue
                             correlation, _ = pearsonr(segment_a, segment_b)
-                            if correlation >= correlation_threshold:
-                                sdc = SDCI()
-                                # Convert country names to ids using the mapping
-                                sdc.country_a_id = self.country_name_to_id.get(
-                                    country_a_name, 0
+
+                            if correlation >= self.config.correlation_threshold:
+                                sdc = SDCI(
+                                    country_a_id=self.country_name_to_id.get(country_a_name, 0),
+                                    country_b_id=self.country_name_to_id.get(country_b_data["country"], 0),
+                                    length=segment_len,
+                                    correlation=correlation,
+                                    start_year_a=country_a_data["data"].iloc[start_a]["year"],
+                                    start_year_b=country_b_data["data"].iloc[start_b]["year"],
                                 )
-                                sdc.country_b_id = self.country_name_to_id.get(
-                                    country_b_name, 0
-                                )
-                                sdc.length = segment_length
-                                sdc.correlation = correlation
-                                sdc.start_year_a = country_a["data"].iloc[start_idx][
-                                    "year"
-                                ]
-                                sdc.start_year_b = country_b["data"].iloc[start_idx_b][
-                                    "year"
-                                ]
                                 country_a_sdcis.append(sdc)
 
-                            # Update progress counters
-                            progress += 1
-                            country_a_progress[country_a_name]["completed"] += 1
-
-                            # Calculate progress percentages
-                            overall_percent = (progress / total_comparisons) * 100
-                            country_a_percent = (
-                                (
-                                    country_a_progress[country_a_name]["completed"]
-                                    / country_a_progress[country_a_name]["total"]
-                                )
-                                * 100
-                                if country_a_progress[country_a_name]["total"] > 0
-                                else 0
-                            )
-
-                            # Log progress
-                            if progress % 1000 == 0 or progress == total_comparisons:
-                                logger.info(
-                                    "%s | %s: %.2f%% | %d (%.2f%%)",
-                                    indicator_id,
-                                    country_a_name,
-                                    country_a_percent,
-                                    len(sdcis) + len(country_a_sdcis),
-                                    overall_percent,
-                                )
-
-            # Save SDCIs for this country after processing
             if country_a_sdcis:
-                logger.info("Saving SDCIs for country %s to Parquet", country_a_name)
-                country_parquet_path = os.path.join(
-                    indicator_output_dir, f"{country_a_name}.parquet"
-                )
-                country_sdcis_df = self._convert_sdcis_to_df(country_a_sdcis)
-                country_sdcis_df.to_parquet(
-                    country_parquet_path,
-                    index=False,
-                    compression="brotli",
-                    compression_level=11,
-                )
-                sdcis.extend(country_a_sdcis)
+                # MODIFIED: Added indicator_id for context
+                self.logger.info(f"[{indicator_id}] Saving {len(country_a_sdcis)} SDCIs for country '{country_a_name}'")
+                sdcis_df = self._convert_sdcis_to_df(country_a_sdcis)
+                sdcis_df.to_parquet(country_output_path, index=False, compression="brotli")
+                all_sdcis.extend(country_a_sdcis)
 
-        return sdcis
+        return all_sdcis
 
-    def _convert_sdcis_to_df(self, sdcis):
-        """Convert list of SDCI objects to DataFrame"""
-        sdcis_df = pd.DataFrame(
-            [
-                {
-                    "country_a_id": sdc.country_a_id,
-                    "country_b_id": sdc.country_b_id,
-                    "length": sdc.length,
-                    "start_year_a": sdc.start_year_a,
-                    "start_year_b": sdc.start_year_b,
-                    "correlation": round(sdc.correlation, 6),
-                }
-                for sdc in sdcis
-            ]
-        )
+    def _convert_sdcis_to_df(self, sdcis: List[SDCI]) -> pd.DataFrame:
+        """Converts a list of SDCI objects to a memory-optimized DataFrame."""
+        if not sdcis:
+            return pd.DataFrame()
+        
+        sdcis_df = pd.DataFrame([sdc.__dict__ for sdc in sdcis])
 
         # Convert to optimal data types
-        sdcis_df = sdcis_df.astype(
-            {
-                "country_a_id": "uint16",
-                "country_b_id": "uint16",
-                "length": "uint16",
-                "start_year_a": "uint16",
-                "start_year_b": "uint16",
-                "correlation": "float32",
-            }
-        )
-
-        return sdcis_df
-
-    def _save_to_parquet(self, country_a_sdcis, sdcis_file, sdcis_df):
-        """Save SDCIs to Parquet file"""
-        country_a_sdcis_df = self._convert_sdcis_to_df(country_a_sdcis)
-
-        combined_df = pd.concat([sdcis_df, country_a_sdcis_df], ignore_index=True)
-        combined_df.to_parquet(
-            sdcis_file,
-            index=False,
-            compression="gzip",
-            coerce_timestamps="ms",
-            allow_truncated_timestamps=True,
-        )
-
-    def update_processing_log(
-        self,
-        indicator_id,
-        status,
-        num_sdcis=0,
-        error_message=None,
-        last_year=None,
-        correlation_threshold=None,
-    ):
-        """Update the processing log with status for an indicator"""
-        try:
-            # Load existing log or create new
-            if os.path.exists(self.processing_log_path):
-                try:
-                    with open(self.processing_log_path, "r") as f:
-                        log = json.load(f)
-                except json.JSONDecodeError:
-                    # If JSON is invalid, start with an empty log
-                    log = {}
-                    logger.warning(
-                        "Processing log was corrupted. Starting with a new log."
-                    )
-            else:
-                log = {}
-
-            # Ensure last_year is a standard integer
-            if last_year is not None:
-                last_year = int(last_year)
-
-            # Update indicator entry
-            log[indicator_id] = {
-                "status": status,
-                "num_sdcis": num_sdcis,
-                "error_message": error_message,
-                "last_updated": datetime.now().isoformat(),
-                "last_year": last_year,
-                "correlation_threshold": correlation_threshold,
-            }
-
-            # Save updated log
-            with open(self.processing_log_path, "w") as f:
-                json.dump(log, f, indent=2)
-
-        except Exception as e:
-            logger.error(f"Error updating processing log: {str(e)}")
+        return sdcis_df.astype({
+            "country_a_id": "uint16",
+            "country_b_id": "uint16",
+            "length": "uint16",
+            "start_year_a": "uint16",
+            "start_year_b": "uint16",
+            "correlation": "float32",
+        })
 
 
-def initialize_extractor(config):
-    """
-    Initialize the SDCIExtractor with the given configuration
-    """
-    return SDCIExtractor(config["input_path"], config["output_path"])
-
-
-def process_indicators(extractor, indicators, config):
-    """
-    Process all indicators in the list
-    """
-    total_indicators = len(indicators)
-
-    for index, indicator_id in enumerate(indicators, start=1):
-        logger.info("-----------")
-        logger.info(
-            "Processing indicator %d of %d (%.1f%% complete): %s",
-            index,
-            total_indicators,
-            (index / total_indicators) * 100,
-            indicator_id,
-        )
-
-        process_indicator(extractor, indicator_id, config)
-
-
-def process_indicator(extractor, indicator_id, config):
-    """
-    Process a single indicator
-    """
-    try:
-        # Load indicator data to get last year
-        df = extractor.load_indicator_data(indicator_id)
-        last_year = df["year"].max()
-
-        # Update processing log to "in progress"
-        update_processing_status(
-            extractor,
-            indicator_id,
-            "in progress",
-            last_year=last_year,
-            correlation_threshold=config["correlation_threshold"],
-        )
-
-        # Find SDCIs for the indicator
-        sdcis = extractor.find_sdcis(
-            indicator_id=indicator_id,
-            min_length=config["min_length"],
-            correlation_threshold=config["correlation_threshold"],
-        )
-
-        # Update processing log to "completed"
-        update_processing_status(
-            extractor,
-            indicator_id,
-            "completed",
-            num_sdcis=len(sdcis),
-            last_year=last_year,
-            correlation_threshold=config["correlation_threshold"],
-        )
-
-        logger.info("Found %d SDCIs for indicator %s", len(sdcis), indicator_id)
-
-    except Exception as e:
-        # Update processing log to "failed"
-        update_processing_status(
-            extractor,
-            indicator_id,
-            "failed",
-            error_message=str(e),
-            last_year=last_year,
-            correlation_threshold=config["correlation_threshold"],
-        )
-        logger.error("Processing failed for indicator %s: %s", indicator_id, str(e))
-        raise
-
-
-def update_processing_status(extractor, indicator_id, status, **kwargs):
-    """
-    Update the processing status for an indicator
-    """
-    extractor.update_processing_log(indicator_id, status, **kwargs)
-
-
-def load_configuration(config_path="config.yaml"):
-    """
-    Load configuration from YAML file
-    """
+def load_config(config_path="config.yaml") -> ScdiFinderConfig:
+    """Loads YAML config file into a dataclass object."""
+    # Path is relative to the script's location
     current_dir = os.path.dirname(os.path.abspath(__file__))
     config_full_path = os.path.join(current_dir, config_path)
 
     with open(config_full_path, "r") as f:
-        config = yaml.safe_load(f)
-    return config
+        config_dict = yaml.safe_load(f)
 
-
-def load_config(config_path="config.yaml"):
-    """
-    Load configuration from YAML file
-    """
-    # Get the directory of the current script (app.py)
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Construct the full path to config.yaml
-    config_full_path = os.path.join(current_dir, config_path)
-
-    with open(config_full_path, "r") as f:
-        config = yaml.safe_load(f)
-    return config
+    return ScdiFinderConfig(**config_dict)
 
 
 def main():
-    """Main function to run the SDCI extraction pipeline"""
+    """Main function to initialize and run the SDCI Finder pipeline."""
+    # MODIFIED: Simplified the log format to just the message
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
     try:
-        config = load_configuration()
-        extractor = initialize_extractor(config)
-        indicators = config["indicators"]
-
-        process_indicators(extractor, indicators, config)
-
-        logger.info("SDCI extraction pipeline completed successfully")
+        config = load_config()
+        pipeline = ScdiFinder(config)
+        pipeline.run()
     except Exception as e:
-        logger.error("SDCI extraction pipeline failed: %s", str(e))
+        logging.getLogger(__name__).critical("Pipeline failed with an unhandled exception.", exc_info=True)
         raise
 
 
