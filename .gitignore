@@ -37,3 +37,9 @@ misc/
 
 # hiding raw data
 orgs_data/
+
+# hiding demicon work
+gateway_points/
+
+# skiping recipes
+recipes/
