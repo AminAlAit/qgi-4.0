@@ -1,0 +1,36 @@
+##########################################################################################################
+##                           Manually add indicators to this list                                     ##
+##########################################################################################################
+indicators:
+  - "NY.GDP.MKTP.KD.ZG" # GDP growth (annual %)
+  - "SP.POP.TOTL"       # Population, total
+  - "PV.EST"            # Political Stability and Absence of Violence/Terrorism: Estimate
+  - "SP.DYN.LE00.IN"    # Life expectancy at birth, total (years)
+  - "NY.GDP.MKTP.CD"    # GDP (current US$)
+  - "SE.PRM.ENRR"       # School enrollment, primary (% gross)
+  - "SL.EMP.TOTL.SP.ZS" # Employment to population ratio, 15+, total (%) (modeled ILO estimate)
+  - "SL.UEM.TOTL.ZS"    # Unemployment, total (% of total labor force) (modeled ILO estimate)
+  - "NY.GDP.PCAP.CD"    # GDP per capita (current US$)
+  - "MS.MIL.MPRT.KD"    # Arms imports (SIPRI trend indicator values)
+  - "EG.ELC.ACCS.RU.ZS" # Access to electricity, rural (% of rural population)
+  - "EG.ELC.ACCS.UR.ZS" # Access to electricity, urban (% of urban population)
+  - "IT.NET.USER.ZS"    # Individuals using the Internet (% of population)
+  - "SH.DYN.MORT"       # Mortality rate, under-5 (per 1,000 live births)
+  - "SP.DYN.TFRT.IN"    # Fertility rate, total (births per woman)
+  - "IT.CEL.SETS.P2"    # Mobile cellular subscriptions (per 100 people)
+  - "NE.EXP.GNFS.CD"    # Exports of goods and services (current US$)
+  - "NE.EXP.GNFS.ZS"    # Exports of goods and services (% of GDP)
+  - "NE.IMP.GNFS.CD"    # Imports of goods and services (current US$)
+  - "NE.IMP.GNFS.ZS"    # Imports of goods and services (% of GDP)
+
+# Configuration for the pipeline execution
+output_format: "parquet"
+
+# Use relative paths for better portability. This path should be relative to the script's location.
+output_path: "data/indicator_extractors/wb"
+
+# Path to the CSV file containing country name mappings.
+countries_csv_path: "data/countries.csv"
+
+# Note: file_size_limit is in the config but not used in the provided load script.
+file_size_limit: 100000000
