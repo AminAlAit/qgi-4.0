@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "qgi-4-0"
+version = "4.0"
+description = ""
+authors = ["Amin Al-Ait"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.3.0"
+pyarrow = "^20.0.0"
+pyyaml = "^6.0.2"
+wbgapi = "^1.0.12"
+psutil = "^7.0.0"
+black = "^25.1.0"
+
+[tool.poetry.group.dev.dependencies]
+# Dependencies for development, linting, and testing
+pytest = "^8.2.2"
+pytest-cov = "^5.0.0"
+mypy = "^1.10.0"
+pylint = "^3.2.5"
+
+
+## Configuration migrated from mypy.ini
+[tool.mypy]
+mypy_path = "src,tests"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+python_version = "3.11"
+strict_equality = true
+strict = true
+allow_untyped_decorators = true
+show_error_context = true
+
+# This section is needed to match the [mypy-testcontainers.*] from your .ini
+[[tool.mypy.overrides]]
+module = "testcontainers.*"
+ignore_missing_imports = true
+
+
+## Configuration migrated from pytest.ini
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "--cov='src' --cov-config=.coveragerc --cov-report=xml --cov-report=term"
+markers = [
+    "slow: marks tests as slow",
+    "load_stage",
+    "serial",
+]

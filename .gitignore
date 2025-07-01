@@ -43,3 +43,9 @@ gateway_points/
 
 # skiping recipes
 recipes/
+
+indicator_extractors/
+
+wb/
+
+.coverage

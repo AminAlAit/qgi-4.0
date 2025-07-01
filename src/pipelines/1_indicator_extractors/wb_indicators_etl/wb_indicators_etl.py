@@ -58,7 +58,7 @@ class PipelineConfig:
     countries_csv_path: str
     output_format: str
     indicators: List[str]
-    file_size_limit: int = 100000000 # Example of a default value
+    file_size_limit: int = 100000000  # Example of a default value
 
     def __post_init__(self):
         """Perform validation after the object is created."""
@@ -68,9 +68,13 @@ class PipelineConfig:
         # Ensure the parent directory for the output path exists
         parent_dir = os.path.dirname(self.output_path)
         if parent_dir and not os.path.exists(parent_dir):
-                 raise FileNotFoundError(f"Parent directory for output_path does not exist: {self.output_path}")
+            raise FileNotFoundError(
+                f"Parent directory for output_path does not exist: {self.output_path}"
+            )
         if not os.path.exists(self.countries_csv_path):
-            raise FileNotFoundError(f"Countries mapping CSV not found at: {self.countries_csv_path}")
+            raise FileNotFoundError(
+                f"Countries mapping CSV not found at: {self.countries_csv_path}"
+            )
 
 
 @dataclass(frozen=True)
@@ -112,7 +116,9 @@ class Extractor:
 
         logging.info("Starting data extraction.")
         try:
-            extracted_indicators = [self._get_one_indicator(indicator_id) for indicator_id in indicator_ids]
+            extracted_indicators = [
+                self._get_one_indicator(indicator_id) for indicator_id in indicator_ids
+            ]
             logging.info("Data extraction completed successfully.")
             return extracted_indicators
         except Exception as e:
@@ -152,17 +158,23 @@ class Transformer:
     def _create_country_mapping(self, csv_path: str) -> Dict[str, str]:
         """Creates a comprehensive mapping from various country codes to a canonical name."""
         reference_df = pd.read_csv(csv_path)
-        reference_df = reference_df.loc[:, ~reference_df.columns.str.contains("Unnamed")]
-        if 'name_1' not in reference_df.columns:
+        reference_df = reference_df.loc[
+            :, ~reference_df.columns.str.contains("Unnamed")
+        ]
+        if "name_1" not in reference_df.columns:
             raise KeyError("The key 'name_1' is missing in the country reference file.")
         mapping = {}
         for col in reference_df.columns:
-            if col != 'name_1':
-                temp_map = reference_df.dropna(subset=[col]).set_index(col)['name_1'].to_dict()
+            if col != "name_1":
+                temp_map = (
+                    reference_df.dropna(subset=[col]).set_index(col)["name_1"].to_dict()
+                )
                 mapping.update(temp_map)
         return mapping
 
-    def execute(self, indicators: List[Indicator]) -> Tuple[List[Indicator], Dict[str, List[str]]]:
+    def execute(
+        self, indicators: List[Indicator]
+    ) -> Tuple[List[Indicator], Dict[str, List[str]]]:
         """
         Runs the transformation process on a list of indicators.
 
@@ -181,7 +193,7 @@ class Transformer:
                 transformed_indicators.append(transformed_ind)
                 if unmatched_list:
                     unmatched_report[ind.id] = unmatched_list
-            
+
             logging.info("Data transformation completed successfully.")
             return transformed_indicators, unmatched_report
         except Exception as e:
@@ -202,32 +214,38 @@ class Transformer:
 
     def _remove_all_nan_year_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         """Removes year columns where all country values are NaN."""
-        return df.dropna(axis='columns', how='all')
+        return df.dropna(axis="columns", how="all")
 
     def _pivot_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
         """Pivots the DataFrame from wide (years as columns) to long format."""
         df["economy"] = df.index
-        df_long = pd.melt(df, id_vars=['economy'], var_name='year', value_name='value')
-        df_long['year'] = df_long['year'].str.extract(r'(\d+)').astype(int)
-        df_long = df_long.sort_values(by=['economy', 'year']).reset_index(drop=True)
+        df_long = pd.melt(df, id_vars=["economy"], var_name="year", value_name="value")
+        df_long["year"] = df_long["year"].str.extract(r"(\d+)").astype(int)
+        df_long = df_long.sort_values(by=["economy", "year"]).reset_index(drop=True)
         return df_long
 
     def _rename_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         """Renames 'economy' to 'country' for clarity."""
-        return df.rename(columns={'economy': 'country'})
+        return df.rename(columns={"economy": "country"})
 
     def _clean_country_names(self, df: pd.DataFrame) -> Tuple[pd.DataFrame, List[str]]:
         """Replaces country codes with full names using the pre-loaded mapping."""
-        df['country'] = df['country'].map(self._country_mapping).fillna(df['country'])
+        df["country"] = df["country"].map(self._country_mapping).fillna(df["country"])
         all_canonical_names = set(self._country_mapping.values())
-        unmatched_values = list(set(value for value in df['country'] if value not in all_canonical_names))
+        unmatched_values = list(
+            set(value for value in df["country"] if value not in all_canonical_names)
+        )
         return df, unmatched_values
 
-    def _delete_rows_by_country(self, df: pd.DataFrame, countries_to_delete: List[str]) -> pd.DataFrame:
+    def _delete_rows_by_country(
+        self, df: pd.DataFrame, countries_to_delete: List[str]
+    ) -> pd.DataFrame:
         """Deletes rows for countries and aggregates that could not be mapped to a canonical name."""
         if countries_to_delete:
-            logging.warning(f"Deleting rows for {len(countries_to_delete)} unmatched economies: {countries_to_delete}")
-        return df[~df['country'].isin(countries_to_delete)]
+            logging.warning(
+                f"Deleting rows for {len(countries_to_delete)} unmatched economies: {countries_to_delete}"
+            )
+        return df[~df["country"].isin(countries_to_delete)]
 
 
 class Loader:
@@ -236,7 +254,9 @@ class Loader:
     def __init__(self):
         logging.info("Loader initialized.")
 
-    def execute(self, indicators: List[Indicator], output_path: str, output_format: str) -> List[str]:
+    def execute(
+        self, indicators: List[Indicator], output_path: str, output_format: str
+    ) -> List[str]:
         """
         Saves each indicator's DataFrame to a Parquet file.
 
@@ -244,7 +264,7 @@ class Loader:
             A list of indicator IDs that had no data and were skipped.
         """
 
-        if output_format.lower() != 'parquet':
+        if output_format.lower() != "parquet":
             raise ValueError(f"Unsupported output format: {output_format}")
 
         logging.info(f"Starting data loading to {output_path}")
@@ -254,7 +274,9 @@ class Loader:
                 output_dir = os.path.join(output_path, indicator.id)
                 os.makedirs(output_dir, exist_ok=True)
                 if indicator.data.empty:
-                    logging.warning(f"Indicator {indicator.id} has no data to save. Skipping.")
+                    logging.warning(
+                        f"Indicator {indicator.id} has no data to save. Skipping."
+                    )
                     skipped_indicators.append(indicator.id)
                     continue
                 table = pa.Table.from_pandas(indicator.data)
@@ -275,7 +297,9 @@ class Pipeline:
 
         self.config: PipelineConfig = self._load_config(config_path)
         self.extractor = Extractor()
-        self.transformer = Transformer(countries_csv_path=self.config.countries_csv_path)
+        self.transformer = Transformer(
+            countries_csv_path=self.config.countries_csv_path
+        )
         self.loader = Loader()
 
     def _load_config(self, config_path: str) -> PipelineConfig:
@@ -306,7 +330,7 @@ class Pipeline:
             skipped_indicators = self.loader.execute(
                 indicators=transformed_indicators,
                 output_path=self.config.output_path,
-                output_format=self.config.output_format
+                output_format=self.config.output_format,
             )
 
             logging.info("ETL pipeline completed successfully.")
@@ -317,7 +341,7 @@ class Pipeline:
                 unmatched_economies=unmatched_report,
                 output_location=self.config.output_path,
                 indicators_with_no_data=skipped_indicators,
-                status="Success"
+                status="Success",
             )
 
         except Exception as e:
@@ -325,10 +349,18 @@ class Pipeline:
             raise
 
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(module)s - %(message)s')
-pipeline = Pipeline(config_path="wb_config.yaml")
-result = pipeline.run()
+def main():
+    """Main function to configure logging and run the ETL pipeline."""
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(module)s - %(message)s"
+    )
+    # Note: Corrected the config path to be relative to the project root for clarity
+    pipeline = Pipeline(config_path="src/pipelines/1_indicator_extractors/wb_indicators_etl/wb_config.yaml")
+    result = pipeline.run()
 
-print("\n----- ETL Pipeline Result -----")
-pprint(result, compact=True)
-print("-----------------------------\n")
+    print("\n----- ETL Pipeline Result -----")
+    pprint(result, compact=True)
+    print("-----------------------------\n")
+
+if __name__ == "__main__":
+    main()

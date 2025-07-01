@@ -38,14 +38,16 @@ class SDCIExtractor:
         # Load countries.csv to create name-to-id mapping
         countries_csv_path = r"/workspace/qgi\qgi-4.0\data\countries.csv"
         self.countries_df = pd.read_csv(countries_csv_path)
-        self.country_name_to_id = {row["name_1"]: row["id"] for _, row in self.countries_df.iterrows()}
+        self.country_name_to_id = {
+            row["name_1"]: row["id"] for _, row in self.countries_df.iterrows()
+        }
 
         # MySQL connection configuration
         self.mysql_config = {
-            'host': 'localhost',
-            'user': 'amin',
-            'password': '<MYSQL_PASSWORD>',
-            'database': 'sdci_database'
+            "host": "localhost",
+            "user": "amin",
+            "password": "<MYSQL_PASSWORD>",
+            "database": "sdci_database",
         }
 
     def load_indicator_data(self, indicator_id):
@@ -79,7 +81,7 @@ class SDCIExtractor:
             preprocessed_data,
             total_comparisons,
             min_length,
-            correlation_threshold
+            correlation_threshold,
         )
 
         return sdcis
@@ -124,11 +126,9 @@ class SDCIExtractor:
                 else:
                     values[nan_pos] = (values[nan_pos - 1] + values[nan_pos + 1]) / 2
 
-            preprocessed_data.append({
-                "country": country,
-                "data": country_data,
-                "values": values
-            })
+            preprocessed_data.append(
+                {"country": country, "data": country_data, "values": values}
+            )
 
         return preprocessed_data
 
@@ -136,14 +136,14 @@ class SDCIExtractor:
         """
         Calculate the total number of segment comparisons for progress tracking.
 
-        This function computes the total number of comparisons that will be made 
-        during the pattern extraction process. It considers all possible segment 
+        This function computes the total number of comparisons that will be made
+        during the pattern extraction process. It considers all possible segment
         lengths within the specified range and all country pairs.
 
         The calculation is based on:
         1. For each country A, considering all valid segment lengths
         2. For each segment length, determining how many segments can be created
-        3. For each segment of country A, counting how many valid segments exist 
+        3. For each segment of country A, counting how many valid segments exist
         in all subsequent countries (B) that can be compared with it
 
         Parameters:
@@ -166,7 +166,7 @@ class SDCIExtractor:
                 num_segments_a = len(values_a) - segment_length + 1
                 num_segments_b = sum(
                     len(country_b["values"]) - segment_length + 1
-                    for country_b in preprocessed_data[i+1:]
+                    for country_b in preprocessed_data[i + 1 :]
                     if len(country_b["values"]) >= segment_length
                 )
                 total_comparisons += num_segments_a * num_segments_b
@@ -179,7 +179,7 @@ class SDCIExtractor:
         preprocessed_data,
         total_comparisons,
         min_length,
-        correlation_threshold
+        correlation_threshold,
     ):
         """
         Identify Single Dyadic Correlating Indexes (SDCIs) between country pairs.
@@ -207,21 +207,24 @@ class SDCIExtractor:
 
         # Create indicator output directory
         indicator_output_dir = os.path.join(self.output_path, indicator_id)
-        os.makedirs(indicator_output_dir, exist_ok = True)
+        os.makedirs(indicator_output_dir, exist_ok=True)
 
         # Check existing country files to resume processing
         existing_countries = set()
         if os.path.exists(indicator_output_dir):
             for filename in os.listdir(indicator_output_dir):
-                if filename.endswith('.parquet'):
-                    country_name = filename.rsplit('.', 1)[0]  # Remove .parquet extension
+                if filename.endswith(".parquet"):
+                    country_name = filename.rsplit(".", 1)[
+                        0
+                    ]  # Remove .parquet extension
                     existing_countries.add(country_name)
         logger.info("------------------")
         logger.info("Resuming from existing SDCIs for %s", indicator_id)
 
         # Filter out countries already processed
         preprocessed_data = [
-            country for country in preprocessed_data
+            country
+            for country in preprocessed_data
             if country["country"] not in existing_countries
         ]
 
@@ -240,7 +243,7 @@ class SDCIExtractor:
                     continue
                 num_segments_a = len(values_a) - segment_length + 1
                 # Loop through each subsequent country B
-                for country_b in preprocessed_data[i+1:]:
+                for country_b in preprocessed_data[i + 1 :]:
                     if len(country_b["values"]) >= segment_length:
                         total_comparisons_country += (
                             len(values_a) - segment_length + 1
@@ -248,7 +251,7 @@ class SDCIExtractor:
 
             country_a_progress[country_a_name] = {
                 "total": total_comparisons_country,
-                "completed": 0
+                "completed": 0,
             }
 
             # Loop through each possible segment length for country A
@@ -259,10 +262,10 @@ class SDCIExtractor:
                 num_segments_a = len(values_a) - segment_length + 1
                 # Loop through each starting index for segments in country A
                 for start_idx in range(num_segments_a):
-                    segment_a = values_a[start_idx:start_idx + segment_length]
+                    segment_a = values_a[start_idx : start_idx + segment_length]
 
                     # Loop through each subsequent country B
-                    for country_b in preprocessed_data[i+1:]:
+                    for country_b in preprocessed_data[i + 1 :]:
                         values_b = country_b["values"]
                         country_b_name = country_b["country"]
                         max_length_b = len(values_b) - 1
@@ -272,19 +275,29 @@ class SDCIExtractor:
                         num_segments_b = len(values_b) - segment_length + 1
                         # Loop through each starting index for segments in country B
                         for start_idx_b in range(num_segments_b):
-                            segment_b = values_b[start_idx_b:start_idx_b + segment_length]
+                            segment_b = values_b[
+                                start_idx_b : start_idx_b + segment_length
+                            ]
 
                             # Calculate correlation
                             correlation, _ = pearsonr(segment_a, segment_b)
                             if correlation >= correlation_threshold:
                                 sdc = SDCI()
                                 # Convert country names to ids using the mapping
-                                sdc.country_a_id = self.country_name_to_id.get(country_a_name, 0)
-                                sdc.country_b_id = self.country_name_to_id.get(country_b_name, 0)
+                                sdc.country_a_id = self.country_name_to_id.get(
+                                    country_a_name, 0
+                                )
+                                sdc.country_b_id = self.country_name_to_id.get(
+                                    country_b_name, 0
+                                )
                                 sdc.length = segment_length
                                 sdc.correlation = correlation
-                                sdc.start_year_a = country_a["data"].iloc[start_idx]["year"]
-                                sdc.start_year_b = country_b["data"].iloc[start_idx_b]["year"]
+                                sdc.start_year_a = country_a["data"].iloc[start_idx][
+                                    "year"
+                                ]
+                                sdc.start_year_b = country_b["data"].iloc[start_idx_b][
+                                    "year"
+                                ]
                                 country_a_sdcis.append(sdc)
 
                             # Update progress counters
@@ -294,8 +307,14 @@ class SDCIExtractor:
                             # Calculate progress percentages
                             overall_percent = (progress / total_comparisons) * 100
                             country_a_percent = (
-                                country_a_progress[country_a_name]["completed"] / country_a_progress[country_a_name]["total"]
-                            ) * 100 if country_a_progress[country_a_name]["total"] > 0 else 0
+                                (
+                                    country_a_progress[country_a_name]["completed"]
+                                    / country_a_progress[country_a_name]["total"]
+                                )
+                                * 100
+                                if country_a_progress[country_a_name]["total"] > 0
+                                else 0
+                            )
 
                             # Log progress
                             if progress % 1000 == 0 or progress == total_comparisons:
@@ -305,19 +324,21 @@ class SDCIExtractor:
                                     country_a_name,
                                     country_a_percent,
                                     len(sdcis) + len(country_a_sdcis),
-                                    overall_percent
+                                    overall_percent,
                                 )
 
             # Save SDCIs for this country after processing
             if country_a_sdcis:
                 logger.info("Saving SDCIs for country %s to Parquet", country_a_name)
-                country_parquet_path = os.path.join(indicator_output_dir, f"{country_a_name}.parquet")
+                country_parquet_path = os.path.join(
+                    indicator_output_dir, f"{country_a_name}.parquet"
+                )
                 country_sdcis_df = self._convert_sdcis_to_df(country_a_sdcis)
                 country_sdcis_df.to_parquet(
                     country_parquet_path,
                     index=False,
                     compression="brotli",
-                    compression_level=11
+                    compression_level=11,
                 )
                 sdcis.extend(country_a_sdcis)
 
@@ -325,26 +346,31 @@ class SDCIExtractor:
 
     def _convert_sdcis_to_df(self, sdcis):
         """Convert list of SDCI objects to DataFrame"""
-        sdcis_df = pd.DataFrame([
-            {
-                "country_a_id": sdc.country_a_id,
-                "country_b_id": sdc.country_b_id,
-                "length":       sdc.length,
-                "start_year_a": sdc.start_year_a,
-                "start_year_b": sdc.start_year_b,
-                "correlation":  round(sdc.correlation, 6)
-            } for sdc in sdcis
-        ])
+        sdcis_df = pd.DataFrame(
+            [
+                {
+                    "country_a_id": sdc.country_a_id,
+                    "country_b_id": sdc.country_b_id,
+                    "length": sdc.length,
+                    "start_year_a": sdc.start_year_a,
+                    "start_year_b": sdc.start_year_b,
+                    "correlation": round(sdc.correlation, 6),
+                }
+                for sdc in sdcis
+            ]
+        )
 
         # Convert to optimal data types
-        sdcis_df = sdcis_df.astype({
-            "country_a_id": "uint16",
-            "country_b_id": "uint16",
-            "length":       "uint16",
-            "start_year_a": "uint16",
-            "start_year_b": "uint16",
-            "correlation":  "float32"
-        })
+        sdcis_df = sdcis_df.astype(
+            {
+                "country_a_id": "uint16",
+                "country_b_id": "uint16",
+                "length": "uint16",
+                "start_year_a": "uint16",
+                "start_year_b": "uint16",
+                "correlation": "float32",
+            }
+        )
 
         return sdcis_df
 
@@ -358,23 +384,31 @@ class SDCIExtractor:
             index=False,
             compression="gzip",
             coerce_timestamps="ms",
-            allow_truncated_timestamps=True
+            allow_truncated_timestamps=True,
         )
 
     def update_processing_log(
-        self, indicator_id, status, num_sdcis=0, error_message=None, last_year=None, correlation_threshold=None
+        self,
+        indicator_id,
+        status,
+        num_sdcis=0,
+        error_message=None,
+        last_year=None,
+        correlation_threshold=None,
     ):
         """Update the processing log with status for an indicator"""
         try:
             # Load existing log or create new
             if os.path.exists(self.processing_log_path):
                 try:
-                    with open(self.processing_log_path, 'r') as f:
+                    with open(self.processing_log_path, "r") as f:
                         log = json.load(f)
                 except json.JSONDecodeError:
                     # If JSON is invalid, start with an empty log
                     log = {}
-                    logger.warning("Processing log was corrupted. Starting with a new log.")
+                    logger.warning(
+                        "Processing log was corrupted. Starting with a new log."
+                    )
             else:
                 log = {}
 
@@ -389,11 +423,11 @@ class SDCIExtractor:
                 "error_message": error_message,
                 "last_updated": datetime.now().isoformat(),
                 "last_year": last_year,
-                "correlation_threshold": correlation_threshold
+                "correlation_threshold": correlation_threshold,
             }
 
             # Save updated log
-            with open(self.processing_log_path, 'w') as f:
+            with open(self.processing_log_path, "w") as f:
                 json.dump(log, f, indent=2)
 
         except Exception as e:
@@ -406,6 +440,7 @@ def initialize_extractor(config):
     """
     return SDCIExtractor(config["input_path"], config["output_path"])
 
+
 def process_indicators(extractor, indicators, config):
     """
     Process all indicators in the list
@@ -416,12 +451,14 @@ def process_indicators(extractor, indicators, config):
         logger.info("-----------")
         logger.info(
             "Processing indicator %d of %d (%.1f%% complete): %s",
-            index, total_indicators,
+            index,
+            total_indicators,
             (index / total_indicators) * 100,
-            indicator_id
+            indicator_id,
         )
 
         process_indicator(extractor, indicator_id, config)
+
 
 def process_indicator(extractor, indicator_id, config):
     """
@@ -438,14 +475,14 @@ def process_indicator(extractor, indicator_id, config):
             indicator_id,
             "in progress",
             last_year=last_year,
-            correlation_threshold=config["correlation_threshold"]
+            correlation_threshold=config["correlation_threshold"],
         )
 
         # Find SDCIs for the indicator
         sdcis = extractor.find_sdcis(
             indicator_id=indicator_id,
             min_length=config["min_length"],
-            correlation_threshold=config["correlation_threshold"]
+            correlation_threshold=config["correlation_threshold"],
         )
 
         # Update processing log to "completed"
@@ -455,7 +492,7 @@ def process_indicator(extractor, indicator_id, config):
             "completed",
             num_sdcis=len(sdcis),
             last_year=last_year,
-            correlation_threshold=config["correlation_threshold"]
+            correlation_threshold=config["correlation_threshold"],
         )
 
         logger.info("Found %d SDCIs for indicator %s", len(sdcis), indicator_id)
@@ -468,16 +505,18 @@ def process_indicator(extractor, indicator_id, config):
             "failed",
             error_message=str(e),
             last_year=last_year,
-            correlation_threshold=config["correlation_threshold"]
+            correlation_threshold=config["correlation_threshold"],
         )
         logger.error("Processing failed for indicator %s: %s", indicator_id, str(e))
         raise
+
 
 def update_processing_status(extractor, indicator_id, status, **kwargs):
     """
     Update the processing status for an indicator
     """
     extractor.update_processing_log(indicator_id, status, **kwargs)
+
 
 def load_configuration(config_path="config.yaml"):
     """
@@ -489,6 +528,7 @@ def load_configuration(config_path="config.yaml"):
     with open(config_full_path, "r") as f:
         config = yaml.safe_load(f)
     return config
+
 
 def load_config(config_path="config.yaml"):
     """
@@ -504,6 +544,7 @@ def load_config(config_path="config.yaml"):
         config = yaml.safe_load(f)
     return config
 
+
 def main():
     """Main function to run the SDCI extraction pipeline"""
     try:
@@ -517,6 +558,7 @@ def main():
     except Exception as e:
         logger.error("SDCI extraction pipeline failed: %s", str(e))
         raise
+
 
 if __name__ == "__main__":
     main()

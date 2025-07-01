@@ -1,0 +1,40 @@
+# Configuration for the Top Patterns Generator Pipeline
+
+# Path to the directory containing country-specific pattern files.
+input_patterns_path: "/workspace/qgi/qgi-4.0/data/pattern_maker_output/"
+
+# Path where the final 'top_patterns.parquet' file will be saved.
+output_path: "/workspace/qgi/qgi-4.0/data/preprocessed_bot_data/"
+
+
+# --- Filtering and Ranking Parameters ---
+# The minimum correlation a pattern must have to be considered.
+# This acts as an initial, simple filter before scoring.
+min_correlation_threshold: 0.70
+
+# The number of top patterns to save in the final output file.
+top_n_patterns: 200000
+
+
+# --- Significance Score Normalization Parameters ---
+# These values define the expected range for each component of the score.
+# The script can dynamically calculate these, but defining them here ensures consistency across runs.
+# Set 'dynamic: true' to calculate from the dataset, or 'dynamic: false' to use the static values.
+normalization_params:
+  dynamic: true # If true, the script will ignore the static values below and find them from the data.
+  static:
+    length:
+      min: 3
+      max: 50
+    scdi_count:
+      min: 2
+      max: 20
+
+
+# --- Significance Score Component Weights ---
+# These weights determine the influence of each component on the final score.
+# The sum should ideally be 1.0.
+score_weights:
+  length: 0.30
+  average_correlation: 0.40
+  scdi_count: 0.30
