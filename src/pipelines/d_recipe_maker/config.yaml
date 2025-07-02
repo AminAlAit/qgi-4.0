@@ -1,0 +1,11 @@
+# Path to the input directory from the ScdiFinder pipeline.
+input_scdi_path: "data/scdi_finder_output"
+
+# Path where the output recipe parquet files will be saved.
+output_recipes_path: "data/recipes"
+
+# Path to the directory containing historical event text files.
+events_path: "data/events"
+
+# Path to the shared countries CSV file.
+countries_csv_path: "data/countries.csv"
