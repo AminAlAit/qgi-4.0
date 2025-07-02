@@ -2,7 +2,7 @@
 
 import pandas as pd
 import pytest
-from src.pipelines.b_scdi_finder.app import ScdiFinderConfig
+from pipelines.b_scdi_finder.scdi_finder import ScdiFinderConfig
 
 
 @pytest.fixture(name="finder_countries_csv")

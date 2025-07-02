@@ -2,7 +2,7 @@
 
 import os
 import pandas as pd
-from src.pipelines.b_scdi_finder.app import ScdiFinder
+from pipelines.b_scdi_finder.scdi_finder import ScdiFinder
 
 
 def test_discover_indicators(finder_test_config):
