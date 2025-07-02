@@ -3,7 +3,7 @@
 import os
 import pandas as pd
 import pytest
-from pipelines.c_pattern_maker.patter_maker import PatternMakerConfig
+from pipelines.c_pattern_maker.pattern_maker import PatternMakerConfig
 
 
 @pytest.fixture(name="maker_test_config")

@@ -4,9 +4,6 @@ input_scdi_path: "data/scdi_finder_output"
 # Path to the output directory where this pipeline will save pattern files.
 output_patterns_path: "data/pattern_maker_output"
 
-# Path to the final aggregated file of top patterns.
-top_patterns_report_path: "data/top_patterns.parquet"
-
 # Path to the shared countries CSV file.
 countries_csv_path: "data/countries.csv"
 

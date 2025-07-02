@@ -41,8 +41,6 @@ class PatternMaker:
         self.logger.info("Starting Pattern Maker pipeline...")
         self.logger.info("Step 1: Creating/Verifying base patterns from SCDI files...")
         self._create_patterns_from_scdis()
-        self.logger.info("Step 2: Generating final top patterns report...")
-        self._create_top_patterns_report()
         self.logger.info("Pattern Maker pipeline completed successfully.")
 
     def _load_country_mappings(self) -> dict:
@@ -85,53 +83,6 @@ class PatternMaker:
                 pq.write_table(agg_table, output_file, compression='brotli')
             else:
                 self.logger.info(f"No patterns with scdi_count > 1 found for '{country_name}'. No file written.")
-
-    def _create_top_patterns_report(self):
-        """
-        Loads all base patterns, creates symmetric counterparts in memory,
-        merges them using a canonical key, calculates significance,
-        and saves the final top N report.
-        """
-        self.logger.info("Aggregating all patterns to find top results...")
-        
-        base_pattern_files = glob.glob(os.path.join(self.config.output_patterns_path, "*", "patterns.parquet"))
-        
-        if not base_pattern_files:
-            self.logger.warning("No base pattern files found to generate report.")
-            return
-
-        ddf = dd.read_parquet(base_pattern_files)
-
-        # Create canonical keys for country pairs and years to ensure proper merging
-        ddf['ck_country_1'] = ddf[['country_a_id', 'country_b_id']].min(axis=1)
-        ddf['ck_country_2'] = ddf[['country_a_id', 'country_b_id']].max(axis=1)
-        ddf['ck_year_1'] = ddf[['start_year_a', 'start_year_b']].min(axis=1)
-        ddf['ck_year_2'] = ddf[['start_year_a', 'start_year_b']].max(axis=1)
-        
-        grouping_keys = ['ck_country_1', 'ck_country_2', 'length', 'ck_year_1', 'ck_year_2']
-
-        # Group by the canonical keys and aggregate
-        merged_ddf = ddf.groupby(grouping_keys).agg(
-            average_correlation=('average_correlation', 'mean'),
-            scdi_count=('scdi_count', 'sum')
-        ).reset_index()
-
-        df = merged_ddf.compute()
-        
-        df.rename(columns={
-            'ck_country_1': 'country_a_id', 'ck_country_2': 'country_b_id',
-            'ck_year_1': 'start_year_a', 'ck_year_2': 'start_year_b'
-        }, inplace=True)
-
-        df['significance'] = (
-            0.4 * df['average_correlation'] +
-            0.4 * df['scdi_count'] +
-            0.2 * df['length']
-        )
-        
-        top_patterns = df.nlargest(self.config.top_n_patterns, 'significance')
-        self.logger.info(f"Saving top {len(top_patterns)} patterns to {self.config.top_patterns_report_path}")
-        top_patterns.to_parquet(self.config.top_patterns_report_path, index=False, compression='brotli')
 
 
 def load_config(config_path="config.yaml") -> PatternMakerConfig:

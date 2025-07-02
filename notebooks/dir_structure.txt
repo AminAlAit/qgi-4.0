@@ -1,6 +1,4 @@
 Directory structure for: /workspace/qgi\qgi-4.0
-├── [dummy_path]
-│   └── [EMPTY.DATA]
 ├── [src]
 │   └── [pipelines]
 │       ├── [a_indicator_extractors]
@@ -8,26 +6,37 @@ Directory structure for: /workspace/qgi\qgi-4.0
 │       │       ├── wb_config.yaml
 │       │       └── wb_indicators_etl.py
 │       ├── [b_scdi_finder]
-│       │   ├── app.py
-│       │   └── config.yaml
+│       │   ├── config.yaml
+│       │   └── scdi_finder.py
 │       ├── [c_pattern_maker]
-│       │   ├── app.py
-│       │   ├── checkpoint.txt
-│       │   ├── inner_checkpoint.txt
+│       │   ├── config.yaml
 │       │   ├── main.ipynb
-│       │   └── merged_pattern_keys.txt
+│       │   └── patter_maker.py
 │       ├── [d_recipe_maker]
-│       │   ├── app.py
+│       │   ├── config.yaml
 │       │   ├── recipe_generation_state.json
+│       │   ├── recipe_maker.py
 │       │   └── recipes_eda.ipynb
-│       └── [d_top_patterns_maker]
+│       └── [e_top_patterns_maker]
 │           ├── config.yaml
 │           └── create_top_patterns.py
 ├── [tests]
 │   ├── [pipelines]
-│   │   └── test_wb_indicators_etl.py
+│   │   ├── [a_indicator_extractors]
+│   │   │   └── [wb_indicators_etl]
+│   │   │       └── test_wb_indicators_etl.py
+│   │   ├── [b_scdi_finder]
+│   │   │   ├── conftest.py
+│   │   │   └── test_scdi_finder.py
+│   │   ├── [c_pattern_maker]
+│   │   │   ├── conftest.py
+│   │   │   └── test_pattern_maker.py
+│   │   ├── [d_recipe_maker]
+│   │   │   ├── conftest.py
+│   │   │   └── test_recipe_maker.py
+│   │   └── [e_top_patterns_maker]
+│   │       └── test_create_top_patterns.py
 │   └── conftest.py
-├── .coverage
 ├── .coveragerc
 ├── .gitignore
 ├── .python-version

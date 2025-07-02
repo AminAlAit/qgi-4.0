@@ -2,7 +2,7 @@
 
 import os
 import pandas as pd
-from pipelines.c_pattern_maker.patter_maker import PatternMaker
+from pipelines.c_pattern_maker.pattern_maker import PatternMaker
 
 
 def test_initial_pattern_creation(maker_test_config, mock_scdi_input_files):
@@ -20,19 +20,3 @@ def test_initial_pattern_creation(maker_test_config, mock_scdi_input_files):
     assert 'scdi_count' in df.columns
     # The remaining pattern should have a count of 2.
     assert df['scdi_count'].iloc[0] == 2
-
-
-def test_top_patterns_report_generation(maker_test_config, mock_scdi_input_files):
-    """Test the full run and verify the final top patterns report."""
-    maker = PatternMaker(config=maker_test_config)
-    maker.run() # Run the entire pipeline
-
-    report_path = maker_test_config.top_patterns_report_path
-    assert os.path.exists(report_path)
-
-    df = pd.read_parquet(report_path)
-    # After aggregation, only one unique pattern remains (USA-Canada, length 3)
-    assert len(df) == 1
-    assert 'significance' in df.columns
-    # The scdi_count should be 2 after the symmetric merge.
-    assert df['scdi_count'].max() == 2

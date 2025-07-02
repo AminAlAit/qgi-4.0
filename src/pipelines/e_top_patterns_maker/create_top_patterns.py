@@ -18,19 +18,17 @@ from dataclasses import dataclass
 from typing import Dict
 import yaml
 import pandas as pd
+import dask.dataframe as dd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
 
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(module)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 
 @dataclass(frozen=True)
 class TopPatternsConfig:
     """A validated configuration object for the pipeline."""
-
     input_patterns_path: str
     output_path: str
     min_correlation_threshold: float
@@ -42,9 +40,7 @@ class TopPatternsConfig:
 @dataclass(frozen=True)
 class PipelineResult:
     """A summary of the completed pipeline run."""
-
-    total_patterns_loaded: int
-    patterns_after_filtering: int
+    total_patterns_merged: int
     top_patterns_saved: int
     output_file_path: str
     status: str = "Success"
@@ -55,7 +51,6 @@ class TopPatternsGenerator:
 
     def __init__(self, config: TopPatternsConfig):
         """Initializes the generator with a validated configuration."""
-
         self.config = config
         self._norm_params = {}  # To hold calculated normalization parameters.
 
@@ -63,13 +58,18 @@ class TopPatternsGenerator:
         """Executes the entire pipeline from start to finish."""
         logging.info("Starting Top Patterns Generator pipeline...")
 
-        # 1. Load and Filter Data Efficiently
-        patterns_df = self._load_all_patterns()
+        # 1. Load and Process Data
+        patterns_df = self._load_and_process_patterns()
 
         if patterns_df.empty:
-            logging.warning("No patterns found after initial filtering. Exiting.")
-            # Note: We can find the total number of files from the dataset object if needed, but not total rows.
-            return PipelineResult(0, 0, 0, "", "Success: No data passed filter")
+            logging.warning("No patterns to process. Exiting.")
+            # CORRECTED: Use keyword arguments matching the dataclass definition
+            return PipelineResult(
+                total_patterns_merged=0,
+                top_patterns_saved=0,
+                output_file_path="",
+                status="Success: No data"
+            )
 
         # 2. Calculate Normalization Parameters
         self._calculate_normalization_params(patterns_df)
@@ -87,138 +87,141 @@ class TopPatternsGenerator:
 
         logging.info("Pipeline completed successfully.")
 
-        # CORRECTED: Use the 'patterns_df' variable that actually exists.
-        # Both 'loaded' and 'filtered' now refer to the count after the initial efficient filter.
+        # CORRECTED: Use correct field names for the result object
         return PipelineResult(
-            total_patterns_loaded=len(patterns_df),
-            patterns_after_filtering=len(patterns_df),
+            total_patterns_merged=len(patterns_df),
             top_patterns_saved=len(top_patterns),
             output_file_path=output_file,
         )
 
-    def _load_all_patterns(self) -> pd.DataFrame:
+    def _load_and_process_patterns(self) -> pd.DataFrame:
         """
-        Loads and filters all pattern parquet files efficiently using PyArrow's dataset API.
-        This approach avoids loading all data into memory at once.
+        Loads all pattern files using Dask, creates symmetric counterparts,
+        and merges them using a fully canonical key. Skips corrupted/empty files.
         """
-        # 1. Create a dataset object without loading data
-        dataset = pq.ParquetDataset(self.config.input_patterns_path)
-        logging.info(f"Discovered {len(dataset.files)} pattern files in dataset.")
+        base_pattern_files = glob.glob(os.path.join(self.config.input_patterns_path, "*", "patterns.parquet"))
+        if not base_pattern_files:
+            logging.warning("No base pattern files found.")
+            return pd.DataFrame()
 
-        # 2. Define a filter to apply during the read operation
-        # This pushes the filtering down to PyArrow, saving memory.
-        from pyarrow import compute as pc
+        # --- MODIFIED SECTION: Validate files before loading ---
+        valid_files = []
+        logging.info(f"Validating {len(base_pattern_files)} found pattern files...")
+        for file in base_pattern_files:
+            # First, check if the file is empty (0 bytes)
+            if os.path.getsize(file) == 0:
+                logging.warning(f"Skipping empty file: {file}")
+                continue
+            # Next, try to read the file's metadata to ensure it's not corrupt
+            try:
+                pq.ParquetFile(file)
+                valid_files.append(file)
+            except pa.lib.ArrowInvalid as e:
+                logging.warning(f"Skipping corrupted file: {file}. \nError: {e}")
 
-        arrow_filter = (
-            pc.field("average_correlation") >= self.config.min_correlation_threshold
-        )
+        if not valid_files:
+            logging.warning("No valid pattern files could be loaded.")
+            return pd.DataFrame()
+        
+        logging.info(f"Loading {len(valid_files)} valid files using Dask...")
+        ddf = dd.read_parquet(valid_files)
+        # --- END MODIFIED SECTION ---
 
-        # 3. Read only the necessary columns for the data that passes the filter
-        # Note: You need to know which columns are required for the next steps.
-        required_columns = [
-            "length",
-            "average_correlation",
-            "scdi_count",
-        ]  # Add any other columns you need
+        # 1. Create symmetric data (lazy operation)
+        symmetric_ddf = ddf.rename(columns={
+            "country_a_id": "country_b_id", "country_b_id": "country_a_id",
+            "start_year_a": "start_year_b", "start_year_b": "start_year_a"
+        })
+        
+        # 2. Combine for full dataset (lazy)
+        combined_ddf = dd.concat([ddf, symmetric_ddf], ignore_index=True)
 
-        logging.info(
-            f"Reading dataset with filter: average_correlation >= {self.config.min_correlation_threshold}"
-        )
-        # A workaround to bypass a broken linter
-        to_table_method = getattr(dataset, "to_table")
-        filtered_table = to_table_method(columns=required_columns, filter=arrow_filter)
+        # 3. Create fully canonical keys (lazy)
+        combined_ddf['ck_country_1'] = combined_ddf[['country_a_id', 'country_b_id']].min(axis=1)
+        combined_ddf['ck_country_2'] = combined_ddf[['country_a_id', 'country_b_id']].max(axis=1)
+        combined_ddf['ck_year_1'] = combined_ddf[['start_year_a', 'start_year_b']].min(axis=1)
+        combined_ddf['ck_year_2'] = combined_ddf[['start_year_a', 'start_year_b']].max(axis=1)
 
-        logging.info(
-            f"Loaded {len(filtered_table):,} patterns that passed the initial filter."
-        )
-        return filtered_table.to_pandas()
+        grouping_keys = ['ck_country_1', 'ck_country_2', 'length', 'ck_year_1', 'ck_year_2']
+
+        # 4. Group and aggregate (lazy)
+        merged_ddf = combined_ddf.groupby(grouping_keys).agg(
+            average_correlation=('average_correlation', 'mean'),
+            scdi_count=('scdi_count', 'sum')
+        ).reset_index()
+
+        # 5. Trigger the computation
+        logging.info("Computing merged patterns...")
+        df = merged_ddf.compute()
+        
+        # 6. Restore original column names
+        df.rename(columns={
+            'ck_country_1': 'country_a_id', 'ck_country_2': 'country_b_id',
+            'ck_year_1': 'start_year_a', 'ck_year_2': 'start_year_b'
+        }, inplace=True)
+        
+        logging.info(f"Loaded and merged into {len(df):,} unique patterns.")
+        return df
 
     def _calculate_normalization_params(self, df: pd.DataFrame):
         """Calculates and stores min/max for normalization."""
-
         if self.config.normalization_params.get("dynamic"):
             logging.info("Dynamically calculating normalization parameters...")
             self._norm_params = {
                 "length": {"min": df["length"].min(), "max": df["length"].max()},
-                "scdi_count": {
-                    "min": df["scdi_count"].min(),
-                    "max": df["scdi_count"].max(),
-                },
+                "scdi_count": {"min": df["scdi_count"].min(), "max": df["scdi_count"].max()},
             }
         else:
             logging.info("Using static normalization parameters from config.")
             self._norm_params = self.config.normalization_params["static"]
 
-        # Correlation is always -1 to 1, but we can use the data's actual range for better scaling
         self._norm_params["average_correlation"] = {
             "min": df["average_correlation"].min(),
             "max": df["average_correlation"].max(),
         }
-
         logging.info(f"Normalization Params: {self._norm_params}")
 
     def _min_max_scale(self, series: pd.Series, component_name: str) -> pd.Series:
         """Applies min-max scaling to a pandas Series."""
-
         min_val = self._norm_params[component_name]["min"]
         max_val = self._norm_params[component_name]["max"]
 
         if max_val == min_val:
-            return pd.Series(
-                [0.5] * len(series), index=series.index
-            )  # Avoid division by zero
-
+            return pd.Series([0.5] * len(series), index=series.index)
         return (series - min_val) / (max_val - min_val)
 
     def _calculate_significance_score(self, df: pd.DataFrame) -> pd.DataFrame:
         """Calculates the weighted significance score for each pattern."""
-
         logging.info("Calculating Significance Score for patterns...")
-
         df["length_norm"] = self._min_max_scale(df["length"], "length")
-        df["corr_norm"] = self._min_max_scale(
-            df["average_correlation"], "average_correlation"
-        )
+        df["corr_norm"] = self._min_max_scale(df["average_correlation"], "average_correlation")
         df["scdi_norm"] = self._min_max_scale(df["scdi_count"], "scdi_count")
-
         weights = self.config.score_weights
-
         df["SignificanceScore"] = (
             weights["length"] * df["length_norm"]
             + weights["average_correlation"] * df["corr_norm"]
             + weights["scdi_count"] * df["scdi_norm"]
         )
-
-        # Drop intermediate norm columns
         df.drop(columns=["length_norm", "corr_norm", "scdi_norm"], inplace=True)
-
         return df
 
     def _save_top_patterns(self, df: pd.DataFrame) -> str:
         """Saves the final DataFrame to a single Parquet file."""
-
         os.makedirs(self.config.output_path, exist_ok=True)
         output_file_path = os.path.join(self.config.output_path, "top_patterns.parquet")
-
         logging.info(f"Saving {len(df)} top patterns to {output_file_path}...")
-
         table = pa.Table.from_pandas(df, preserve_index=False)
         pq.write_table(table, output_file_path, compression="brotli")
-
         return output_file_path
-
 
 def load_config(config_path: str = "config.yaml") -> TopPatternsConfig:
     """Loads the YAML configuration file and returns a validated Config object."""
-
     script_dir = os.path.dirname(os.path.abspath(__file__))
     config_full_path = os.path.join(script_dir, config_path)
-
     logging.info(f"Loading configuration from: {config_full_path}")
     with open(config_full_path, "r") as f:
         config_dict = yaml.safe_load(f)
     return TopPatternsConfig(**config_dict)
-
 
 if __name__ == "__main__":
     try:
@@ -228,13 +231,11 @@ if __name__ == "__main__":
 
         print("\n----- Top Patterns Pipeline Result -----")
         print(f"  Status: {result.status}")
-        print(f"  Total Patterns Loaded: {result.total_patterns_loaded:,}")
-        print(f"  Patterns After Filtering: {result.patterns_after_filtering:,}")
-        print(f"  Top Patterns Saved: {result.top_patterns_saved:,}")
-        print(f"  Output File: {result.output_file_path}")
+        if result.status == "Success":
+            print(f"  Total Unique Patterns Processed: {result.total_patterns_merged:,}")
+            print(f"  Top Patterns Saved: {result.top_patterns_saved:,}")
+            print(f"  Output File: {result.output_file_path}")
         print("----------------------------------------\n")
 
     except Exception as e:
-        logging.error(
-            f"Pipeline failed with an unhandled exception: {e}", exc_info=True
-        )
+        logging.error(f"Pipeline failed with an unhandled exception: {e}", exc_info=True)
