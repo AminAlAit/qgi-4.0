@@ -352,15 +352,19 @@ class Pipeline:
 def main():
     """Main function to configure logging and run the ETL pipeline."""
     logging.basicConfig(
-        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(module)s - %(message)s"
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(module)s - %(message)s",
     )
     # Note: Corrected the config path to be relative to the project root for clarity
-    pipeline = Pipeline(config_path="src/pipelines/1_indicator_extractors/wb_indicators_etl/wb_config.yaml")
+    pipeline = Pipeline(
+        config_path="src/pipelines/1_indicator_extractors/wb_indicators_etl/wb_config.yaml"
+    )
     result = pipeline.run()
 
     print("\n----- ETL Pipeline Result -----")
     pprint(result, compact=True)
     print("-----------------------------\n")
+
 
 if __name__ == "__main__":
     main()

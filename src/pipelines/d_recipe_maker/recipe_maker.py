@@ -18,6 +18,7 @@ import yaml
 @dataclass(frozen=True)
 class RecipeMakerConfig:
     """Validated configuration for the RecipeMaker pipeline."""
+
     input_scdi_path: str
     output_recipes_path: str
     events_path: str
@@ -27,6 +28,7 @@ class RecipeMakerConfig:
 @dataclass
 class Event:
     """Represents a single historical event."""
+
     year: int
     event_type: str
     description: str
@@ -39,25 +41,29 @@ class RecipeMaker:
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
         self.countries_df = pd.read_csv(config.countries_csv_path)
-        self.id_to_name_map = dict(zip(self.countries_df['id'], self.countries_df['name_1']))
+        self.id_to_name_map = dict(
+            zip(self.countries_df["id"], self.countries_df["name_1"])
+        )
         self.events_data: dict[str, list[Event]] = {}
 
     def run(self):
         """Executes the full recipe generation pipeline."""
         self.logger.info("Starting Recipe Maker pipeline...")
-        
+
         self._load_events()
         if not self.events_data:
             self.logger.error("No events data loaded. Pipeline cannot continue.")
             return
 
         all_recipes = self._process_all_scdis()
-        
-        self.logger.info(f"Aggregated {len(all_recipes)} event types. Now saving to files...")
+
+        self.logger.info(
+            f"Aggregated {len(all_recipes)} event types. Now saving to files..."
+        )
         for event_type, recipes in all_recipes.items():
             recipe_df = pd.DataFrame(recipes)
             self._save_or_merge_recipe(recipe_df, event_type)
-        
+
         self.logger.info("Recipe Maker pipeline completed successfully.")
 
     def _load_events(self):
@@ -70,33 +76,37 @@ class RecipeMaker:
         for filename in os.listdir(self.config.events_path):
             if not filename.endswith(".txt"):
                 continue
-            
+
             country_name = filename.replace(".txt", "")
             file_path = os.path.join(self.config.events_path, filename)
             country_events = []
-            
+
             with open(file_path, "r", encoding="utf-8") as f:
                 for line in f:
                     parts = line.strip().split(" | ")
                     if len(parts) == 4:
                         try:
-                            country_events.append(Event(
-                                year=int(parts[1]),
-                                event_type=parts[2].strip(),
-                                description=parts[3].strip()
-                            ))
+                            country_events.append(
+                                Event(
+                                    year=int(parts[1]),
+                                    event_type=parts[2].strip(),
+                                    description=parts[3].strip(),
+                                )
+                            )
                         except ValueError:
-                            continue # Skip lines with non-integer years
-            
+                            continue  # Skip lines with non-integer years
+
             if country_events:
                 self.events_data[country_name] = country_events
         self.logger.info(f"Loaded events for {len(self.events_data)} countries.")
 
     def _process_all_scdis(self) -> dict:
         """Iterates through all SCDI files and generates recipe references."""
-        scdi_files = glob.glob(os.path.join(self.config.input_scdi_path, "*", "*.parquet"))
+        scdi_files = glob.glob(
+            os.path.join(self.config.input_scdi_path, "*", "*.parquet")
+        )
         self.logger.info(f"Found {len(scdi_files)} SCDI files to process.")
-        
+
         # This will hold all found recipes in memory before writing to disk
         accumulated_recipes = {}
 
@@ -116,14 +126,14 @@ class RecipeMaker:
                         "correlation": row.get("correlation"),
                     }
                     accumulated_recipes.setdefault(event_type, []).append(recipe_ref)
-        
+
         return accumulated_recipes
 
     def _get_fitting_events_for_scdi(self, scdi_row: pd.Series) -> list[str]:
         """Finds matching event types for a single SCDI row."""
         country_a_name = self.id_to_name_map.get(scdi_row.get("country_a_id"))
         country_b_name = self.id_to_name_map.get(scdi_row.get("country_b_id"))
-        
+
         if not country_a_name or not country_b_name:
             return []
 
@@ -132,20 +142,27 @@ class RecipeMaker:
 
         country_a_events = self.events_data.get(country_a_name, [])
         country_b_events = self.events_data.get(country_b_name, [])
-        
+
         fitting_event_types = set()
         for event_a in country_a_events:
             if event_a.year == end_year_a:
                 for event_b in country_b_events:
-                    if event_b.year == end_year_b and event_a.event_type == event_b.event_type:
+                    if (
+                        event_b.year == end_year_b
+                        and event_a.event_type == event_b.event_type
+                    ):
                         fitting_event_types.add(event_a.event_type)
         return list(fitting_event_types)
 
     def _save_or_merge_recipe(self, new_recipe_df: pd.DataFrame, event_type: str):
         """Saves or merges a recipe DataFrame to a Parquet file."""
-        sanitized_name = re.sub(r'(?u)[^-\w.]', '', event_type.strip().replace(" ", "_")).lower()
-        output_file = os.path.join(self.config.output_recipes_path, f"{sanitized_name}.parquet")
-        
+        sanitized_name = re.sub(
+            r"(?u)[^-\w.]", "", event_type.strip().replace(" ", "_")
+        ).lower()
+        output_file = os.path.join(
+            self.config.output_recipes_path, f"{sanitized_name}.parquet"
+        )
+
         os.makedirs(self.config.output_recipes_path, exist_ok=True)
 
         if os.path.exists(output_file):
@@ -158,9 +175,11 @@ class RecipeMaker:
             )
         else:
             final_df = new_recipe_df
-        
-        final_df.to_parquet(output_file, index=False, compression='brotli')
-        self.logger.info(f"Saved recipe for '{event_type}' with {len(final_df)} entries.")
+
+        final_df.to_parquet(output_file, index=False, compression="brotli")
+        self.logger.info(
+            f"Saved recipe for '{event_type}' with {len(final_df)} entries."
+        )
 
 
 def load_config(config_path="config.yaml") -> RecipeMakerConfig:
@@ -171,16 +190,23 @@ def load_config(config_path="config.yaml") -> RecipeMakerConfig:
         config_dict = yaml.safe_load(f)
     return RecipeMakerConfig(**config_dict)
 
+
 def main():
     """Main function to initialize and run the Recipe Maker pipeline."""
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    )
     try:
         config = load_config()
         pipeline = RecipeMaker(config)
         pipeline.run()
     except Exception:
-        logging.getLogger(__name__).critical("Pipeline failed with an unhandled exception.", exc_info=True)
+        logging.getLogger(__name__).critical(
+            "Pipeline failed with an unhandled exception.", exc_info=True
+        )
         raise
+
 
 if __name__ == "__main__":
     main()

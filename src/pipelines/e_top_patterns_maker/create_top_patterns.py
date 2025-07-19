@@ -29,6 +29,7 @@ logging.basicConfig(level=logging.INFO, format="%(message)s")
 @dataclass(frozen=True)
 class TopPatternsConfig:
     """A validated configuration object for the pipeline."""
+
     input_patterns_path: str
     output_path: str
     min_correlation_threshold: float
@@ -40,6 +41,7 @@ class TopPatternsConfig:
 @dataclass(frozen=True)
 class PipelineResult:
     """A summary of the completed pipeline run."""
+
     total_patterns_merged: int
     top_patterns_saved: int
     output_file_path: str
@@ -68,7 +70,7 @@ class TopPatternsGenerator:
                 total_patterns_merged=0,
                 top_patterns_saved=0,
                 output_file_path="",
-                status="Success: No data"
+                status="Success: No data",
             )
 
         # 2. Calculate Normalization Parameters
@@ -99,7 +101,9 @@ class TopPatternsGenerator:
         Loads all pattern files using Dask, creates symmetric counterparts,
         and merges them using a fully canonical key. Skips corrupted/empty files.
         """
-        base_pattern_files = glob.glob(os.path.join(self.config.input_patterns_path, "*", "patterns.parquet"))
+        base_pattern_files = glob.glob(
+            os.path.join(self.config.input_patterns_path, "*", "patterns.parquet")
+        )
         if not base_pattern_files:
             logging.warning("No base pattern files found.")
             return pd.DataFrame()
@@ -122,44 +126,71 @@ class TopPatternsGenerator:
         if not valid_files:
             logging.warning("No valid pattern files could be loaded.")
             return pd.DataFrame()
-        
+
         logging.info(f"Loading {len(valid_files)} valid files using Dask...")
         ddf = dd.read_parquet(valid_files)
         # --- END MODIFIED SECTION ---
 
         # 1. Create symmetric data (lazy operation)
-        symmetric_ddf = ddf.rename(columns={
-            "country_a_id": "country_b_id", "country_b_id": "country_a_id",
-            "start_year_a": "start_year_b", "start_year_b": "start_year_a"
-        })
-        
+        symmetric_ddf = ddf.rename(
+            columns={
+                "country_a_id": "country_b_id",
+                "country_b_id": "country_a_id",
+                "start_year_a": "start_year_b",
+                "start_year_b": "start_year_a",
+            }
+        )
+
         # 2. Combine for full dataset (lazy)
         combined_ddf = dd.concat([ddf, symmetric_ddf], ignore_index=True)
 
         # 3. Create fully canonical keys (lazy)
-        combined_ddf['ck_country_1'] = combined_ddf[['country_a_id', 'country_b_id']].min(axis=1)
-        combined_ddf['ck_country_2'] = combined_ddf[['country_a_id', 'country_b_id']].max(axis=1)
-        combined_ddf['ck_year_1'] = combined_ddf[['start_year_a', 'start_year_b']].min(axis=1)
-        combined_ddf['ck_year_2'] = combined_ddf[['start_year_a', 'start_year_b']].max(axis=1)
+        combined_ddf["ck_country_1"] = combined_ddf[
+            ["country_a_id", "country_b_id"]
+        ].min(axis=1)
+        combined_ddf["ck_country_2"] = combined_ddf[
+            ["country_a_id", "country_b_id"]
+        ].max(axis=1)
+        combined_ddf["ck_year_1"] = combined_ddf[["start_year_a", "start_year_b"]].min(
+            axis=1
+        )
+        combined_ddf["ck_year_2"] = combined_ddf[["start_year_a", "start_year_b"]].max(
+            axis=1
+        )
 
-        grouping_keys = ['ck_country_1', 'ck_country_2', 'length', 'ck_year_1', 'ck_year_2']
+        grouping_keys = [
+            "ck_country_1",
+            "ck_country_2",
+            "length",
+            "ck_year_1",
+            "ck_year_2",
+        ]
 
         # 4. Group and aggregate (lazy)
-        merged_ddf = combined_ddf.groupby(grouping_keys).agg(
-            average_correlation=('average_correlation', 'mean'),
-            scdi_count=('scdi_count', 'sum')
-        ).reset_index()
+        merged_ddf = (
+            combined_ddf.groupby(grouping_keys)
+            .agg(
+                average_correlation=("average_correlation", "mean"),
+                scdi_count=("scdi_count", "sum"),
+            )
+            .reset_index()
+        )
 
         # 5. Trigger the computation
         logging.info("Computing merged patterns...")
         df = merged_ddf.compute()
-        
+
         # 6. Restore original column names
-        df.rename(columns={
-            'ck_country_1': 'country_a_id', 'ck_country_2': 'country_b_id',
-            'ck_year_1': 'start_year_a', 'ck_year_2': 'start_year_b'
-        }, inplace=True)
-        
+        df.rename(
+            columns={
+                "ck_country_1": "country_a_id",
+                "ck_country_2": "country_b_id",
+                "ck_year_1": "start_year_a",
+                "ck_year_2": "start_year_b",
+            },
+            inplace=True,
+        )
+
         logging.info(f"Loaded and merged into {len(df):,} unique patterns.")
         return df
 
@@ -169,7 +200,10 @@ class TopPatternsGenerator:
             logging.info("Dynamically calculating normalization parameters...")
             self._norm_params = {
                 "length": {"min": df["length"].min(), "max": df["length"].max()},
-                "scdi_count": {"min": df["scdi_count"].min(), "max": df["scdi_count"].max()},
+                "scdi_count": {
+                    "min": df["scdi_count"].min(),
+                    "max": df["scdi_count"].max(),
+                },
             }
         else:
             logging.info("Using static normalization parameters from config.")
@@ -194,7 +228,9 @@ class TopPatternsGenerator:
         """Calculates the weighted significance score for each pattern."""
         logging.info("Calculating Significance Score for patterns...")
         df["length_norm"] = self._min_max_scale(df["length"], "length")
-        df["corr_norm"] = self._min_max_scale(df["average_correlation"], "average_correlation")
+        df["corr_norm"] = self._min_max_scale(
+            df["average_correlation"], "average_correlation"
+        )
         df["scdi_norm"] = self._min_max_scale(df["scdi_count"], "scdi_count")
         weights = self.config.score_weights
         df["SignificanceScore"] = (
@@ -214,6 +250,7 @@ class TopPatternsGenerator:
         pq.write_table(table, output_file_path, compression="brotli")
         return output_file_path
 
+
 def load_config(config_path: str = "config.yaml") -> TopPatternsConfig:
     """Loads the YAML configuration file and returns a validated Config object."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -222,6 +259,7 @@ def load_config(config_path: str = "config.yaml") -> TopPatternsConfig:
     with open(config_full_path, "r") as f:
         config_dict = yaml.safe_load(f)
     return TopPatternsConfig(**config_dict)
+
 
 if __name__ == "__main__":
     try:
@@ -232,10 +270,14 @@ if __name__ == "__main__":
         print("\n----- Top Patterns Pipeline Result -----")
         print(f"  Status: {result.status}")
         if result.status == "Success":
-            print(f"  Total Unique Patterns Processed: {result.total_patterns_merged:,}")
+            print(
+                f"  Total Unique Patterns Processed: {result.total_patterns_merged:,}"
+            )
             print(f"  Top Patterns Saved: {result.top_patterns_saved:,}")
             print(f"  Output File: {result.output_file_path}")
         print("----------------------------------------\n")
 
     except Exception as e:
-        logging.error(f"Pipeline failed with an unhandled exception: {e}", exc_info=True)
+        logging.error(
+            f"Pipeline failed with an unhandled exception: {e}", exc_info=True
+        )

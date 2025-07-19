@@ -16,6 +16,7 @@ psutil = "^7.0.0"
 black = "^25.1.0"
 scipy = "^1.16.0"
 dask = "^2025.5.1"
+tweepy = "^4.16.0"
 
 [tool.poetry.group.dev.dependencies]
 # Dependencies for development, linting, and testing

@@ -2,7 +2,9 @@
 
 import pandas as pd
 import pytest
-from src.pipelines.a_indicator_extractors.wb_indicators_etl.wb_indicators_etl import PipelineConfig
+from src.pipelines.a_indicator_extractors.wb_indicators_etl.wb_indicators_etl import (
+    PipelineConfig,
+)
 
 
 @pytest.fixture(name="dummy_countries_csv_path")
@@ -26,21 +28,22 @@ def test_pipeline_config(tmp_path, dummy_countries_csv_path):
         countries_csv_path=dummy_countries_csv_path,
         output_format="parquet",
         indicators=["SP.POP.TOTL"],
-        file_size_limit=1000
+        file_size_limit=1000,
     )
 
 
 @pytest.fixture(name="sample_raw_dataframe")
 def mock_raw_wb_dataframe():
     """Returns a sample raw DataFrame from the World Bank API."""
-    data = {'YR1960': [100, 200, 300], 'YR1961': [110, 210, 310]}
-    index = pd.Index(['USA', 'AFE', 'WLD'], name='economy')
+    data = {"YR1960": [100, 200, 300], "YR1961": [110, 210, 310]}
+    index = pd.Index(["USA", "AFE", "WLD"], name="economy")
     return pd.DataFrame(data, index=index)
 
 
 @pytest.fixture(name="sample_indicator_metadata")
 def mock_indicator_metadata():
     """Mocks the metadata object returned by wbgapi."""
+
     class MockMetadata:
         concept = "Test Concept"
         metadata = {"IndicatorName": "Population, total"}

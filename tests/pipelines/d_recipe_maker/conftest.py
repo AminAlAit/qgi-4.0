@@ -17,8 +17,9 @@ def _recipe_test_config_fixture(tmp_path):
         input_scdi_path=str(tmp_path / "scdi_input"),
         output_recipes_path=str(tmp_path / "recipes_output"),
         events_path=str(tmp_path / "events_input"),
-        countries_csv_path=str(countries_path)
+        countries_csv_path=str(countries_path),
     )
+
 
 @pytest.fixture
 def mock_recipe_inputs(recipe_test_config):
@@ -26,17 +27,22 @@ def mock_recipe_inputs(recipe_test_config):
     # Create mock SCDI file
     scdi_dir = Path(recipe_test_config.input_scdi_path) / "POP_GROWTH"
     scdi_dir.mkdir(parents=True, exist_ok=True)
-    scdi_df = pd.DataFrame({
-        'country_a_id': [1], 'country_b_id': [2],
-        'length': [5], 'start_year_a': [2000], 'start_year_b': [2010],
-        'correlation': [0.95]
-    })
+    scdi_df = pd.DataFrame(
+        {
+            "country_a_id": [1],
+            "country_b_id": [2],
+            "length": [5],
+            "start_year_a": [2000],
+            "start_year_b": [2010],
+            "correlation": [0.95],
+        }
+    )
     scdi_df.to_parquet(scdi_dir / "USA.parquet")
 
     # Create mock Event files
     events_dir = Path(recipe_test_config.events_path)
     events_dir.mkdir(exist_ok=True)
-    
+
     # --- FIXED SECTION ---
     # Event for USA in 2005 (2000 + 5)
     usa_events = ". USA | 2005 | Trade Agreement | Signed new trade deal"
