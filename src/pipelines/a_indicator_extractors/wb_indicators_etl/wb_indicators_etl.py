@@ -355,9 +355,9 @@ def main():
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(module)s - %(message)s",
     )
-    # Note: Corrected the config path to be relative to the project root for clarity
+    # TODO: make path relative, store it somewhere professional
     pipeline = Pipeline(
-        config_path="src/pipelines/1_indicator_extractors/wb_indicators_etl/wb_config.yaml"
+        config_path=r"/workspace/qgi\qgi-4.0\src\pipelines\a_indicator_extractors\wb_indicators_etl\wb_config.yaml"
     )
     result = pipeline.run()
 

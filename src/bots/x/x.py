@@ -74,7 +74,7 @@ class QGIXBot:
 
         tweet_text = (
             f"⚡ QGI Pattern Detected ⚡\n\n"
-            f"Countries: {country_a_name} & {country_b_name}\n"
+            f"Countries: #{country_a_name} & #{country_b_name}\n"
             f"Timeframe: {int(pattern['start_year_a'])}–{int(pattern['start_year_a'] + pattern['length'])}\n"
             f"Indicators: {int(pattern['scdi_count'])}\n"
             f"Correlation: {pattern['average_correlation']:.2f}\n\n"
