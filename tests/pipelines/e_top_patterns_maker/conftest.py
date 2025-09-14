@@ -1,11 +1,9 @@
 """
 Pytest fixtures for testing the Top Patterns Generator pipeline.
 """
-
 import os
 import pytest
 import pandas as pd
-import yaml
 from src.pipelines.e_top_patterns_maker.create_top_patterns import TopPatternsConfig
 
 
@@ -15,11 +13,9 @@ def mock_patterns_dir(tmp_path_factory):
     Creates a temporary directory structure with mock pattern parquet files.
     This simulates the output from the `c_pattern_maker` pipeline.
     """
-    # Create a base temporary directory for this test session
     base_dir = tmp_path_factory.mktemp("pattern_data")
 
-    # Define mock data
-    # Pattern 1: A strong, multi-SCDI pattern
+    # Define mock data, now including the 'indicator_ids' column
     usa_patterns = pd.DataFrame(
         {
             "country_a_id": [1],
@@ -29,10 +25,10 @@ def mock_patterns_dir(tmp_path_factory):
             "start_year_b": [2011],
             "average_correlation": [0.95],
             "scdi_count": [4],
+            "indicator_ids": [["ID1", "ID2", "ID3", "ID4"]],
         }
     )
 
-    # Pattern 2: A weaker, but still valid pattern
     mexico_patterns = pd.DataFrame(
         {
             "country_a_id": [3],
@@ -42,10 +38,10 @@ def mock_patterns_dir(tmp_path_factory):
             "start_year_b": [2015],
             "average_correlation": [0.85],
             "scdi_count": [2],
+            "indicator_ids": [["ID5", "ID6"]],
         }
     )
 
-    # Create the directory structure and save the files
     usa_dir = base_dir / "USA"
     mexico_dir = base_dir / "Mexico"
     os.makedirs(usa_dir, exist_ok=True)

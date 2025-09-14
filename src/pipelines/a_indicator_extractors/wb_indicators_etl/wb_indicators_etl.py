@@ -249,7 +249,7 @@ class Transformer:
 
 
 class Loader:
-    """Loads transformed data into storage, such as Parquet files."""
+    """Loads transformed data and creates the indicator registry."""
 
     def __init__(self):
         logging.info("Loader initialized.")
@@ -258,11 +258,10 @@ class Loader:
         self, indicators: List[Indicator], output_path: str, output_format: str
     ) -> List[str]:
         """
-        Saves each indicator's DataFrame to a Parquet file.
-
-        Returns:
-            A list of indicator IDs that had no data and were skipped.
+        Saves each indicator's DataFrame and creates the central indicator registry.
         """
+
+        self._create_indicator_registry(indicators, output_path)
 
         if output_format.lower() != "parquet":
             raise ValueError(f"Unsupported output format: {output_format}")
@@ -287,6 +286,21 @@ class Loader:
         except Exception as e:
             logging.error(f"Data loading failed: {e}")
             raise
+
+    def _create_indicator_registry(self, indicators: List[Indicator], output_path: str):
+        """Creates and saves a YAML file mapping indicator IDs to their names."""
+        logging.info("Creating indicator registry...")
+        registry = {ind.id: ind.indicator_name for ind in indicators if ind.indicator_name}
+
+        # The registry should be saved in the parent data directory, not the WB specific one.
+        registry_path = os.path.abspath(os.path.join(output_path, '..', '..', 'indicator_registry.yaml'))
+
+        try:
+            with open(registry_path, 'w', encoding='utf-8') as f:
+                yaml.dump(registry, f, allow_unicode=True)
+            logging.info(f"Indicator registry saved successfully to: {registry_path}")
+        except IOError as e:
+            logging.error(f"Failed to write indicator registry: {e}")
 
 
 class Pipeline:

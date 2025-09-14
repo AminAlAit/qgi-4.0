@@ -24,9 +24,7 @@ class PatternMakerConfig:
 
     input_scdi_path: str
     output_patterns_path: str
-    top_patterns_report_path: str
     countries_csv_path: str
-    top_n_patterns: int
 
 
 class PatternMaker:
@@ -75,43 +73,38 @@ class PatternMaker:
             if not scdi_files:
                 continue
 
-            table = pq.read_table(scdi_files)
-            if table.num_rows == 0:
+            # 1. Load all SCDI files for the country and add the indicator_id
+            df_list = []
+            for file in scdi_files:
+                df = pd.read_parquet(file)
+                df['indicator_id'] = os.path.basename(os.path.dirname(file))
+                df_list.append(df)
+
+            if not df_list:
                 continue
 
-            # Aggregate all SCDIs into patterns
-            agg_table = (
-                table.group_by(
-                    [
-                        "country_a_id",
-                        "country_b_id",
-                        "length",
-                        "start_year_a",
-                        "start_year_b",
-                    ]
-                )
-                .aggregate([("correlation", "mean"), ("correlation", "count")])
-                .rename_columns(
-                    [
-                        "country_a_id",
-                        "country_b_id",
-                        "length",
-                        "start_year_a",
-                        "start_year_b",
-                        "average_correlation",
-                        "scdi_count",
-                    ]
-                )
-            )
+            combined_df = pd.concat(df_list, ignore_index=True)
 
-            if "scdi_count" in agg_table.column_names:
-                agg_table = agg_table.filter(
-                    pc.greater(agg_table["scdi_count"], 1)
-                )  # pylint: disable=no-member
+            # 2. Perform a single, direct aggregation
+            final_patterns_df = combined_df.groupby(
+                ["country_a_id", "country_b_id", "length", "start_year_a", "start_year_b"]
+            ).agg(
+                average_correlation=('correlation', 'mean'),
+                indicator_ids=('indicator_id', list) ## TODO: instead of saving indicator WB ID strings, save another numerical ID
+            ).reset_index()
 
-            if agg_table.num_rows > 0:
+            # 3. Calculate scdi_count from the length of the indicator_ids list
+            final_patterns_df['scdi_count'] = final_patterns_df['indicator_ids'].str.len()
+
+            # 4. Filter out patterns with only one indicator
+            final_patterns_df = final_patterns_df[final_patterns_df['scdi_count'] > 1]
+
+            output_dir = os.path.join(self.config.output_patterns_path, country_name)
+            output_file = os.path.join(output_dir, "patterns.parquet")
+
+            if not final_patterns_df.empty:
                 os.makedirs(output_dir, exist_ok=True)
-                pq.write_table(agg_table, output_file, compression="brotli")
+                final_patterns_df.to_parquet(output_file, index=False, compression="brotli")
             else:
                 self.logger.info(
                     f"No patterns with scdi_count > 1 found for '{country_name}'. No file written."

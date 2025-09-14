@@ -1,209 +1,59 @@
-Directory structure for: /workspace\Desktop\Demicon\terraform-aws-fah-analytics-api
-├── [examples]
-│   ├── [10-complete]
-│   │   ├── .gitignore
-│   │   ├── .terraform.lock.hcl
-│   │   ├── MODULE.md
-│   │   ├── README.md
-│   │   ├── backend.tf
-│   │   ├── main.tf
-│   │   ├── outputs.tf
-│   │   ├── providers.tf
-│   │   └── variables.tf
-│   ├── [20-mds]
-│   │   ├── [modules]
-│   │   │   ├── [atfx-partition]
-│   │   │   │   ├── README.md
-│   │   │   │   ├── main.tf
-│   │   │   │   ├── outputs.tf
-│   │   │   │   └── variables.tf
-│   │   │   └── [atfx-table]
-│   │   │       ├── main.tf
-│   │   │       ├── output.tf
-│   │   │       └── variables.tf
-│   │   ├── .gitignore
-│   │   ├── README.md
-│   │   ├── backend.tf
-│   │   ├── main.tf
-│   │   ├── outputs.tf
-│   │   ├── providers.tf
-│   │   └── variables.tf
-│   └── [21-mds-cleaner]
-│       ├── .gitignore
-│       ├── .terraform.lock.hcl
-│       ├── README.md
-│       ├── backend.tf
-│       ├── main.tf
-│       ├── outputs.tf
-│       ├── providers.tf
-│       └── variables.tf
-├── [modules]
-│   ├── [cleaner_topic]
-│   │   ├── main.tf
-│   │   ├── outputs.tf
-│   │   └── variables.tf
-│   ├── [influx]
-│   │   ├── [modules]
-│   │   │   ├── [cleaner]
-│   │   │   │   ├── [handlers]
-│   │   │   │   │   └── [cleaner]
-│   │   │   │   │       ├── [src]
-│   │   │   │   │       │   └── app.py
-│   │   │   │   │       ├── [tests]
-│   │   │   │   │       │   ├── [events]
-│   │   │   │   │       │   │   └── sqs_job_event.json
-│   │   │   │   │       │   └── test_handler.py
-│   │   │   │   │       ├── .coverage
-│   │   │   │   │       ├── .gitignore
-│   │   │   │   │       ├── .pylintrc
-│   │   │   │   │       ├── .python-version
-│   │   │   │   │       ├── README.md
-│   │   │   │   │       ├── coverage.xml
-│   │   │   │   │       ├── mypy.ini
-│   │   │   │   │       ├── poetry.lock
-│   │   │   │   │       ├── poetry.toml
-│   │   │   │   │       ├── pyproject.toml
-│   │   │   │   │       └── pytest.ini
-│   │   │   │   ├── [modules]
-│   │   │   │   │   ├── [role]
-│   │   │   │   │   │   ├── main.tf
-│   │   │   │   │   │   ├── outputs.tf
-│   │   │   │   │   │   ├── providers.tf
-│   │   │   │   │   │   └── variables.tf
-│   │   │   │   │   └── [sg]
-│   │   │   │   │       ├── main.tf
-│   │   │   │   │       ├── outputs.tf
-│   │   │   │   │       ├── providers.tf
-│   │   │   │   │       └── variables.tf
-│   │   │   │   ├── main.tf
-│   │   │   │   ├── providers.tf
-│   │   │   │   └── variables.tf
-│   │   │   ├── [ecs]
-│   │   │   │   ├── [modules]
-│   │   │   │   │   ├── [alb]
-│   │   │   │   │   │   ├── main.tf
-│   │   │   │   │   │   ├── outputs.tf
-│   │   │   │   │   │   ├── providers.tf
-│   │   │   │   │   │   └── variables.tf
-│   │   │   │   │   ├── [ecr]
-│   │   │   │   │   │   ├── main.tf
-│   │   │   │   │   │   ├── outputs.tf
-│   │   │   │   │   │   ├── providers.tf
-│   │   │   │   │   │   └── variables.tf
-│   │   │   │   │   ├── [monitoring]
-│   │   │   │   │   │   ├── [dashboards]
-│   │   │   │   │   │   │   └── default.json.tpl
-│   │   │   │   │   │   ├── main.tf
-│   │   │   │   │   │   ├── outputs.tf
-│   │   │   │   │   │   ├── providers.tf
-│   │   │   │   │   │   └── variables.tf
-│   │   │   │   │   ├── [role]
-│   │   │   │   │   │   ├── main.tf
-│   │   │   │   │   │   ├── outputs.tf
-│   │   │   │   │   │   ├── providers.tf
-│   │   │   │   │   │   └── variables.tf
-│   │   │   │   │   ├── [scaling]
-│   │   │   │   │   │   ├── main.tf
-│   │   │   │   │   │   ├── outputs.tf
-│   │   │   │   │   │   ├── providers.tf
-│   │   │   │   │   │   └── variables.tf
-│   │   │   │   │   └── [sg]
-│   │   │   │   │       ├── main.tf
-│   │   │   │   │       ├── outputs.tf
-│   │   │   │   │       ├── providers.tf
-│   │   │   │   │       └── variables.tf
-│   │   │   │   ├── [tasks]
-│   │   │   │   │   └── influx_task.json.tpl
-│   │   │   │   ├── main.tf
-│   │   │   │   ├── outputs.tf
-│   │   │   │   ├── providers.tf
-│   │   │   │   └── variables.tf
-│   │   │   └── [efs]
-│   │   │       ├── [modules]
-│   │   │       │   ├── [backup]
-│   │   │       │   │   ├── main.tf
-│   │   │       │   │   ├── outputs.tf
-│   │   │       │   │   ├── providers.tf
-│   │   │       │   │   └── variables.tf
-│   │   │       │   ├── [kms]
-│   │   │       │   │   ├── main.tf
-│   │   │       │   │   ├── outputs.tf
-│   │   │       │   │   ├── providers.tf
-│   │   │       │   │   └── variables.tf
-│   │   │       │   └── [sg]
-│   │   │       │       ├── main.tf
-│   │   │       │       ├── outputs.tf
-│   │   │       │       ├── providers.tf
-│   │   │       │       └── variables.tf
-│   │   │       ├── main.tf
-│   │   │       ├── outputs.tf
-│   │   │       ├── providers.tf
-│   │   │       └── variables.tf
-│   │   ├── main.tf
-│   │   ├── outputs.tf
-│   │   ├── providers.tf
-│   │   └── variables.tf
-│   ├── [mds]
-│   │   ├── [modules]
-│   │   │   ├── [cleaner]
-│   │   │   │   ├── [handlers]
-│   │   │   │   │   └── [mds_cleaner]
-│   │   │   │   │       ├── [src]
-│   │   │   │   │       │   ├── [domain]
-│   │   │   │   │       │   │   └── model.py
-│   │   │   │   │       │   ├── [gateways]
-│   │   │   │   │       │   │   ├── glue_gateway.py
-│   │   │   │   │       │   │   └── s3_gateway.py
-│   │   │   │   │       │   ├── app.py
-│   │   │   │   │       │   └── service.py
-│   │   │   │   │       ├── [tests]
-│   │   │   │   │       │   ├── [doubles]
-│   │   │   │   │       │   │   └── mock_gateways.py
-│   │   │   │   │       │   ├── test_app.py
-│   │   │   │   │       │   ├── test_glue_gateway.py
-│   │   │   │   │       │   └── test_service.py
-│   │   │   │   │       ├── .coverage
-│   │   │   │   │       ├── .gitignore
-│   │   │   │   │       ├── .pylintrc
-│   │   │   │   │       ├── .python-version
-│   │   │   │   │       ├── README.md
-│   │   │   │   │       ├── coverage.xml
-│   │   │   │   │       ├── mypy.ini
-│   │   │   │   │       ├── poetry.lock
-│   │   │   │   │       ├── pyproject.toml
-│   │   │   │   │       └── pytest.ini
-│   │   │   │   ├── main.tf
-│   │   │   │   └── variables.tf
-│   │   │   └── [user]
-│   │   │       ├── main.tf
-│   │   │       ├── outputs.tf
-│   │   │       └── variables.tf
-│   │   ├── main.tf
-│   │   ├── outputs.tf
-│   │   ├── providers.tf
-│   │   └── variables.tf
-│   └── [sqs_sns_bridge]
-│       ├── [handlers]
-│       │   └── [bridge_handler]
-│       │       └── [src]
-│       │           └── app.py
-│       ├── main.tf
-│       ├── outputs.tf
-│       └── variables.tf
+Directory structure for: /workspace/qgi\qgi-4.0
+├── [src]
+│   ├── [bots]
+│   │   └── [x]
+│   │       ├── config_tokens.yaml
+│   │       ├── run_bot.bat
+│   │       ├── x.ipynb
+│   │       └── x.py
+│   └── [pipelines]
+│       ├── [a_indicator_extractors]
+│       │   └── [wb_indicators_etl]
+│       │       ├── prompt.md
+│       │       ├── wb_config.yaml
+│       │       └── wb_indicators_etl.py
+│       ├── [b_scdi_finder]
+│       │   ├── config.yaml
+│       │   └── scdi_finder.py
+│       ├── [c_pattern_maker]
+│       │   ├── config.yaml
+│       │   ├── main.ipynb
+│       │   └── pattern_maker.py
+│       ├── [d_recipe_maker]
+│       │   ├── config.yaml
+│       │   ├── recipe_generation_state.json
+│       │   ├── recipe_maker.py
+│       │   └── recipes_eda.ipynb
+│       └── [e_top_patterns_maker]
+│           ├── config.yaml
+│           └── create_top_patterns.py
+├── [tests]
+│   ├── [bots]
+│   │   └── [x]
+│   ├── [pipelines]
+│   │   ├── [a_indicator_extractors]
+│   │   │   └── [wb_indicators_etl]
+│   │   │       └── test_wb_indicators_etl.py
+│   │   ├── [b_scdi_finder]
+│   │   │   ├── conftest.py
+│   │   │   └── test_scdi_finder.py
+│   │   ├── [c_pattern_maker]
+│   │   │   ├── conftest.py
+│   │   │   └── test_pattern_maker.py
+│   │   ├── [d_recipe_maker]
+│   │   │   ├── conftest.py
+│   │   │   └── test_recipe_maker.py
+│   │   └── [e_top_patterns_maker]
+│   │       ├── conftest.py
+│   │       └── test_create_top_patterns.py
+│   └── conftest.py
+├── .coverage
+├── .coveragerc
 ├── .gitignore
-├── .gitlab-ci.yml
-├── .markdownlint.json
-├── .pre-commit-config.yaml
-├── .releaserc.yml
-├── .terraform.lock.hcl
-├── .terraformignore
-├── .tfsec.yml
-├── .tool-versions
-├── MODULE.md
-├── Makefile
+├── .python-version
 ├── README.md
-├── VERSION
-├── main.tf
-├── outputs.tf
-├── providers.tf
-└── variables.tf
+├── coverage.xml
+├── poetry.lock
+├── pyproject.toml
+├── requirements.txt
+└── tokens.yaml

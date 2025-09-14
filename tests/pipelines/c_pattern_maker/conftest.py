@@ -16,9 +16,7 @@ def pattern_maker_test_config(tmp_path):
     return PatternMakerConfig(
         input_scdi_path=str(tmp_path / "scdi_input"),
         output_patterns_path=str(tmp_path / "patterns_output"),
-        top_patterns_report_path=str(tmp_path / "top_patterns.parquet"),
         countries_csv_path=str(countries_csv_path),
-        top_n_patterns=10,
     )
 
 

@@ -24,12 +24,9 @@ def test_load_and_process_patterns_merging(top_patterns_config):
     generator = TopPatternsGenerator(config=top_patterns_config)
     processed_df = generator._load_and_process_patterns()
 
-    assert (
-        len(processed_df) == 2
-    ), "Should merge symmetric pairs back into original count"
+    assert len(processed_df) == 2, "Should merge symmetric pairs back into original count"
 
     # Find the USA(1)-Canada(2) pattern
-    # Note: The canonical key sorts the IDs, so country_a_id will always be the smaller one.
     usa_can_pattern = processed_df[
         (processed_df["country_a_id"] == 1) & (processed_df["country_b_id"] == 2)
     ]
@@ -40,6 +37,10 @@ def test_load_and_process_patterns_merging(top_patterns_config):
 
     # The average_correlation should be the mean (0.95 and 0.95 -> 0.95)
     assert usa_can_pattern.iloc[0]["average_correlation"] == 0.95
+
+    # The indicator_ids list should be merged and made unique
+    expected_ids = sorted(['ID1', 'ID2', 'ID3', 'ID4'])
+    assert sorted(usa_can_pattern.iloc[0]["indicator_ids"]) == expected_ids
 
 
 def test_significance_score_calculation(top_patterns_config):
@@ -71,24 +72,24 @@ def test_full_run_creates_output(top_patterns_config):
     An integration test to verify that a full pipeline run creates the
     expected output file with the correct structure.
     """
-    # SIMPLIFIED: No need to patch the run method anymore.
+
     generator = TopPatternsGenerator(config=top_patterns_config)
     result = generator.run()
 
     assert result.status == "Success"
-    # We have 2 unique patterns in our test data
     assert result.total_patterns_merged == 2
     assert result.top_patterns_saved == 2
 
     output_path = result.output_file_path
     assert os.path.exists(output_path)
 
-    # Verify the contents of the output file
     output_df = pd.read_parquet(output_path)
     assert len(output_df) == 2
     assert "SignificanceScore" in output_df.columns
+    assert "indicator_ids" in output_df.columns
+    assert "indicator_names" in output_df.columns
 
-    # Check that the data is sorted by score
     assert (
         output_df.iloc[0]["SignificanceScore"] >= output_df.iloc[1]["SignificanceScore"]
     )
+ 

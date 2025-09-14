@@ -90,12 +90,19 @@ class QGIXBot:
         country_b_name = self.country_map.get(pattern["country_b_id"], "Unknown")
 
         score_100 = pattern["SignificanceScore"] * 100
+        indicator_names = pattern.get('indicator_names', [])
+        if len(indicator_names) > 2:
+            indicators_text = f"Key Indicators: {indicator_names[0]}; {indicator_names[1]}..."
+        elif indicator_names:
+            indicators_text = f"Key Indicators: {'; '.join(indicator_names)}"
+        else:
+            indicators_text = f"Indicators: {int(pattern['scdi_count'])}"
 
         tweet_text = (
             f"⚡ QGI Pattern Detected ⚡\n\n"
             f"Countries: {format_hashtag(country_a_name)} & {format_hashtag(country_b_name)}\n"
             f"Timeframe: {int(pattern['start_year_a'])}–{int(pattern['start_year_a'] + pattern['length'])}\n"
-            f"Indicators: {int(pattern['scdi_count'])}\n"
+            f"{indicators_text}\n"
             f"Correlation: {pattern['average_correlation']:.2f}\n\n"
             f"Significance Score: {score_100:.0f}/100\n\n"
             f"#Geopolitics #DataScience #QGI #Economics"

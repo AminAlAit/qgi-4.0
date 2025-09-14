@@ -6,6 +6,3 @@ output_patterns_path: "data/pattern_maker_output"
 
 # Path to the shared countries CSV file.
 countries_csv_path: "data/countries.csv"
-
-# The number of top patterns to select for the final report.
-top_n_patterns: 100000
