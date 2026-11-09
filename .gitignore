@@ -31,6 +31,8 @@ pattern_maker_output/
 
 # Ignoring side topics
 Sarah/
+demicon/
+external projects/
 
 # Archiving QGI 3.0 data
 misc/

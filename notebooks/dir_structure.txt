@@ -1,59 +1,44 @@
-Directory structure for: /workspace/qgi\qgi-4.0
-├── [src]
-│   ├── [bots]
-│   │   └── [x]
-│   │       ├── config_tokens.yaml
-│   │       ├── run_bot.bat
-│   │       ├── x.ipynb
-│   │       └── x.py
-│   └── [pipelines]
-│       ├── [a_indicator_extractors]
-│       │   └── [wb_indicators_etl]
-│       │       ├── prompt.md
-│       │       ├── wb_config.yaml
-│       │       └── wb_indicators_etl.py
-│       ├── [b_scdi_finder]
-│       │   ├── config.yaml
-│       │   └── scdi_finder.py
-│       ├── [c_pattern_maker]
-│       │   ├── config.yaml
-│       │   ├── main.ipynb
-│       │   └── pattern_maker.py
-│       ├── [d_recipe_maker]
-│       │   ├── config.yaml
-│       │   ├── recipe_generation_state.json
-│       │   ├── recipe_maker.py
-│       │   └── recipes_eda.ipynb
-│       └── [e_top_patterns_maker]
-│           ├── config.yaml
-│           └── create_top_patterns.py
-├── [tests]
-│   ├── [bots]
-│   │   └── [x]
-│   ├── [pipelines]
-│   │   ├── [a_indicator_extractors]
-│   │   │   └── [wb_indicators_etl]
-│   │   │       └── test_wb_indicators_etl.py
-│   │   ├── [b_scdi_finder]
-│   │   │   ├── conftest.py
-│   │   │   └── test_scdi_finder.py
-│   │   ├── [c_pattern_maker]
-│   │   │   ├── conftest.py
-│   │   │   └── test_pattern_maker.py
-│   │   ├── [d_recipe_maker]
-│   │   │   ├── conftest.py
-│   │   │   └── test_recipe_maker.py
-│   │   └── [e_top_patterns_maker]
-│   │       ├── conftest.py
-│   │       └── test_create_top_patterns.py
-│   └── conftest.py
-├── .coverage
-├── .coveragerc
-├── .gitignore
-├── .python-version
-├── README.md
-├── coverage.xml
-├── poetry.lock
-├── pyproject.toml
-├── requirements.txt
-└── tokens.yaml
+MSIT/
+├── [5–10 Relevant Job Listings]
+│   ├── AllCloud - Data Engineer.pdf
+│   ├── Crossing Hurdles - Machine Learning Engineer.pdf
+│   ├── Data_ML_AI Engineer Job URLs.pdf
+│   ├── Deel - AI-ML Engineer, Python.pdf
+│   ├── Mindrift - Freelance Data Scraping Engineer (Python).pdf
+│   ├── Mindrift - freelance data science engineer (python and sql).pdf
+│   ├── Netconomy - AI Engineer.pdf
+│   ├── Oliver Bernard - AI Engineer.pdf
+│   ├── Opsfleet - AI Engineer.pdf
+│   ├── Parallel Consulting - AI Engineer.pdf
+│   ├── Reflow - ML Engineer.pdf
+│   ├── Understanding Recruitment - Machine Learning Engineer (Deployed).pdf
+│   └── Wave Group - AI Engineer.pdf
+├── [Current CV]
+│   └── Amin_Al-Ait_Cloud_Data_Engineer.pdf
+├── [Letters from Our Partner Companies]
+│   ├── Arctic_Wolf_(3).pdf
+│   ├── Deltia.pdf
+│   ├── Incyde+GmbH+DE_MK.pdf
+│   ├── LOI+Cybercurriculum.pdf
+│   ├── VamiSec+__+Masterschool-signed2.pdf
+│   └── Zusammenarbeit+-+Webeet+(2).pdf
+├── [Motivation Letter]
+│   ├── Cover Letter DE.pdf
+│   └── Cover Letter EN.pdf
+├── [Official Educational Offer]
+│   └── Amin Sabri Al-Ait - Offer Letter - Data Analytics - May 12 2026 - 12 months_27c42d37.pdf
+├── [Proof of Qualifications & Further Education]
+│   ├── AWS Certified Cloud Practitioner certificate.pdf
+│   ├── AWS Certified Data Engineer - Associate certificate.pdf
+│   └── Zeugnisbewertung.pdf
+├── [Rejection Letters from Job Applications]
+│   ├── Amin, thank you for your interest in Taxfix.pdf
+│   ├── Data Engineer - Update on your application.pdf
+│   ├── Thank you for applying to Lighthouse.pdf
+│   ├── Thank you for your application for Data Engineer – Business Intelligence (BI) (f-m-d).pdf
+│   ├── Update on your application at Deel.pdf
+│   └── Your application at Coolblue.pdf
+├── All information you need to prepare your appointment with the agency.pdf
+├── MSIT_Career-and-Hiring-DE.pdf
+├── Masterschool+-+Motivation+Letter+-+German.pdf
+└── Modulübersicht DA_AI_& ML 12 Modules Vollzeit.pdf
