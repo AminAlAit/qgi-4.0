@@ -1,55 +1,33 @@
-# QGI 4.0 — Local SCDI & Columnar Parquet Engine (2025)
+# QGI 4.0 — Local SCDI Econometric Engine & X Bot v1 (2025)
 
-> [!IMPORTANT]
-> **Historical Archive (`QGI v4.0`):** This repository is part of the preserved evolutionary archive of **Quantitative Geopolitical Intelligence (QGI)**. Active production development, multi-account cloud infrastructure, and machine learning now reside in **QGI 7.0** at [`AminAlAit/qgi`](https://github.com/AminAlAit/qgi) (Live at [qgintelligence.com](https://qgintelligence.com)).
-
-## QGI Generational Lineage (`v1.0` → `v7.0`)
-
-| Generation | Period | Architecture & Milestone | Repository |
-|---|---|---|---|
-| **QGI 1.0** | Mar–Oct 2023 | Initial Pairwise Country Correlation Engine & Streamlit Prototype | `AminAlAit/trojan`, `AminAlAit/trojan-streamlit` |
-| **QGI 2.0** | Nov 2023 | Soft Power & Institutional Composite Index Prototype | `AminAlAit/trojan-2.0` |
-| **QGI 3.0** | Jan–Feb 2024 | Standalone Multi-Page Streamlit Analytical Terminal | [`AminAlAit/qgi-streamlit`](https://github.com/AminAlAit/qgi-streamlit) |
-| **QGI 4.0** | Feb–Sep 2025 | **Local SCDI Formalization, MySQL→Parquet Engine (Pipelines A–E) & X Bot v1** | **`AminAlAit/qgi-4.0`** *(this repo)* |
-| **QGI 5.0** | Sep 2025–Mar 2026 | First-Generation AWS Cloud Migration (Decoupled Lambda & Batch Microservices) | `AminAlAit/qgi-pipeline-a/b/c-*` |
-| **QGI 6.0** | Mar–Aug 2026 | 7-Repo Multi-Account AWS Cloud (14.3B FFT Correlations) & Trajectory Engine (42 Models) | `AminAlAit/qgi-{aws-tf,infra,pipeline,data,ml,frontend}` |
-| **QGI 7.0** | Oct 2026–Present | **Unified Public Monorepo & Sovereign IP Vault (Active Production)** | [`AminAlAit/qgi`](https://github.com/AminAlAit/qgi) & `AminAlAit/qgi-docs` |
+> **[Historical Archive — Generation 4.0 of 7.0]**
+> This repository preserves **QGI 4.0** (2025), the pivotal fourth-generation engine that mathematically formalized the **Spearman-Cross-Correlation-DTW Index (SCDI)**, modularized the 5-stage local pipeline (pipeline_a through pipeline_e), transitioned storage from local MySQL (data_prep/) to partitioned Apache Parquet, and launched the first automated X/Twitter analytical bot (x_bot/).
+> - **Original Repository Name:** `AminAlAit/qgi-4.0`
+> - **Active Production Platform (QGI 7.0):** [**AminAlAit/qgi**](https://github.com/AminAlAit/qgi) ([qgintelligence.com](https://qgintelligence.com))
 
 ---
 
-## Architectural Overview (QGI 4.0)
+## Architectural Scope (2025)
 
-**QGI 4.0** marked the formalization of the **Single Dyadic Correlating Index (SCDI)** pipeline and the transition from relational MySQL tables to high-throughput local columnar Apache Parquet storage (`pyarrow`), laying the algorithmic foundation for the subsequent AWS cloud migrations (QGI 5.0–7.0).
+1. **5-Stage Modular Econometric Pipeline:**
+   - **pipeline_a/ (Indicator Extractor):** World Bank API ingestion and time-series normalization (indicator_extractor.py).
+   - **pipeline_b/ (SCDI Finder):** Pairwise country-indicator correlation engine combining Spearman rank correlation, lagged cross-correlation, and Dynamic Time Warping (scdi_finder.py).
+   - **pipeline_c/ (Pattern Synthesizer):** Multi-indicator structural pattern aggregation (pattern_synthesizer.py).
+   - **pipeline_d/ (Recipe Maker):** Composite macro-geopolitical recipe construction (ecipe_maker.py).
+   - **pipeline_e/ (Trends Analyzer):** Regime shift and structural break detection (	rends_analyzer.py).
+2. **Storage Migration (data_prep/):** Migrated raw World Bank time series from local relational tables (mysql_setup.py, populate_mysql.py) to columnar Parquet (migrate_mysql_to_parquet.py) and early S3 staging (upload_to_s3.py).
+3. **Outreach Automation (x_bot/):** First automated chart rendering (chart_generator.py), insight synthesis (content_generator.py), and scheduled social publishing (scheduler.py, 	witter_publisher.py).
 
-### Core Pipeline Topology (`src/pipelines/` & `src/bots/`)
+---
 
-1. **Pipeline A — World Bank Indicators ETL (`a_wb_indicators_etl/`):**
-   - Automated indicator extraction and longitudinal normalization across sovereign countries.
-2. **Pipeline B — SCDI Finder (`b_scdi_finder/`):**
-   - Pairwise cross-country indicator lag/lead correlation discovery and statistical significance filtering.
-3. **Pipeline C — Pattern Maker (`c_pattern_maker/`):**
-   - Multi-indicator structural pattern synthesis over discovered SCDI dyads.
-4. **Pipeline D — Recipe Maker (`d_recipe_maker/`):**
-   - Historical geopolitical and macroeconomic event precursor recipe assembly.
-5. **Pipeline E — Top Patterns Generator (`e_create_top_patterns/`):**
-   - Ranking and curation of top-tier structural analogues into `top_patterns.parquet`.
-6. **Automated X Outreach Bot (`src/bots/x/`):**
-   - First-generation automated social publishing pipeline reading curated patterns and posting visual insights.
+## QGI Generational Lineage (1.0 – 7.0)
 
-### Repository Layout
-
-```text
-qgi-4.0/
-├── src/
-│   ├── bots/x/                        # Automated X publishing bot (v1)
-│   ├── pipelines/
-│   │   ├── a_wb_indicators_etl/       # Pipeline A: World Bank indicator ingestion
-│   │   ├── b_scdi_finder/             # Pipeline B: Dyadic SCDI correlation engine
-│   │   ├── c_pattern_maker/           # Pipeline C: Structural pattern synthesis
-│   │   ├── d_recipe_maker/            # Pipeline D: Event precursor recipe builder
-│   │   └── e_create_top_patterns/     # Pipeline E: Top pattern curation
-│   └── utils/                         # Shared Parquet & logging utilities
-├── notebooks/                         # Exploratory research, network analysis & Athena EDA
-├── tests/                             # Unit & pipeline integration tests
-└── pyproject.toml                     # Poetry dependency specification
-```
+| Generation | Era | Canonical GitHub Repository | Original Repository Name(s) | Key Milestone |
+| :--- | :--- | :--- | :--- | :--- |
+| **QGI 1.0** | 2023 | `AminAlAit/qgi-1.0` | `trojan`, `trojan-streamlit` | Initial pairwise country correlation engine (countriesIndex.py, patternEngine.py) & first Streamlit prototype |
+| **QGI 2.0** | 2023 | `AminAlAit/qgi-2.0` | `trojan-2.0` | Poetry-managed Soft Power & composite institutional index prototype |
+| **QGI 3.0** | 2024 | `AminAlAit/qgi-3.0` | `qgi` (2024), `qgi-streamlit`, `qgi-local` | First public Quantitative Geopolitical Intelligence Streamlit prototype & World Bank notebook workflows |
+| **QGI 4.0** | 2025 | `AminAlAit/qgi-4.0` | `qgi-4.0` | Formalization of SCDI (Spearman + Cross-Correlation + DTW), local MySQL-to-Parquet engine (Pipelines A–E), and X Bot v1 |
+| **QGI 5.0** | 2025–2026 | `AminAlAit/qgi-5.0` | `qgi-pipeline-a-indicator-extractor`, `qgi-pipeline-b-scdi-finder`, `qgi-pipeline-c-pattern-synthesizer` | First AWS cloud migration: Serverless Lambda indicator extractor, Dockerized AWS Batch SCDI compute worker, and Lambda pattern synthesizer |
+| **QGI 6.0** | 2026 | `AminAlAit/qgi-6.0` | `qgi-aws-tf`, `qgi-infra`, `qgi-pipeline`, `qgi-data`, `qgi-ml`, `qgi-frontend`, `qgi-docs` | 7-repo multi-account AWS cloud architecture (14.3B FFT correlations), Trajectory Engine (42 event models), and Next.js 16 terminal |
+| **QGI 7.0 (Active)** | 2026–Present | [**AminAlAit/qgi**](https://github.com/AminAlAit/qgi) & `AminAlAit/qgi-docs` | `qgi`, `qgi-docs` | Unified polyglot production monorepo & live analytical terminal at [qgintelligence.com](https://qgintelligence.com) |
